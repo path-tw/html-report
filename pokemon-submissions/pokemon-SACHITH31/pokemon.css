@@ -1,0 +1,30 @@
+#buttonContainer {
+    margin: 30px;
+}
+body {
+    background-color: #B9BCC6;
+}
+img {
+    width: 400px;
+    height: 400px;
+}
+#pokemonsContainer {
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 30px;
+    justify-content: space-around;
+}
+#pokemonsContainer p {
+    padding: 10px;
+}
+#pokemonsContainer img{
+    width: 250px;
+    height: 250px;
+}
+.pokemonDiv {
+    background-color: white;
+    border-radius: 20px;
+    border: 2px solid white;
+}

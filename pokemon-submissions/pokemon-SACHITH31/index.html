@@ -3,33 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="pokemon.css">
+    <script src="pokemon.js" defer></script>
     <title>Document</title>
-    <style>
-        #buttonContainer {
-            margin: 30px;
-        }
-        img {
-            width: 400px;
-            height: 400px;
-        }
-        #pokemonsContainer {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 30px;
-            justify-content: space-around;
-        }
-        #pokemonsContainer p {
-            padding: 10px;
-        }
-        #pokemonsContainer img{
-            width: 250px;
-            height: 250px;
-        }
-        .pokemonDiv {
-            border: 2px solid red;
-        }
-    </style>
 </head>
 <body>
     <main>        
@@ -39,56 +15,5 @@
 
         </div>
     </main>
-    <script>
-
-let button = document.querySelector('button');
-let main = document.querySelector('main');
-let pokemonsContainer = document.querySelector('#pokemonsContainer');
-let increment = 0;
-let namesContainer = [];
-
-button.addEventListener('click', () => {
-increment = increment + 10;
-fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    return data;
-  })
-  .then((data) => {
-    return data.results;
-  })
-  .then((data) => {
-    for (let i = 0; i < data.length; i++) {
-    fetch(data[i].url)
-      .then((data) => {
-        return data.json()
-      })
-      .then((data) =>{
-        let pokemonNamesContainer = [];
-        pokemonNamesContainer.push(data.name);
-        namesContainer.push(pokemonNamesContainer)
-        for (let i = 0; i < pokemonNamesContainer.length; i++) {
-          console.log(pokemonNamesContainer[i]);
-        }
-        let divContainer = document.createElement('div');
-        divContainer.setAttribute('class', 'pokemonDiv')
-        let imageContainer = document.createElement('img');
-        imageContainer.setAttribute('class', 'pokemonImage');
-        let pokemonName = document.createElement('p');
-        pokemonName.setAttribute('class', 'pokemonName');
-        pokemonName.innerText = pokemonNamesContainer;
-        imageContainer.src = data.sprites.front_default;
-        main.append(pokemonsContainer);
-        pokemonsContainer.append(divContainer);
-        divContainer.append(imageContainer);           
-        divContainer.append(pokemonName);            
-      })
-    }
-  })
-});
-
-</script>
 </body>
 </html>
