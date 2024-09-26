@@ -1,5 +1,7 @@
-const fetchDetails = async (url) => {
+const fetchDetails = async (url, loadingpage) => {
     const pokemonsContainer = document.getElementById('mainpage');
+    loadingpage.innerHTML = '';
+    loadingpage.remove();
     try {
     const response = await fetch(url)
     const data = await response.json();
@@ -8,8 +10,9 @@ const fetchDetails = async (url) => {
         pokemonElement.innerHTML = `
           <h2>${data.name}</h2>
           <p>ID: ${data.id}</p>
-          <img src="${data.sprites.front_default}" alt="${data.name}" class="pokemon-image">
+          <img src="${data.sprites.front_default}">
           <p>Type: ${data.types.map(type => type.type.name).join(', ')}</p>`;
+          pokemonElement.style.textAlign = 'center';
         pokemonsContainer.appendChild(pokemonElement);
     } catch(error){
         console.log(error);
@@ -17,12 +20,8 @@ const fetchDetails = async (url) => {
 };
 
 const getPokemonDetails = (pokemons, loadingpage) => {
-    const pokemonsContainer = document.querySelector('#mainpage');
-    pokemonsContainer.innerHTML = '';
-    loadingpage.remove();
-
     pokemons.forEach(pokemon => {
-        fetchDetails(pokemon.url);
+        fetchDetails(pokemon.url, loadingpage);
     });
 };
 

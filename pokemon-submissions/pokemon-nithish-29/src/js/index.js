@@ -1,5 +1,7 @@
 'use strict';
 
+let allPokemonsData = [];
+
 const insertData = (pokemonDiv, name, image, id, type , data) => {
  name.textContent = `${data.name}`;
  image.src = `${data.sprites.front_default}`;
@@ -24,14 +26,19 @@ const createPokemonDiv = (data) => {
   container.appendChild(appendDiv);
 };
 
+const renderApiData = async (id) => {
+  const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  createPokemonDiv(data);
+  allPokemonsData.push(data);
+}
+
 const fetchpokemonData = async () => {
   const totalPokemons = 500;
   return new Promise(async (resolve) => {
     for (let id = 1; id <= totalPokemons; id++) {
-      const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      createPokemonDiv(data);
+      renderApiData(id);
     }
    resolve('resolved');
   });
@@ -43,6 +50,7 @@ const displayLoader = async () => {
   loader.style.display = 'flex';
   renderPokemon = await fetchpokemonData();
   loader.style.display = 'none';
+  setupSearch();
 };
 
 window.onload = displayLoader;

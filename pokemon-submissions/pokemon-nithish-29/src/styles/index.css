@@ -4,11 +4,22 @@ header {
   top: 0%;
   background-color: #F3B391;
   position: sticky;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #heading {
   padding-top: 10px;
   padding-left: 20px;
+}
+
+#search {
+  position: relative;
+  right: 30%;
+  padding: 7px;
+  width: 40%;
+  border-radius: 20px;
 }
 
 #allpokemons {

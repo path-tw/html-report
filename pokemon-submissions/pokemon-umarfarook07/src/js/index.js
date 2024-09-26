@@ -55,6 +55,15 @@ const createPokemonCard = (pokemon) => {
   return pokemonCard;
 };
 
+const handleSearch = () => {
+  const searchElement = document.getElementById('search');
+  searchElement.oninput = async (event) => {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${event.target.value}`)
+    const jsonRes = await response.json();
+    console.log(jsonRes);
+  };
+}
+
 const main = async () => {
   showLoadingIndicator();
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
@@ -66,7 +75,6 @@ const main = async () => {
       const pokemonCard = createPokemonCard(parsedPokemonDetails);
       pokemonGrid.appendChild(pokemonCard);
     });
-  console.log(res);
   hideLoadingIndicator();
 };
 

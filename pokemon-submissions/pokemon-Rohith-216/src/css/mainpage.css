@@ -14,13 +14,18 @@ h1 {
     display: flex;
     height: auto;
     width: auto;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
+    padding-left: 10px;
+    gap: 5px;
+    margin-top: 2px;
 }
 
 .pokemon {
-    height: 400PX;
-    width: 370px;
+    height: 300PX;
+    width: 250px;
     box-shadow: rgb(38, 38, 38);
+    padding: auto;
+    border: 1px solid grey;
 }

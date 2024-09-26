@@ -1,0 +1,24 @@
+#popupMsg{
+    display: flex;
+    width: 400px;
+    margin:20% 40%;
+    color: white;
+    aspect-ratio: 1;
+  }
+.body-styling{
+    background-color: black;
+    color: white;
+}
+body{
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+.pokemon{
+    border: 1px solid white;
+    width: 200px;
+    height: 200px;
+    gap: 50px;
+    border-radius: 20%;
+    text-align: center;
+}
