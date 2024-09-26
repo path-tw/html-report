@@ -3,7 +3,7 @@ window.onload = () => {
   const pokedex = document.getElementById('pokemons')
   pokedex.innerText = 'Loading...';
   loadPokemons();
-}
+};
 
 const getType = async (id) => {
   const types = await fetch(`https://pokeapi.co/api/v2/pokemon-form/${id}`)
@@ -18,13 +18,10 @@ const getType = async (id) => {
     type: numberOfTypes,
     imagesrc : image
   };
-}
+};
 
-const createPokeCard = (pokemons) => {
-  const pokedex = document.getElementById('pokemons')
-  pokedex.innerText = '';
-  pokemons.map(pokemon => {
-    const pokeCard = document.createElement('div');
+const createCard = (pokemon) => {
+  const pokeCard = document.createElement('div');
     const name = document.createElement('h3');
     const id = document.createElement('p');
     const type = document.createElement('p');
@@ -35,6 +32,14 @@ const createPokeCard = (pokemons) => {
     id.textContent = `Id: ${pokemon.id}`;
     type.textContent = `Type: ${pokemon.type}`;
     pokeCard.append(name,id,image,type);
+    return pokeCard;
+};
+
+const createPokeCard = (pokemons) => {
+  const pokedex = document.getElementById('pokemons')
+  pokedex.innerText = '';
+  pokemons.map(pokemon => {
+    const pokeCard = createCard(pokemon);
     pokedex.append(pokeCard)
   });
 };

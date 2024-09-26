@@ -1,13 +1,16 @@
-const renderPokemon = async () => {
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon/');
+const renderPokemon = async (loader) => {
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon-form/?limit=1302');
   const result = await response.json();
-  console.log(result.results[0].url);
-
+  console.log(result.results);
   for (let index = 0; index < result.results.length; index++) {
-  const url = await fetch(result.results[index].url);
-  const info = await url.json();
+  const link = await fetch(result.results[index].url);
+  const info = await link.json();
     renderPokemonNameAndId(info.name, info.id, info.sprites.front_shiny, info.types[0].type.name);
   }
+  return new Promise((resolve, reject) => {
+    loader.remove();
+    resolve('successfully loaded the data');
+  })
 }
 
 const renderPokemonNameAndId = (name, id, image, type) => {
@@ -37,6 +40,15 @@ const renderPokemonImgAndType = (container, image, type) => {
   container.appendChild(printType);
 }
 
+const showLoader = () => {
+  const loader = document.createElement('p');
+  loader.id = 'loader';
+  loader.innerText = 'Page is still loading...';
+  const body = document.getElementsByTagName('body')[0];
+  body.appendChild(loader);
+  renderPokemon(loader);
+}
+
 window.onload = () => {
-  renderPokemon();
+  showLoader();
 }

@@ -2,64 +2,11 @@
 <html lang="en">
 <head>
     <title>pokemen</title>
-    <style>
-.pokemon{
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px;
-}
-.pokemon div{
-    border: 1px solid black;
-    padding: 10px;
-    margin: 20px;
-    width: 130px;
-}
-    </style>
+    <link href="src/css/pokemon.css" rel="stylesheet">
+     <script src="src/js/pokemon.js"></script>
 </head>
 <body>
+    <div id="loading" >loading...</div>
   <div id="pokemon" class="pokemon"></div>
-  <script>
-    function pokemon(data) {
-        const pokemonContainer = document.getElementById('pokemon');
-            const pokemonBlock = document.createElement('div');
-
-            const name = document.createElement('h2');
-            name.textContent = data.name;
-
-            const id = document.createElement('p');
-            id.textContent = `ID: ${data.id}`;
-
-            const img = document.createElement('img');
-            img.src = data.sprites.front_default;
-
-            const type = document.createElement('p');
-            let types = '';
-            data.types.forEach(typeInfo => {
-                types += typeInfo.type.name + ' ';
-            });
-            type.textContent = `Type: ${types.trim()}`;
-
-          pokemonBlock.appendChild(name);
-          pokemonBlock.appendChild(id);
-          pokemonBlock.appendChild(img);
-          pokemonBlock.appendChild(type);
-            pokemonContainer.appendChild(pokemonBlock);
-    }
-    function fetching() {
-        fetch("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1302")
-    .then((response) => response.json())
-    .then((data) => data.results)
-    .then((arr) => {
-        for (let i = 0; i < arr.length; i++) {
-            fetch(arr[i].url)
-                .then((response) => response.json())
-                .then((pokemonData) => {
-                    pokemon(pokemonData);
-                });
-        }
-    });
-    }
-    fetching();
-</script>
 </body>
 </html>

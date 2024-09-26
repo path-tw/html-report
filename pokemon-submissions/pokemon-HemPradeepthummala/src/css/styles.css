@@ -3,26 +3,34 @@
   justify-content: space-evenly;
   align-items: center;
   color:black;
-  height:30px;
+  height:80px;
   width:auto;
+  position:sticky ;
+  top:0px;
+  background-color: white;
 }
 
 #main-container {
-  display: flex;
+  display:flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-}
-
-.image {
-  height:200px;
-  aspect-ratio: 1;
+  height:85%;
 }
 
 .div-container {
+  text-align: center;
+  height:270px;
   border:2px solid black;
-  height:fit-content;
-  width: fit-content;
+  width: 130px;
   word-wrap: break-word;
   margin:3px;
+}
+.loader{
+  height:100%;
+  width:100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
 }

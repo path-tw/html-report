@@ -1,54 +1,56 @@
 'use strict';
-const pokemonData = [];
 
 const displayData = (div) => {
   const main = document.getElementById('main-container');
   main.append(div)
-  }
-  
-  const createDiv = (object) => {
-    console.log('creating');
-    const div = document.createElement('div');
-    const image = document.createElement('image');
-    image.src = object.image;
-    const h3 = document.createElement('h3');
-    const details = document.createElement('h4');
-    h3.innerText = object.name;
-    details.innerText = `Type : ${object.type}\nId : ${object.id}`;
-    div.classList.add('div-container');
-    div.append(h3,details,image);
-    displayData(div);
-  }
+}
 
-const getPokeName = async (type, url) => {
-  const pokeName = (await (await fetch(url)).json());
-  console.log('data loaded')
-  let index = 0
-  for (let pokemons of pokeName.pokemon) {
-    for (let pokemon in pokemons) {
-      if (pokemon === 'slot' ) {
-        break;
-      }
-      const object = {};
-      object.image = ((await(await fetch(pokemons[pokemon].url)).json()).sprites.front_default);
-      console.log('imageloaded')
-      object.name = pokemons[pokemon].name;
-      object.type = type
-      object.id = (++index);
-      pokemonData.push(object);
-    }
+const createDiv = (object) => {
+  const div = document.createElement('div');
+  const image = document.createElement('img');
+  image.src = object.image;
+  const h3 = document.createElement('h3');
+  const details = document.createElement('h4');
+  const type = document.createElement('h4');
+  type.innerText = 'Type :';
+  for (let i of object.type) {
+    type.innerText += `${i} `;
   }
-};
+  h3.innerText = object.name;
+  details.innerText = `Id : ${object.id}`;
+  div.classList.add('div-container');
+  div.appendChild(h3);
+  div.appendChild(image);
+  div.appendChild(type);
+  div.appendChild(details);
+  displayData(div);
+}
 
 const getPokeData = async () => {
-  const pokeData = (await (await fetch('https://pokeapi.co/api/v2/type')).json());
+  const pokemonData = [];
+  const pokeData = (await (await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')).json());
   for (let i in pokeData.results) {
-    const type = pokeData.results[i].name;
-    await getPokeName(type, pokeData.results[i].url);
-    for (const object of pokemonData) {
-      createDiv(object);
+    const object = {};
+    object.name = (pokeData.results[i].name);
+    const pokemon = await (await fetch(pokeData.results[i].url)).json();
+    object.id = pokemon.id;
+    object.type = [];
+    object.image = pokemon.sprites.front_default;
+    for (const i of pokemon.types) {
+      object.type.push(i.type.name);
     }
+    pokemonData.push(object);
+  }
+  return pokemonData;
+}
+
+
+const load = async () => {
+  const pokemon = await getPokeData();
+  document.getElementById('load').remove();
+  for(const poke in pokemon) {
+    createDiv(pokemon[poke]);
   }
 }
 
-window.onload = getPokeData();
+window.onload = load();

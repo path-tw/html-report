@@ -55,27 +55,49 @@ const createPokemonCard = (pokemon) => {
   return pokemonCard;
 };
 
-const handleSearch = () => {
+const handleSearch = async () => {
   const searchElement = document.getElementById('search');
-  searchElement.oninput = async (event) => {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${event.target.value}`)
-    const jsonRes = await response.json();
-    console.log(jsonRes);
-  };
-}
+  const response = await fetch(
+    `https://pokeapi.co/api/v2/pokemon/${searchElement.value}`
+  );
+  const searchResults = await response.json();
+  console.log([searchResults]);
+  await renderPokemons([searchResults]);
+};
 
-const main = async () => {
+const fetchPokemonDetails = async (pokemon) => {
+  const pokemonDetails = await fetch(pokemon.url);
+  const parsedPokemonDetails = await pokemonDetails.json();
+  return parsedPokemonDetails;
+};
+
+const fetchPokemons = async () => {
   showLoadingIndicator();
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
-    const pokemons = await response.json();
-    const pokemonGrid = document.getElementById('pokemon-grid');
+  const response = await fetch(
+    'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0'
+  );
+  const pokemons = await response.json();
+  return pokemons;
+};
+const addSearchButtonEventListener = () => {
+  const searchButton = document.getElementById('search-btn');
+  searchButton.onclick = handleSearch;
+};
+
+const renderPokemons = async (pokemons) => {
+  const pokemonGrid = document.getElementById('pokemon-grid');
+  pokemonGrid.innerHTML = '';
     pokemons.results.forEach(async (pokemon) => {
-      const pokemonDetails = await fetch(pokemon.url);
-      const parsedPokemonDetails = await pokemonDetails.json();
+      const parsedPokemonDetails = await fetchPokemonDetails(pokemon);
       const pokemonCard = createPokemonCard(parsedPokemonDetails);
       pokemonGrid.appendChild(pokemonCard);
     });
-  hideLoadingIndicator();
+};
+
+const main = async () => {
+  const pokemons = await fetchPokemons();
+  await renderPokemons(pokemons);
+  addSearchButtonEventListener();
 };
 
 window.onload = main;

@@ -92,4 +92,29 @@ const appendAllPokemonDetails = async () => {
   });
 };
 
-window.onload = appendAllPokemonDetails;
+const appendSearchBar = (header) => {
+  const searchBar = document.createElement('input');
+  searchBar.placeholder = 'Search Here';
+  searchBar.setAttribute('id', 'searchBar')
+  header.appendChild(searchBar);
+};
+
+const appendMainHeading = (header) => {
+  const mainHeading = document.createElement('h1');
+  mainHeading.innerText = 'Pokédex';
+  mainHeading.setAttribute('id', 'mainHeading');
+  header.appendChild(mainHeading);
+}
+
+const appendInHeaders = () => {
+  const header = document.querySelector('header');
+  appendMainHeading(header);
+  appendSearchBar(header);
+};
+
+const main = () => {
+  appendInHeaders();
+  appendAllPokemonDetails();
+};
+
+window.onload = main;

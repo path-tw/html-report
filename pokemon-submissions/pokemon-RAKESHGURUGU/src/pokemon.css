@@ -21,7 +21,7 @@ body {
 #pokemons {
   display: flex;
   flex-wrap: wrap;
-  margin: 70px 30px;
+  margin: 70px 10px;
 }
 
 .pokemonInfo {
@@ -52,4 +52,15 @@ body {
 .image {
   height: 150px;
   aspect-ratio: 1;
+}
+
+#loader {
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  position: fixed;
+  top: 50px;
+  right: 42%;
+  border: 1px solid black;
+  padding: 20px 40px;
 }
