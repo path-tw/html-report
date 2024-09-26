@@ -1,0 +1,22 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing:border-box;
+}
+#pageTitle{
+  background-color: black;
+  color: white;
+  height: 13vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+main{
+  border: 1px solid black;
+  margin: 20px;
+  padding: 5px;
+}
+

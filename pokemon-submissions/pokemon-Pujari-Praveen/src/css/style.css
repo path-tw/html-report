@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.all-pokemons-container {
+  border: 2px solid black;
+  margin: 50px 5px 5px 5px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 40px;
+  row-gap: 50px;
+}
+
+.pokemon-container img {
+  width: 50%;
+}
+
+.pokemon-container {
+  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5%;
+}

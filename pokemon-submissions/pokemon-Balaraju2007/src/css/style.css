@@ -1,0 +1,9 @@
+.pokemon {
+    height:250px;
+    width: 200px;
+    border : 1px solid red;  
+}
+img {
+    height: 100px;
+    aspect-ratio: 1;
+}

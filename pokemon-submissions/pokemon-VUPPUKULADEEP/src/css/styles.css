@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.content {
+    border: 2px solid black;
+    border-radius: 5%;
+    display: inline;
+}
+
+img {
+    height: 15vh;
+    aspect-ratio: 1;
+}
+
+h2,p {
+    text-align: center;
+}
+
+h1 {
+    height: 20%;
+    margin-top :0%;
+    padding : 1% 10% 0.5% 10%;
+    font-family: cursive;
+    color: white;
+    background-color: black;
+    text-align: center;
+}
+
+.loader {
+    height: 4vh;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 5px solid gray;
+    border-top: 5px solid rgb(10, 10, 10);
+    position: fixed;
+    left: 48%;
+    top: 50%;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }

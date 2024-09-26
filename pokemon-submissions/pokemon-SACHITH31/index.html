@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #buttonContainer {
+            margin: 30px;
+        }
+        img {
+            border: 2px solid red;
+            width: 400px;
+            height: 400px;
+        }
+        #pokemonsContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: space-around;
+        }
+        #pokemonsContainer p {
+            padding: 10px;
+            border: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+    <main>        
+        <h1>Pokemon Api</h1>
+        <button>Load More</button>
+        <div id="pokemonsContainer">
+
+        </div>
+    </main>
+    <script>
+let button = document.querySelector('button');
+let main = document.querySelector('main');
+let pokemonsContainer = document.querySelector('#pokemonsContainer');
+increment = 50;
+button.addEventListener('click', () => {
+    increment = increment + 10;
+    fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    return data;
+  })
+  .then((data) => {
+    // console.log(data)
+    return data.results;
+  })
+  .then((data) => {
+    for (let i = 0; i < increment; i++) {
+    //   console.log(data[i].name);
+        let name = document.createElement('p');
+        let image = document.createElement('img');
+
+        main.append(pokemonsContainer);
+        pokemonsContainer.append(name);
+     name.innerText = data[i].name;
+    }
+});
+})
+
+//     image.src = data.results[1].url;
+//     console.log(image.src)
+//   
+// })
+
+
+
+
+// })
+
+</script>
+</body>
+</html>

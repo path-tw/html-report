@@ -1,0 +1,53 @@
+ body {
+   background-color: aliceblue;
+ }
+
+ #title,
+ .aPokemon {
+   text-align: center;
+   color: #fff;
+   background-color: #000;
+   padding: 10px;
+ }
+
+ #title {
+   position: sticky;
+   top: 0px;
+ }
+
+ .aPokemon {
+   position: relative;
+   width: 15vw;
+   padding: 30px 10px;
+ }
+
+ .type {
+   padding: 10px;
+ }
+
+ .pokemonid {
+   position: absolute;
+   top: 0;
+   background-color: white;
+   color: black;
+   padding: 0px 10px;
+ }
+
+ #containers {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 10px;
+   justify-content: center;
+ }
+
+ .loading {
+  width: 100px;
+  height: 100px;
+  background-color: lightcyan;
+  margin: 100px auto;
+  border: 8px solid transparent;
+  border-radius: 50%;
+  border-top: 8px solid black;
+  border-style: groove;
+  animation: loading-animation 2s linear infinite;
+}

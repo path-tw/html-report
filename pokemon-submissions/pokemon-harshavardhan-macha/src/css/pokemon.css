@@ -1,0 +1,39 @@
+header{
+    border-left: 5px solid black;
+    height: 100px;
+    display: flex;
+    background-color:beige ;
+    position:fixed;
+    width: 2000px;
+    z-index: 1;
+}
+
+header h1 {
+    margin-left: 5px;
+    font-size: 39px;
+    font-family: helvetica;
+    text-transform: uppercase;
+}
+
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+   position: scroll;
+    justify-content: center;
+}
+
+#container div{
+    border:6px solid black;
+    width: 250px;
+    height: 350px;
+    position: relative;
+    top: 100px;
+
+    
+}
+
+#container div img{
+   margin-left: 60px;
+   height: 150px;
+}

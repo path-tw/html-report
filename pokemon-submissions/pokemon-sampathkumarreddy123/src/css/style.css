@@ -1,0 +1,35 @@
+*{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.navbar{
+  width: 100wh;
+  height: 50px;
+  border-bottom: 1px solid black;
+  background-color: #ada1a1d8;
+  margin-bottom: 20px;
+}
+#heading{
+  font-size: 30px;
+  
+}
+  #allPokemonsDetails{
+    background-color: #CDC2A5;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.pokemonContainer{
+  background-color:#EAE4DD;
+  width: 260px;
+  height: 250px;
+  margin-bottom: 10px;
+  padding-left: 40px;
+  border: 1px solid black;
+}
+
+.image{
+  width: 120px;
+margin-left: 40px;
+}
