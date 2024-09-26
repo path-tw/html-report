@@ -1,5 +1,5 @@
 const fetchPokemonData = async () => {
-  const url = 'https://pokeapi.co/api/v2/pokemon';
+  const url = 'https://pokeapi.co/api/v2/pokemon?limit=52';
   const options = {
     method: 'GET'
   }
@@ -64,14 +64,16 @@ const addDetialsToDom = async (pokemons) => {
   return pokemonContainer;
 };
 
-const preloading = async () => {
+const preloading = () => {
   const divForLoading = document.createElement('div');
+  const pokemonContainer = document.getElementById('pokemon-container');
   divForLoading.classList.add('preload');
   divForLoading.innerHTML = 'Loading..';
+  pokemonContainer.appendChild(divForLoading);
 }
 
 const data = async () => {
-  await preloading();
+  preloading();
   const pokemons = await fetchPokemonData();
   addDetialsToDom(pokemons);
   const preload = document.querySelector('.preload');
