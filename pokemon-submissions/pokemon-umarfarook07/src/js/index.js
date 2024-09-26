@@ -57,12 +57,8 @@ const createPokemonCard = (pokemon) => {
 
 const handleSearch = async () => {
   const searchElement = document.getElementById('search');
-  const response = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${searchElement.value}`
-  );
-  const searchResults = await response.json();
-  console.log([searchResults]);
-  await renderPokemons([searchResults]);
+  const searchResults = await fetchPokemons();
+  await renderPokemons(searchResults);
 };
 
 const fetchPokemonDetails = async (pokemon) => {
@@ -77,6 +73,7 @@ const fetchPokemons = async () => {
     'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0'
   );
   const pokemons = await response.json();
+  hideLoadingIndicator();
   return pokemons;
 };
 const addSearchButtonEventListener = () => {
@@ -87,11 +84,11 @@ const addSearchButtonEventListener = () => {
 const renderPokemons = async (pokemons) => {
   const pokemonGrid = document.getElementById('pokemon-grid');
   pokemonGrid.innerHTML = '';
-    pokemons.results.forEach(async (pokemon) => {
-      const parsedPokemonDetails = await fetchPokemonDetails(pokemon);
-      const pokemonCard = createPokemonCard(parsedPokemonDetails);
-      pokemonGrid.appendChild(pokemonCard);
-    });
+  pokemons.results.forEach(async (pokemon) => {
+    const parsedPokemonDetails = await fetchPokemonDetails(pokemon);
+    const pokemonCard = createPokemonCard(parsedPokemonDetails);
+    pokemonGrid.appendChild(pokemonCard);
+  });
 };
 
 const main = async () => {

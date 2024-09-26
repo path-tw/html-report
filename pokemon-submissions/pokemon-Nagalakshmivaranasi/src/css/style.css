@@ -1,5 +1,25 @@
 #header {
   color: #fff;
-  background-color: #000;
-  
+  background-color: rgb(0, 110, 255);
+  font-size: 3rem;
+  padding: 1.5%;
+  margin: 0;
+  margin-top: 0%;
+}
+
+.pokemon-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.pokemon-details {
+  /* border: 1px solid rgb(0, 110, 255); */
+  height: 250px;
+  width: 200px;
+}
+
+.bold-text {
+  font-weight: 600;
+  font-size: 1.1rem;
 }
