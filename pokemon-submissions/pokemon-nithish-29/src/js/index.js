@@ -31,26 +31,28 @@ const renderApiData = async (id) => {
   const response = await fetch(url);
   const data = await response.json();
   allPokemonsData.push(data);
-  createPokemonDiv(data);
 }
 
 const fetchpokemonData = async () => {
-  const totalPokemons = 500;
+  const totalPokemons = 200;
   return new Promise(async (resolve) => {
     for (let id = 1; id <= totalPokemons; id++) {
-      renderApiData(id);
+      await renderApiData(id);
     }
    resolve('resolved');
   });
 };
 
 const displayLoader = async () => {
+  document.getElementById('search').addEventListener('input', setupSearch);
   const loader = document.getElementById('loader');
   let renderPokemon = 'pending';
   loader.style.display = 'flex';
   renderPokemon = await fetchpokemonData();
+  for(let id = 1; id < allPokemonsData.length; id++) {
+    await createPokemonDiv(allPokemonsData[id]);
+  }
   loader.style.display = 'none';
-  document.getElementById('search').addEventListener('input', setupSearch);
 };
 
 window.onload = displayLoader;

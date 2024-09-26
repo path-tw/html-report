@@ -18,7 +18,6 @@ const fetchPokemonData = async () => {
       };
       array.push(pokemonInfo);
     }
-    console.log(array);
     return array;
   }
   catch (error) {
@@ -29,6 +28,7 @@ const fetchPokemonData = async () => {
 const addDetial = (label, value) => {
   const pTag = document.createElement('p');
   const spanTag = document.createElement('span');
+  pTag.classList.add('details');
   spanTag.classList.add('bold-text');
   spanTag.innerText = label;
   pTag.append(spanTag, value);
@@ -57,7 +57,6 @@ const displayPokemonDetails = (pokemonObj) => {
 
 const addDetialsToDom = async (pokemons) => {
   const pokemonContainer = document.getElementById('pokemon-container');
-  console.log(pokemons);
   for (const pokemon of pokemons) {
     const pokemonDetial = displayPokemonDetails(pokemon);
     pokemonContainer.appendChild(pokemonDetial);
@@ -65,10 +64,18 @@ const addDetialsToDom = async (pokemons) => {
   return pokemonContainer;
 };
 
+const preloading = async () => {
+  const divForLoading = document.createElement('div');
+  divForLoading.classList.add('preload');
+  divForLoading.innerHTML = 'Loading..';
+}
+
 const data = async () => {
+  await preloading();
   const pokemons = await fetchPokemonData();
   addDetialsToDom(pokemons);
-  console.log(pokemons);
+  const preload = document.querySelector('.preload');
+  preload.remove();
 };
 
 window.onload = data;

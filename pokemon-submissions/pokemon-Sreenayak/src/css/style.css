@@ -12,6 +12,15 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px;
+    left: 45px;
+}
+header img {
+    height: 45px;
+    width: 45px;
+    padding: 10px;
+    top: 10px;
+    bottom: 10px;
 }
 .container {
     max-width: 1200px;
