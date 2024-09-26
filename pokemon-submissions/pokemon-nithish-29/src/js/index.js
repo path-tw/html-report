@@ -44,26 +44,6 @@ const fetchpokemonData = async () => {
   });
 };
 
-const searchPokemon = (searchedItem) => {
-  const searchedPokemons = allPokemonsData.filter(pokemon => {
-    pokemon.name.toLowerCase().includes(searchedItem) ||
-    pokemon.id.toLowerCase().includes(searchedItem) ||
-    pokemon.types.map(typeInfo => 
-      typeInfo.type.name.toLowerCase().includes(searchedItem));
-  });
-  searchedPokemons.forEach(pokemon => createPokemonDiv(pokemon));
-};
-
-const setupSearch = () => {
-  const search = document.getElementById('search');
-  const searchedItem = search.value.toLowerCase();
-  const container = document.getElementById('allPokemons');
-  while(container.firstChild) {
-    container.removeChild(container.firstChild);
-  }
-  searchPokemon(searchedItem);
-};
-
 const displayLoader = async () => {
   const loader = document.getElementById('loader');
   let renderPokemon = 'pending';

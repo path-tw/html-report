@@ -20,6 +20,8 @@ header {
   padding: 7px;
   width: 40%;
   border-radius: 20px;
+  font-size: 1rem;
+  background-color: #FEFADC;
 }
 
 #allpokemons {

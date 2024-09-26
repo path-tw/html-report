@@ -3,7 +3,7 @@
 const getTheData = () => {
   return new Promise(async (resolve) => {
     try {
-      const fetchedData = await fetch('https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=1000');
+      const fetchedData = await fetch('https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=1');
       const resultData = await fetchedData.json();
       resolve(resultData);
     } catch (error) {
@@ -30,17 +30,17 @@ const createAPokemonContainer = () => {
   return pokemonContainer;
 };
 
-const appendPokemonImage = (pokemonContainer, pokemonDetails) => {
-  const pokemonImage = document.createElement('img');
-  pokemonImage.src = pokemonDetails.sprites.front_default;
-  pokemonContainer.appendChild(pokemonImage);
-};
-
 const appendPokemonID = (pokemonContainer, pokemonDetails) => {
   const IDh3 = document.createElement('h3');
   IDh3.innerText = pokemonDetails.id;
   IDh3.classList.add('pokemonid');
   pokemonContainer.appendChild(IDh3);
+};
+
+const appendPokemonImage = (pokemonContainer, pokemonDetails) => {
+  const pokemonImage = document.createElement('img');
+  pokemonImage.src = pokemonDetails.sprites.front_default;
+  pokemonContainer.appendChild(pokemonImage);
 };
 
 const appendPokemonName = (pokemonContainer, pokemonDetails) => {
@@ -53,15 +53,15 @@ const appendPokemonName = (pokemonContainer, pokemonDetails) => {
 
 const appendPokemonType = (pokemonContainer, pokemonDetails) => {
   const pokemonTypesh3 = document.createElement('h3');
-  pokemonTypesh3.innerText = 'Type: ';
+  pokemonTypesh3.innerText = 'Type/Types: ';
   pokemonContainer.appendChild(pokemonTypesh3);
   pokemonTypesh3.classList.add('types');
+  const pokemonTypespan = document.createElement('span');
   pokemonDetails.types.forEach(type => {
-    const pokemonTypespan = document.createElement('span');
     pokemonTypespan.classList.add('type');
-    pokemonTypespan.innerText = type.type.name;
-    pokemonContainer.appendChild(pokemonTypespan);
+    pokemonTypespan.innerText = pokemonTypespan.innerText + `  ${type.type.name}`;
   });
+  pokemonContainer.appendChild(pokemonTypespan);
 };
 
 const appendDetailsToPokemonConatier = (pokemon, callback) => {
@@ -92,10 +92,16 @@ const appendAllPokemonDetails = async () => {
   });
 };
 
+const searchBarFunctionality = (event) => {
+  const sampleText = 'hemeswar reddy';
+  sampleText.includes(event.target.value);
+};
+
 const appendSearchBar = (header) => {
   const searchBar = document.createElement('input');
   searchBar.placeholder = 'Search Here';
-  searchBar.setAttribute('id', 'searchBar')
+  searchBar.setAttribute('id', 'searchBar');
+  searchBar.setAttribute('oninput', 'searchBarFunctionality(event)');
   header.appendChild(searchBar);
 };
 

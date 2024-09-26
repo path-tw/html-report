@@ -7,10 +7,7 @@ const renderPokemon = async (loader) => {
   const info = await link.json();
     renderPokemonNameAndId(info.name, info.id, info.sprites.front_shiny, info.types[0].type.name);
   }
-  return new Promise((resolve, reject) => {
-    loader.remove();
-    resolve('successfully loaded the data');
-  })
+  loader.remove();
 }
 
 const renderPokemonNameAndId = (name, id, image, type) => {

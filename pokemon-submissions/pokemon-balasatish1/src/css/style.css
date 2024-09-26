@@ -115,3 +115,24 @@ header {
   font-size: 1.1rem;
   text-transform: capitalize;
 }
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-pokemon {
+  outline: none;
+  border: 1px solid white;
+  border-radius: 20px;
+  height: 30px;
+  color: white;
+  background-color: rgba(255, 255, 255, 0);
+  padding: 15px;
+  font-size: 1.25rem;
+}
+.fa-magnifying-glass {
+  color: white;
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
