@@ -57,9 +57,8 @@ const createSectionForPokemon = () => {
 };
 
 const processPokemonData = async (responseJson) => {
-  const allPokemonData = responseJson.results;
-  console.log(allPokemonData);
-  for (const pokemon of allPokemonData) {
+  pokemonsData = responseJson.results;
+  for (const pokemon of pokemonsData) {
     const pokemonData = await getPokemonData(pokemon.url);
     const pokemonContainer = createSectionForPokemon();
     setPokemonImg(pokemonContainer, pokemonData);
