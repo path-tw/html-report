@@ -32,6 +32,33 @@ fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
         for (let i = 0; i < typesContainer.length; i++) {
          pokemonType = document.createElement('p');
           pokemonType.innerText = typesContainer;
+          if (typesContainer[i] === 'water') {
+            pokemonType.setAttribute('id', 'water');
+          }
+          if (typesContainer[i] === 'fire' || typesContainer[i] === 'flying') {
+            pokemonType.setAttribute('id', 'fire');
+          }
+          if (typesContainer[i] === 'grass' || typesContainer[i] === 'poison') {
+            pokemonType.setAttribute('id', 'grass');
+          }
+          if (typesContainer[i] === 'bug') {
+            pokemonType.setAttribute('id', 'bug');
+          }
+          if (typesContainer[i] === 'normal') {
+            pokemonType.setAttribute('id', 'normal');
+          }
+          if (typesContainer[i] === 'electric') {
+            pokemonType.setAttribute('id', 'electric');
+          }
+          if (typesContainer[i] === 'ground') {
+            pokemonType.setAttribute('id', 'ground');
+          }
+          if (typesContainer[i] === 'fairy') {
+            pokemonType.setAttribute('id', 'fairy');
+          }
+          if (typesContainer[i] === 'fighting') {
+            pokemonType.setAttribute('id', 'fighting');
+          }
           // console.log(typesContainer)
         }
         let pokemonNamesContainer = [];
@@ -53,6 +80,10 @@ fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
         divContainer.append(imageContainer);           
         divContainer.append(pokemonName);
         divContainer.append(pokemonType);
+
+        console.log(pokemonType)
+       
+
       })
     }
   })
