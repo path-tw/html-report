@@ -62,11 +62,11 @@ const getPokemonData = async () => {
     allPokemonData.push(await getSpecificData(eachData));
   }
   await renderDataInGallery(allPokemonData);
-  await removeLoadingAnimation();
 };
 
 const main = async function () {
   await getPokemonData();
+  await removeLoadingAnimation();
 };
 
 window.onload = main;

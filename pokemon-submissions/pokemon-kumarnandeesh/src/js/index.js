@@ -8,55 +8,68 @@ const toAppendName = (name) => {
 
 const toAppendId = (id) => {
     const idContainer = document.createElement('p');
-    idContainer.innerText = id;
+    idContainer.innerText = `ID : ${id}`;
     return idContainer;
 };
 
 const toAppendImage = (url) => {
     const imageContainer = document.createElement('img');
     imageContainer.src = url;
+    imageContainer.alt = 
     imageContainer.style.display = 'flex';
     return imageContainer;
 };
 
 const toAppendTypes = (type) => {
-    
     const typeContainer = document.createElement('div');
     const array = [];
     for (let index = 0; index < type.length; index++) {
         const typeName = type[index].type.name;
         array.push(typeName);
-        typeContainer.append(typeName);
+        const typeElement = document.createElement('span');
+        typeElement.innerText = typeName;
+        typeContainer.appendChild(typeElement);
+        if (index < type.length - 1) {
+            const comma = document.createElement('span');
+            comma.innerText = ', ';
+            typeContainer.appendChild(comma);
+        }
     }
-
     return typeContainer;
 };
 
+
+
 const toFetchApi = async () => {
-  const pokemon = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
-  
-  const pokemonData = await pokemon.json();
-  const mainContainer = document .getElementById('main');
-  for (let index = 0;index < pokemonData.results.length; index++) {
+    const mainContainer = document.getElementById('main');
+    const pokemon = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
+    const pokemonData = await pokemon.json();
+    for (let index = 0;index < pokemonData.results.length; index++) {
+        const pokemonContainer = document.createElement('div');
+        pokemonContainer.classList.add('pokemonContainer');
 
-    const pokemonName = pokemonData.results[index].name;
-    mainContainer.append(toAppendName(pokemonName));
+        const pokemonName = pokemonData.results[index].name;
+        pokemonContainer.appendChild(toAppendName(pokemonName));
 
-    const pokemonDetails = await fetch(pokemonData.results[index].url);
-    const data = await pokemonDetails.json();
+        const pokemonDetails = await fetch(pokemonData.results[index].url);
+        const data = await pokemonDetails.json();
 
-    const pokemonId = data.id;
-    mainContainer.append(toAppendId(pokemonId));
+        const image = data.sprites.front_default;
+        pokemonContainer.appendChild(toAppendImage(image));
 
-    const image = data.sprites.front_default;
-    
-    mainContainer.append(toAppendImage(image));
-    
-    const type = data.types;
-    mainContainer.append(toAppendTypes(type));
-    
-    console.log(pokemonName , pokemonId);
-  }
+        const pokemonId = data.id;
+        pokemonContainer.appendChild(toAppendId(pokemonId));
+
+        
+        const type = data.types;
+        pokemonContainer.appendChild(toAppendTypes(type));
+        
+        mainContainer.appendChild(pokemonContainer);
+    }
 }
 
-toFetchApi();
+const forLoading = async () => {
+
+}
+
+window.onload = toFetchApi;
