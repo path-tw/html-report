@@ -26,32 +26,26 @@ const removeLoadingAnimation = async function () {
   loadingBox.remove();
 };
 
+const createParaTag = function (text, value) {
+  const paraTag = document.createElement('p');
+  const spanTag = document.createElement('span');
+  spanTag.innerText = value;
+  paraTag.append(text, spanTag);
+  return paraTag;
+};
+
 const renderEachPokemon = function (eachPokemon) {
   const pokemonGallery = document.querySelector('.pokemon-gallery');
-
   const divTag = document.createElement('div');
   divTag.classList.add('pokemon');
-
-  const idPara = document.createElement('p');
-  const idSpan = document.createElement('span');
-  idPara.append('Id : ', idSpan);
-
-  const namePara = document.createElement('p');
-  const nameSpan = document.createElement('span');
-  namePara.append('Name : ', nameSpan);
-
-  const typePara = document.createElement('p');
-  const typeSpan = document.createElement('span');
-  typePara.append('Type : ', typeSpan);
-
   const image = document.createElement('img');
-
   image.src = eachPokemon.imageUrl;
-  idSpan.innerText = eachPokemon.id;
-  nameSpan.innerText = eachPokemon.name;
-  typeSpan.innerText = eachPokemon.type;
-
-  divTag.append(image, idPara, namePara, typePara);
+  divTag.append(
+    image,
+    createParaTag('Id : ', eachPokemon.id),
+    createParaTag('Name : ', eachPokemon.name),
+    createParaTag('Type : ', eachPokemon.type)
+  );
   pokemonGallery.appendChild(divTag);
   return divTag;
 };
