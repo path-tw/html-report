@@ -1,5 +1,5 @@
 'use strict';
-const getPokemonAndRender = (searchInput, pokemonGallery, allPokemonData) => {
+const getPokemonAndRender = function (searchInput, pokemonGallery, allPokemonData) {
   pokemonGallery.innerHTML = '';
   const inputValue = searchInput.value.toLowerCase();
   for (const eachPokemon of allPokemonData) {
