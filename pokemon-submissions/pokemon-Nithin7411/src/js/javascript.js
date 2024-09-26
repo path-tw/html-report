@@ -1,7 +1,7 @@
 "use strict";
 
 const fetchPokeDetails = async function () {
-  let url = "https://pokeapi.co/api/v2/pokemon?limit=10";
+  let url = "https://pokeapi.co/api/v2/pokemon?limit=100";
   while (url) {
     try {
       let response = await fetch(url);
@@ -18,9 +18,13 @@ const fetchPokeDetails = async function () {
 };
 
 const fetchPokeInfo = async function (url) {
-  const response = await fetch(url);
-  const data = await response.json();
-  displayPokemon(data);
+  try {
+      const response = await fetch(url);
+      const data = await response.json();
+      displayPokemon(data);
+  } catch (error) {
+      console.error("Error fetching Pokémon info:", error);
+  }
 };
 
 const displayPokemon = function(data) {
