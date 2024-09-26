@@ -5,7 +5,7 @@ let increment = 0;
 let namesContainer = [];
 
 button.addEventListener('click', () => {
-increment = increment + 10;
+increment = increment + 300;
 fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
   .then((response) => {
     return response.json();
@@ -23,15 +23,16 @@ fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
         return data.json()
       })
       .then((data) =>{
+        let pokemonID = document.createElement('p');
         let typesContainer = [];
         let pokemonType;
-        //  console.log(data.types)
+         console.log(data)
         for (let i = 0; i < data.types.length; i++ ) {
           typesContainer.push(data.types[i].type.name);
         }
         for (let i = 0; i < typesContainer.length; i++) {
          pokemonType = document.createElement('p');
-          pokemonType.innerText = typesContainer;
+          pokemonType.innerText = `Type: ${typesContainer}`;
           if (typesContainer[i] === 'water') {
             pokemonType.setAttribute('id', 'water');
           }
@@ -47,17 +48,32 @@ fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
           if (typesContainer[i] === 'normal') {
             pokemonType.setAttribute('id', 'normal');
           }
-          if (typesContainer[i] === 'electric') {
+          if (typesContainer[i] === 'electric' || typesContainer[i] === 'steel') {
             pokemonType.setAttribute('id', 'electric');
           }
-          if (typesContainer[i] === 'ground') {
+          if (typesContainer[i] === 'ground' || typesContainer[i] === 'rock') {
             pokemonType.setAttribute('id', 'ground');
+          }
+          if (typesContainer[i] === 'ghost') {
+            pokemonType.setAttribute('id', 'ghost');
+          }
+          if (typesContainer[i] === 'dark') {
+            pokemonType.setAttribute('id', 'dark');
+          }
+          if (typesContainer[i] === 'dragon') {
+            pokemonType.setAttribute('id', 'dragon');
           }
           if (typesContainer[i] === 'fairy') {
             pokemonType.setAttribute('id', 'fairy');
           }
           if (typesContainer[i] === 'fighting') {
             pokemonType.setAttribute('id', 'fighting');
+          }
+          if (typesContainer[i] === 'ice') {
+            pokemonType.setAttribute('id', 'ice');
+          }
+          if (typesContainer[i] === 'psychic') {
+            pokemonType.setAttribute('id', 'psychic');
           }
           // console.log(typesContainer)
         }
@@ -73,15 +89,18 @@ fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
         imageContainer.setAttribute('class', 'pokemonImage');
         let pokemonName = document.createElement('p');
         pokemonName.setAttribute('class', 'pokemonName');
-        pokemonName.innerText = pokemonNamesContainer;
+        pokemonName.innerText = `Name: ${pokemonNamesContainer}`;
+        pokemonID.innerText = `ID: ${data.id}`;
+        pokemonID.setAttribute('class', 'pokemonID');
         imageContainer.src = data.sprites.front_default;
         main.append(pokemonsContainer);
         pokemonsContainer.append(divContainer);
+        divContainer.append(pokemonID);           
         divContainer.append(imageContainer);           
         divContainer.append(pokemonName);
         divContainer.append(pokemonType);
 
-        console.log(pokemonType)
+        // console.log(pokemonType)
        
 
       })
