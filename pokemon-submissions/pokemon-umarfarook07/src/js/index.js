@@ -22,7 +22,7 @@ const createPokemonNameElement = (pokemon) => {
 const createPokemonIdElement = (pokemon) => {
   const pokemonIdElement = document.createElement('div');
   pokemonIdElement.classList.add('pokemon-id');
-  pokemonIdElement.textContent = pokemon.id;
+  pokemonIdElement.textContent = `ID: ${pokemon.id}`;
   return pokemonIdElement;
 };
 
@@ -55,9 +55,34 @@ const createPokemonCard = (pokemon) => {
   return pokemonCard;
 };
 
+const isMatchingSearchValue = (value, searchValue) => {
+  const isMatched = value.toLowerCase().includes(searchValue);
+  return isMatched;
+};
+const isMatchingSearchResult = (pokemon, searchValue) => {
+  const searchResult = isMatchingSearchValue(pokemon.name, searchValue)
+  return searchResult;
+}
+
 const handleSearch = async () => {
   const searchElement = document.getElementById('search');
-  const searchResults = await fetchPokemons();
+  const searchValue = searchElement.value.trim().toLowerCase();
+
+  if (!searchValue) {
+    console.log('Search is empty');
+    return;
+  }
+  const allPokemons = await fetchPokemons();
+  const searchResults = allPokemons.filter((pokemon) =>
+    isMatchingSearchResult(pokemon, searchValue)
+  );
+
+  if (searchResults.length === 0) {
+    document.getElementById('pokemon-grid').innerHTML =
+      '<p>No Pokémon found</p>';
+    return;
+  }
+
   await renderPokemons(searchResults);
 };
 
@@ -69,13 +94,11 @@ const fetchPokemonDetails = async (pokemon) => {
 
 const fetchPokemons = async () => {
   showLoadingIndicator();
-  const response = await fetch(
-    'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0'
-  );
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
   const pokemons = await response.json();
-  hideLoadingIndicator();
-  return pokemons;
+  return pokemons.results;
 };
+
 const addSearchButtonEventListener = () => {
   const searchButton = document.getElementById('search-btn');
   searchButton.onclick = handleSearch;
@@ -84,11 +107,16 @@ const addSearchButtonEventListener = () => {
 const renderPokemons = async (pokemons) => {
   const pokemonGrid = document.getElementById('pokemon-grid');
   pokemonGrid.innerHTML = '';
-  pokemons.results.forEach(async (pokemon) => {
-    const parsedPokemonDetails = await fetchPokemonDetails(pokemon);
+  
+  const pokemonFetchPromises = pokemons.map(async (pokemon) => {
+    const pokemonDetails = await fetch(pokemon.url);
+    const parsedPokemonDetails = await pokemonDetails.json();
     const pokemonCard = createPokemonCard(parsedPokemonDetails);
     pokemonGrid.appendChild(pokemonCard);
   });
+
+  await Promise.all(pokemonFetchPromises);
+  hideLoadingIndicator();
 };
 
 const main = async () => {
