@@ -1,20 +1,21 @@
+const allData = [];
 let isResolved = false;
 const fetchPokemonData = async () => {
   return new Promise(async (resolve, reject) => {
-    const allData = [];
     try {
-        const fetchData = await fetch('https://pokeapi.co/api/v2/pokemon?limit=40');
-        const pokemonsData = await fetchData.json();
-        for (const pokemon of pokemonsData.results) {
-          const otherData = await fetch(pokemon.url);
-          const object = await otherData.json();
-          allData.push({
-            name: object.name,
-            id: object.id,
-            image: object.sprites.front_default,
-            type: object.types[0].type.name,
-            });
-        }
+      const fetchData = await fetch('https://pokeapi.co/api/v2/pokemon?limit=40');
+      const pokemonsData = await fetchData.json();
+      for (const pokemon of pokemonsData.results) {
+        const otherData = await fetch(pokemon.url);
+        const object = await otherData.json();
+        console.log("called fetch");
+        allData.push({
+          name: object.name,
+          id: object.id,
+          image: object.sprites.front_default,
+          type: `${object.types[0].type.name}`,
+        });
+      }
     }
     catch (error) {
       reject(error);
@@ -33,6 +34,8 @@ const createAndAppendDiv = (pokemon) => {
   const id = document.createElement('h5');
   image.src = pokemon.image;
   name.innerText = pokemon.name || 'pokemon';
+  div.id = pokemon.id;
+  console.log("called");
   id.innerText = `Pokemon Id: ${pokemon.id || 'id not exist'}`;
   type.innerText = `Pokemon Type: ${pokemon.type || 'normal'}`;
   div.append(name, image, id, type);
@@ -47,6 +50,20 @@ const renderPokemons = async () => {
     createAndAppendDiv(pokemon);
   }
 };
+const search = () => {
+  const input = document.getElementById('search').value;
+  console.log(input);
+  allData.forEach((element) => {
+    if (Object.values(element).some((eachData) => {
+      return eachData.toString().includes(input)
+    })) {
+      document.getElementById(element.id).hidden = false;
+    } else {
+      document.getElementById(element.id).hidden = true;
+    }
+  });
+
+};
 const setLoader = async () => {
   const main = document.getElementById('main');
   const loaderBox = document.createElement('div');
@@ -60,4 +77,5 @@ const setLoader = async () => {
 window.onload = async () => {
   setLoader();
   renderPokemons();
+  document.getElementById('search').addEventListener('input', search);
 };

@@ -31,8 +31,7 @@ const displayPokemons = (pokemonData) => {
     currentContainer.append(pokemonImage, pokemonName, pokemonId, pokemonType);
     parent.appendChild(currentContainer);
   }
-}
-
+};
 
 const determineType = (typesArray) => {
   const types = [];

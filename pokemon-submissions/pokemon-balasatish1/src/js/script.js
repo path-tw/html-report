@@ -1,7 +1,14 @@
 'use strict';
-const getPokemonAndRender = function (searchInput, pokemonGallery, allPokemonData) {
-  pokemonGallery.innerHTML = '';
-  const inputValue = searchInput.value.toLowerCase();
+const removeLoadingAnimation = async function () {
+  const loadingBox = document.querySelector('#loading-container');
+  loadingBox.remove();
+};
+
+const getPokemonAndRender = function (
+  inputValue,
+  pokemonGallery,
+  allPokemonData
+) {
   for (const eachPokemon of allPokemonData) {
     if (
       eachPokemon.name.includes(inputValue)
@@ -17,13 +24,10 @@ const searchPokemon = function (allPokemonData) {
   const searchInput = document.querySelector('.search-pokemon-input');
   const pokemonGallery = document.querySelector('.pokemon-gallery');
   searchInput.addEventListener('input', () => {
-    getPokemonAndRender(searchInput, pokemonGallery, allPokemonData);
+    pokemonGallery.innerHTML = '';
+    const inputValue = searchInput.value.toLowerCase().trim();
+    getPokemonAndRender(inputValue, pokemonGallery, allPokemonData);
   });
-};
-
-const removeLoadingAnimation = async function () {
-  const loadingBox = document.querySelector('#loading-container');
-  loadingBox.remove();
 };
 
 const createParaTag = function (text, value) {
