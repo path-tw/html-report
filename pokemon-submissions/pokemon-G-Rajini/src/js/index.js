@@ -2,7 +2,7 @@
 
 const fetchPokemonApi = async () => {
     try {
-        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=60');
         const data = await response.json();
         const pokemonArray = data.results.map(async (pokemon) => {
             const pokemonResponse = await fetch(pokemon.url);
@@ -51,6 +51,29 @@ const renderPokemonApi = async () => {
     for (let index = 0; index < pokemonDetails.length; index++) {
         createDiv(pokemonDetails[index]);
     }
+    return pokemonDetails;
 };
 
-renderPokemonApi();
+
+
+window.onload = async () => {
+    const outerDiv = document.getElementById('pokemonImages');
+        const arrayOfObjects = await renderPokemonApi();
+    const search = document.getElementById('search');
+    search.addEventListener('input', () => {
+        const data = searchItems(arrayOfObjects, search.value.toLowerCase())
+        console.log(data);
+        outerDiv.innerHTML = '';
+        for (let index = 0; index < data.length; index++) {
+            document.body.appendChild(outerDiv);
+            createDiv(data[index]);
+        }
+    });
+};
+
+const searchItems = (array, searchInput) => {
+    const outerDiv = document.getElementById('pokemonImages');
+   return array.filter((eachObject) => {
+        return eachObject.id.toString().includes(searchInput) || eachObject.type.toLowerCase().includes(searchInput) || eachObject.name.toLowerCase().includes(searchInput);
+    });
+};

@@ -4,6 +4,19 @@
     text-transform: capitalize;
     font-family: sans-serif,monospace;
 }
+
+#navBar{
+    background-color: rgb(222, 225, 231);
+    height:50px;
+}
+#search{
+    /* margin-right:10px; */
+    float: right;
+}
+#homeButton{
+    float: right;
+}
+
 #loadingMessage{
     font-size: larger;
     position: fixed;
