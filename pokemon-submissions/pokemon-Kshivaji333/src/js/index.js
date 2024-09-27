@@ -1,19 +1,14 @@
 
-const getPokemonsDAta = async () => {
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
-  const pokemonsData = await response.json();
-  console.log(pokemonsData)
+const appendCards = () => {
+  const container = document.getElementById('pokemonsContainer');
+  for (const pokemon of allPokemonsData) {
+    const card = createCard(pokemon);
+    container.appendChild(card);
+  }
+};
+window.onload = () => {
+  // showLoader()
+  createPokemonsData().then(() => {
+    appendCards();
+  })
 }
-
-const getTypeAndImage = async () => {
-  allPokemons = await getPokemonsDAta();
-  const pokemonsDetails = [];
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon/ditto');
-  const pokemon = await response.json();
-  const pokemonType = pokemon.types['0'].type.name;
-  const pokemonImageUrl = pokemon.sprites.front_shiny;
-  console.log(allPokemons)
-  
-}
-
-getTypeAndImage()

@@ -3,17 +3,27 @@
   padding: 0px;
   box-sizing:border-box;
 }
+body{
+  /* background-image: url('../images/background.png'); */
+  background-repeat:no-repeat;
+  background-size: 100%;
+  /* background-position-x:; */
+  height: 100%;
+  width: 100%;
+}
 #pageTitle{
-  background-color: black;
-  color: white;
+  margin: 14px;
+  border: solid;
   height: 13vh;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 3em;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Arial', sans-serif;
 }
-
+#pageTitle img{
+  width: 300px;
+}
 main{
   border: 1px solid black;
   margin: 20px;

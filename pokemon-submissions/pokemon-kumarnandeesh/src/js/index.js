@@ -15,7 +15,6 @@ const toAppendId = (id) => {
 const toAppendImage = (url) => {
     const imageContainer = document.createElement('img');
     imageContainer.src = url;
-    imageContainer.alt = 
     imageContainer.style.display = 'flex';
     return imageContainer;
 };

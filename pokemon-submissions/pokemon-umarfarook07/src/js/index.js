@@ -6,7 +6,7 @@ const capitalizeFirstLetter = (textContent) => {
 
 const createPokemonImage = (pokemon) => {
   const pokemonImage = document.createElement('img');
-  pokemonImage.src = pokemon.sprites.front_default || 'no-image.jpg';
+  pokemonImage.src = pokemon.sprites.front_default || 'src/images/no-image-webp';
   pokemonImage.alt = pokemon.name;
   pokemonImage.classList.add('pokemon-img');
   return pokemonImage;
@@ -60,7 +60,7 @@ const isMatchingSearchValue = (value, searchValue) => {
   return isMatched;
 };
 const isMatchingSearchResult = (pokemon, searchValue) => {
-  const searchResult = isMatchingSearchValue(pokemon.name, searchValue)
+  const searchResult = isMatchingSearchValue(pokemon.name, searchValue);
   return searchResult;
 }
 
