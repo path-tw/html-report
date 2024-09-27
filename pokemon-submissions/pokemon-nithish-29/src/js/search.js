@@ -1,6 +1,9 @@
 'use strict';
 
-const searchPokemon = (searchedItem) => {
+const searchPokemon = async (searchedItem) => {
+  onloadPokemons('flex');
+  const allPokemonsData = await fetchpokemonData();
+  onloadPokemons('none');
   const searchedPokemons = allPokemonsData.filter(pokemon => {
     const nameMatches = pokemon.name.toLowerCase().includes(searchedItem);
     const idMatches = pokemon.id.toString() === searchedItem;

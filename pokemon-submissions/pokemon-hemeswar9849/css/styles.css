@@ -40,9 +40,15 @@
    padding: 0px 10px;
  }
 
+ .groupedHeading {
+  grid-column: 5;
+ }
+
  #containers {
-   display: flex;
-   flex-wrap: wrap;
+   margin-left: 20px;
+   display: grid;
+   grid-template-columns: repeat(5, 1fr);
+   justify-content: center;
    gap: 10px;
    justify-content: center;
    margin-top: 10px;
@@ -59,3 +65,7 @@
    border-style: groove;
    animation: loading-animation 2s linear infinite;
  }
+
+.hide {
+  display: none;
+}

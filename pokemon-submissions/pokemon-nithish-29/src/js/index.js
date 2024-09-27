@@ -1,7 +1,5 @@
 'use strict';
 
-let allPokemonsData = [];
-
 const insertData = (pokemonDiv, name, image, id, type , data) => {
  name.textContent = `${data.name}`;
  image.src = `${data.sprites.front_default}`;
@@ -30,29 +28,32 @@ const renderApiData = async (id) => {
   const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
   const response = await fetch(url);
   const data = await response.json();
-  allPokemonsData.push(data);
+  return data;
 }
 
 const fetchpokemonData = async () => {
-  const totalPokemons = 200;
-  return new Promise(async (resolve) => {
-    for (let id = 1; id <= totalPokemons; id++) {
-      await renderApiData(id);
-    }
-   resolve('resolved');
-  });
+  const totalPokemons = 500;
+  let allPokemonsData = [];
+  for (let id = 1; id <= totalPokemons; id++) {
+    const data = await renderApiData(id);
+    allPokemonsData.push(data);
+  }
+  return allPokemonsData;
 };
+
+const onloadPokemons = (displayType) => {
+  const loader = document.getElementById('loader');
+  loader.style.display = displayType;
+}
 
 const displayLoader = async () => {
   document.getElementById('search').addEventListener('input', setupSearch);
-  const loader = document.getElementById('loader');
   let renderPokemon = 'pending';
-  loader.style.display = 'flex';
+  onloadPokemons('flex');
   renderPokemon = await fetchpokemonData();
-  for(let id = 1; id < allPokemonsData.length; id++) {
-    await createPokemonDiv(allPokemonsData[id]);
-  }
+  renderPokemon.forEach(pokemon => createPokemonDiv(pokemon));
   loader.style.display = 'none';
+  onloadPokemons('none');
 };
 
 window.onload = displayLoader;

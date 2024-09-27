@@ -1,21 +1,34 @@
 'use strict';
 
-const assignData =async (image, name, id, type) => {
-    const img = document.createElement('img');
-    const namecont = document.createElement('span');
-    const idcont = document.createElement('span');
-    const typecont = document.createElement('span');
-    const container = document.querySelector('.pokemonData');
-    const mainData = document.createElement('section');
-    img.src = image? image: './src/images/pokeball.png';
-    namecont.innerText ='Name:' + name;
-    idcont.innerText ='Id:' + id;
-    typecont.innerText ='Type:' + type;
-    mainData.appendChild(img);
-    mainData.appendChild(namecont);
-    mainData.appendChild(idcont);
-    mainData.appendChild(typecont);
-    container.appendChild(mainData);
+const createImageElement = (image) => {
+  const img = document.createElement('img');
+  img.src = image ? image : './src/images/pokeball.png';
+  return img;
+};
+
+const createTextElement = (text, label) => {
+  const span = document.createElement('span');
+  span.innerText = `${label}: ${text}`;
+  return span;
+};
+
+const createMainDataContainer = (img, nameContainer, idContainer, typeContainer) => {
+  const mainData = document.createElement('section');
+  mainData.appendChild(img);
+  mainData.appendChild(nameContainer);
+  mainData.appendChild(idContainer);
+  mainData.appendChild(typeContainer);
+  return mainData;
+};
+
+const assignData = async (image, name, id, type) => {
+  const img = createImageElement(image);
+  const nameContainer = createTextElement(name, 'Name');
+  const idContainer = createTextElement(id, 'Id');
+  const typeContainer = createTextElement(type, 'Type');
+  const mainData = createMainDataContainer(img, nameContainer, idContainer, typeContainer);
+  const container = document.querySelector('.pokemonData');
+  container.appendChild(mainData);
 };
 
 const getELement =async (element) => {
@@ -23,20 +36,29 @@ const getELement =async (element) => {
     return url.json();
 };
 
-const createPokemonContainer =async (rawPokemonInfo) => {
+const getPokemonData = async (element) => {
+  const name = element['name'];
+  const url = await getELement(element);
+  const image = url['sprites']['front_default'];
+  const id = url['id'];
+  const type1 = url['types'][0]['type']['name'];
+  const type2 = url['types'][1] ? url['types'][1]['type']['name'] : undefined;
+  const type = type2 ? type1 + '/' + type2 : type1;
+  return { image, name, id, type };
+};
+
+const createPokemonContainer = async (rawPokemonInfo) => {
   const allPokemonData = rawPokemonInfo['results'];
   const loader = document.querySelector('.loader');
-  for (const element of allPokemonData) {
-    const name = element['name'];
-    const url = await getELement(element);
-    const image = url['sprites']['front_default'];
-    const id = url['id'];
-    const type1 = url['types'][0]['type']['name'];
-    const type2 = url['types'][1] ? url['types'][1]['type']['name'] : undefined;
-    const type =type2 ? type1 + '/' +type2 : type1;
-    assignData(image, name, id, type);
-  }
-  loader.style.display = 'none';
+  let count = 0;
+  allPokemonData.forEach(async (element) => {
+    const pokemonData = await getPokemonData(element);
+    assignData(pokemonData.image, pokemonData.name, pokemonData.id, pokemonData.type);
+    count++;
+    if (count === allPokemonData.length) {
+      loader.style.display = 'none';
+    }
+  });
 };
 
 const searchPokemon = () => {
@@ -46,13 +68,10 @@ const searchPokemon = () => {
   allDataPokemon.forEach((pokemon) => {
     const pokemonInfo = pokemon.querySelectorAll('span');
     if (pokemonInfo[0].innerText.toLowerCase().includes(pokemonSearch)) {
-      // alert('name');
       pokemon.style.display = 'flex';
     } else if (pokemonInfo[1].innerText.toLowerCase().includes(pokemonSearch)) {
-      // alert('id');
       pokemon.style.display = 'flex';
     } else if (pokemonInfo[2].innerText.toLowerCase().includes(pokemonSearch)) {
-      // alert('type');
       pokemon.style.display = 'flex';
     } else {
       pokemon.style.display = 'none';

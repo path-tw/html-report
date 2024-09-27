@@ -46,23 +46,18 @@ const appendPokemonImage = (pokemonContainer, pokemonDetails) => {
 
 const appendPokemonName = (pokemonContainer, pokemonDetails) => {
   const pokemonNameh3 = document.createElement('h3');
-  pokemonNameh3.innerText = 'Pokémon name : ';
-  const pokemonNamediv = document.createElement('div');
-  pokemonNamediv.classList.add('pokemonName');
-  pokemonNamediv.innerText = pokemonDetails.name;
-  pokemonContainer.append(pokemonNameh3, pokemonNamediv);
+  pokemonNameh3.classList.add('pokemonName');
+  pokemonNameh3.innerText = pokemonDetails.name;
+  pokemonContainer.appendChild(pokemonNameh3);
 };
 
 const appendPokemonType = (pokemonContainer, pokemonDetails) => {
   const pokemonTypesh3 = document.createElement('h3');
-  pokemonTypesh3.innerText = 'Type/Types: ';
-  pokemonContainer.appendChild(pokemonTypesh3);
-  const pokemonTypespan = document.createElement('span');
-  pokemonTypespan.classList.add('pokemonType');
+  pokemonTypesh3.classList.add('pokemonTypes');
   pokemonDetails.types.forEach(type => {
-    pokemonTypespan.innerText = pokemonTypespan.innerText + `  ${type.type.name}`;
+    pokemonTypesh3.innerText = pokemonTypesh3.innerText + `  ${type.type.name}`;
   });
-  pokemonContainer.appendChild(pokemonTypespan);
+  pokemonContainer.appendChild(pokemonTypesh3);
 };
 
 const appendDetailsToPokemonConatier = (pokemon, callback) => {
@@ -94,9 +89,14 @@ const appendAllPokemonDetails = async () => {
 };
 
 const searchBarFunctionality = (event) => {
-  const sampleText = 'hemeswar reddy';
-  // const 
-  sampleText.includes(event.target.value);
+  const allPokemons = document.querySelectorAll('.aPokemon');
+  allPokemons.forEach((pokemon) => {
+    if (!pokemon.innerText.includes(event.target.value)) {
+      pokemon.classList.add('hide');
+    } else {
+      pokemon.classList.remove('hide');
+    }
+  });
 };
 
 const appendSearchBar = (header) => {

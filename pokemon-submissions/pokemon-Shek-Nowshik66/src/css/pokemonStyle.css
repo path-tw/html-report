@@ -10,17 +10,18 @@ img{
 header{
     background-color: black;
     color: white;
-    text-align: center;
     margin: -25px -10px;
     padding: 10px;
 }
 
 .webHeader{
     font-size: 36px;
+    text-align: center;
 }
 
 .webDetails{
     font-size: 24px;
+    text-align: center;
 }
 
 .pokemonData{
@@ -57,6 +58,11 @@ header{
 
 .searchPokemon{
     border-radius: 10px;
+    height: 20px;
+}
+
+.searchContainer{
+    margin-left: 100px;
 }
 
 @keyframes spin{
