@@ -29,7 +29,8 @@ const setPokemonType = (pokemonInfo, pokemonData) => {
   const pokemonTypePara = createElementAssignClass('p', 'pokemon-type');
   const pokemonType = document.createElement('span');
   const defaultText = document.createTextNode('Type:');
-  pokemonType.innerText = pokemonData.name;
+  const pokemonTypes = pokemonData.types;
+  pokemonTypes.forEach(type => pokemonType.textContent = type['type'].name);
   pokemonTypePara.append(defaultText, pokemonType);
   pokemonInfo.appendChild(pokemonTypePara);
 };

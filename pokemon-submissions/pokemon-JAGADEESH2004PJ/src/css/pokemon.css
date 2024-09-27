@@ -1,18 +1,21 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 120px;
 }
 
 .header {
   width: 100%;
-  height: 100px;
+  height: 120px;
   background-color: black;
+  top: 0;
+  position: fixed;
   display: flex;
   align-items: center;
-
 }
 
 h1 {
@@ -58,15 +61,44 @@ h1 {
   font-size: 0.9em;
 }
 
-img {
+.pokemonImage {
   width: 100px;
   height: auto;
 }
 
 .searchBox {
-  position: relative;
-  left: 60%;
+  position: absolute;
+  left: 65%;
   border-radius: 20px;
-  height: 25px;
-  width: 200px;
+  height: 45px;
+  width: 370px;
+  font-size: 15px;
+}
+
+.searchImg{
+  border-radius: 20px;
+  height: 40px;
+  width: 50px;
+}
+
+.searchBtn{
+  position: absolute;
+  left: 85%;
+  top: 40px;
+  border-radius: 7px;
+  height: 30px;
+  width: 40px;
+  background-color:white;
+  border: none;
+}
+
+#pikachuImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  background-color: black;
+}
+#noResultsMessage {
+  display: none;
+  color: red;
 }

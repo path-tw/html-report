@@ -10,11 +10,18 @@ const fetchPokemonDetails = async () => {
 };
 
 const getPokemonDetails = (pokemonDetails) => {
+    const pokemonsContainer = document.getElementById('container');
+    const loadingPage = document.createElement('h1');
+    loadingPage.classList.add('loader');
+    loadingPage.innerText = 'Loading please wait...';
+    pokemonsContainer.appendChild(loadingPage);
     // console.log(pokemandetails);
     const fetchPromises = pokemonDetails.map(key => fetchCharacterDetailsAndAppend(key.url));
     Promise.all(fetchPromises)
+    .then(() => pokemonsContainer.removeChild())
     .catch(error => {
         console.error('Error fetching Pokémon details:', error);
+        pokemonsContainer.removeChild(loadingPage);
     }); 
 };
 

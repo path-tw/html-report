@@ -5,7 +5,7 @@ const dataLimit = async function () {
 };
 
 const fetchAPI = async function () {
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=250');
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=50');
   const value = await response.json();
   return value;
 };
@@ -22,14 +22,18 @@ const createContainer = function (js, properties, index) {
   const div = document.createElement('div');
   div.className = 'content';
   const img = document.createElement('img');
-  const p1 = document.createElement('p');
-  const p2 = document.createElement('p');
-  const h2 = document.createElement('h2');
-  h2.innerText = `${js.results[index].name}`
-  p1.innerText = ` id = ${properties.id}`
-  p2.innerText = ` type = ${properties.types['0'].type.name}`
+  img.className = 'img';
+  const id = document.createElement('p');
+  id.className = 'id';
+  const type = document.createElement('p');
+  type.className = 'type';
+  const name = document.createElement('h2');
+  name.className = 'name';
+  name.innerText = `${js.results[index].name}`
+  id.innerText = ` id = ${properties.id}`
+  type.innerText = ` type = ${properties.types['0'].type.name}`
   img.src = properties.sprites.front_default;
-  div.append(img, h2, p1, p2);
+  div.append(img, name, id, type);
   return div;
 };
 
@@ -56,4 +60,7 @@ const load = async function () {
   await main(loader);
 };
 
-window.onload = load;
+window.onload = async () => {
+  await load();
+  searchaddevent();
+};

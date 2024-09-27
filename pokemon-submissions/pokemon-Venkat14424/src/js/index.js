@@ -1,10 +1,9 @@
 'use strict'
 
-const appendPokemonName = (data) => {
-  const pokemonName = document.createElement('p');
-  pokemonName.classList.add('pokemonName');
-  pokemonName.innerHTML = "Name: " + data.name;
-  return pokemonName;
+const appendPokemanImage = (data) => {
+  const pokemonImg = document.createElement('img');
+  pokemonImg.setAttribute('src', data.sprites.front_default);
+  return pokemonImg;
 };
 
 const appendPokemanId = (data) => {
@@ -14,10 +13,11 @@ const appendPokemanId = (data) => {
   return pokemonId;
 };
 
-const appendPokemanImage = (data) => {
-  const pokemonImg = document.createElement('img');
-  pokemonImg.setAttribute('src', data.sprites.front_default);
-  return pokemonImg;
+const appendPokemonName = (data) => {
+  const pokemonName = document.createElement('p');
+  pokemonName.classList.add('pokemonName');
+  pokemonName.innerHTML = "Name: " + data.name;
+  return pokemonName;
 };
 
 const appendPokemanType = (data) => {
@@ -41,7 +41,7 @@ const displayPokemon = async (url) => {
 async function fetchPokemons() {
   const loadingMessage = document.getElementById('loadingMessage');
   loadingMessage.style.display = 'block';
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=1010');
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=1000');
   const data = await response.json();
   await  data.results.forEach((pokemon) => {
     displayPokemon(pokemon.url);

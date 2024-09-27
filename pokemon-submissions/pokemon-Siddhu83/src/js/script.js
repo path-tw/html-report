@@ -31,6 +31,7 @@ const displayPokemons = (pokemonData) => {
     currentContainer.append(pokemonImage, pokemonName, pokemonId, pokemonType);
     parent.appendChild(currentContainer);
   }
+  return;
 };
 
 const determineType = (typesArray) => {
@@ -52,7 +53,7 @@ const makeFetchCall = async (url) => {
 };
 
 const createPokemon = async () => {
-  for (let i = 1; i <= 110; i++) {
+  for (let i = 1; i <= 1000; i++) {
     const url = `https://pokeapi.co/api/v2/pokemon-form/${i}/`;
     const pokemon = await makeFetchCall(url);
     const pokemonTypes = determineType(pokemon.types);
@@ -69,12 +70,41 @@ const createPokemon = async () => {
   });
 };
 
+// const addDefaultListeners = () => {
+//   const search = document.getElementById('search-bar');
+//   search.addEventListener('focus', () => createPopup());
+// };
 
 const displayLoader = async () => {
   const loadMessage = createPTag('you are going to pokemon world in few moments...', 'load-message');
   const parent = document.getElementsByClassName('pokemon-main-container')[0];
   parent.innerHTML = '';
   parent.appendChild(loadMessage);
+  // addDefaultListeners();
+  return;
+};
+
+const performSearch = (event) => {
+  const inputText = event.target.value;
+  if (inputText) {
+    const matchedElements = [];
+    for (const element of POKEMON) {
+      if (element.name.includes(inputText) ||
+        element.type.includes(inputText) ||
+        element.id == inputText) {
+        matchedElements.push(element);
+      }
+    }
+    displayPokemons(matchedElements);
+    return;
+  }
+  displayPokemons(POKEMON); // when the search input text has nothing
+  console.log(event.target.value, matchedElements);
+};
+
+const addEventListeners = () => {
+  const search = document.getElementById('search-bar');
+  search.addEventListener('input', () => performSearch(event));
   return;
 };
 
@@ -82,6 +112,7 @@ const main = async () => {
   displayLoader();
   const pokemonData = await createPokemon();
   displayPokemons(pokemonData);
+  addEventListeners();
 };
 
 window.onload = main;

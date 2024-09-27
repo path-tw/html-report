@@ -1,6 +1,6 @@
 'use strict';
-const searchPokemonInContainer = () => {
-  const searchInput = document.getElementById('searchBook');
+const searchPokemon = () => {
+  const searchInput = document.getElementById('searchPokemon');
   const searchOption = document.getElementById('searchOption').value;
   const pokemonDataSections = document.querySelectorAll('#pokemonContainer section');
   const searchValue = searchInput.value.toLowerCase();
