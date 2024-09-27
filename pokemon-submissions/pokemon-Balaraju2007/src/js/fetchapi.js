@@ -1,17 +1,26 @@
 window.onload = function () {
-    fetchPokemon(); 
+    fetchPokemon();
+   
+}
+const hideLoading = function () {
+  const totalPokemons1 = document.getElementById('pokemons');
+  if (totalPokemons1.innerText !== '') {
+    const loader = document.getElementById('loader');
+    loader.style.display = 'none';
+  }
 }
 const arrayOfPokemons = [];
 const fetchPokemon = async () => {
-    const totalPokemons = await fetch("https://pokeapi.co/api/v2/pokemon-form/");
-    const parsePokemons = await totalPokemons.json();
-     const resultsArray = parsePokemons.results;
-    for (const element of resultsArray) {
-      const pokemonName = element.name;
-      const pokemon =await fetchEachPokemonDetails(pokemonName, element.url);
-      arrayOfPokemons.push(pokemon)
-    }
+  const totalPokemons = await fetch("https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=700/");
+  const parsePokemons = await totalPokemons.json();
+  const resultsArray = parsePokemons.results;
+  for (const element of resultsArray) {
+    const pokemonName = element.name;
+    const pokemon =await fetchEachPokemonDetails(pokemonName, element.url);
+    arrayOfPokemons.push(pokemon)
+   }
    createAndAppendElements(arrayOfPokemons);
+   hideLoading();
 }
 const fetchEachPokemonDetails = async (pokemonName, url) => {
   const object ={ name: undefined,
@@ -41,10 +50,11 @@ const createAndAppendElements = function (pokemons) {
     section.className = 'pokemon';
     totalPokemons.appendChild(section);
     displayDetails(section, pokemons[index]['name'], pokemons[index]['id'], pokemons[index]['imageUrl'], pokemons[index]['type']);
-  }
+  } 
 }
 const displayDetails = function (section,pokemonName, pokemonId, pokemonImage, pokemonType) {
   const image = document.createElement('img');
+  image.style.display = 'block';
   const name = document.createElement('p');
   const id = document.createElement('p');
   const type = document.createElement('p');

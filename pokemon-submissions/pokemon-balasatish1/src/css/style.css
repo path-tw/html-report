@@ -52,7 +52,7 @@
 }
 
 body {
-  background-color: rgba(128, 128, 128, 0.1);
+  background-color: rgba(128, 128, 128, 0.2);
 }
 
 header {
@@ -84,7 +84,7 @@ header {
   padding: 10px;
   padding-bottom: 5px;
   background-color: rgba(255, 255, 255, 0.75);
-  border: 1px solid gray;
+  border: 1px solid rgba(128, 128, 128, 0.5);
   border-radius: 2.5px;
 }
 

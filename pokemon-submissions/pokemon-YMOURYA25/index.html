@@ -8,10 +8,23 @@
     <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>
-    <header id="name">Poki Pokemon</header>
+    <header>
+        <h1 id="name">poki pokemon</h1>
+        <div class="search-container">
+            <label for="searchBy">Search By:</label>
+            <select name="search" id="searchBy">
+                <option value="all">All</option>
+                <option value="name">Name</option>
+                <option value="id">ID</option>
+                <option value="type">Type</option>
+            </select>
+            
+            <input type="text" id="searchItem">
+        </div>
+    </header>
+    
     <main id="main-container">
 
     </main>
 </body>
 </html>
-

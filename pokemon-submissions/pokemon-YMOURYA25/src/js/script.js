@@ -1,9 +1,10 @@
 window.onload = () => {
-    loadingmessage();
-    pokemonfetch();
+    loadingMessage();
+    pokemonFetch();
+    search();
 };
 
-const loadingmessage = () => {
+const loadingMessage = () => {
     const main = document.getElementById('main-container');
     const loadingMessage = document.createElement('h2');
     loadingMessage.id = 'loading-message';
@@ -18,33 +19,36 @@ const removeLoadingMessage = () => {
     }
 };
 
-const pokemonfetch = async () => {
+const pokemonFetch = async () => {
     const rootUrl = 'https://pokeapi.co/api/v2/pokemon';
     let i = 1;
+
     try {
         const response = await fetch(`${rootUrl}?limit=100000&offset=0`);
         const pokemons = await response.json();
         const totalPokemons = pokemons.results.length;
-        console.log(totalPokemons);
 
         removeLoadingMessage();
 
         for (i = 1; i <= totalPokemons; i++) {
-            pokemonDataFetch(i, rootUrl);
+            await pokemonDataFetch(i, rootUrl);
         }
     } catch (error) {
         console.error(error);
     }
 };
 
+
 const createDivAndItsElementsAppendToMain = (src, name, id, type) => {
     const main = document.getElementById('main-container');
     const div = document.createElement('div');
     div.className = 'pokemon-container';
+
     const img = createImage(src);
     const pokemonName = createDetail(name, 'pokemon-name', 'h1');
     const pokemonId = createDetail(`Id: ${id}`, 'pokemon-id');
     const pokemonType = createDetail(`Type: ${type}`, 'pokemon-type');
+
     div.append(img, pokemonName, pokemonId, pokemonType);
     main.appendChild(div);
 };
@@ -55,7 +59,6 @@ const createImage = (src) => {
     img.className = 'pokemon-image';
     return img;
 };
-
 
 const createDetail = (info, className, tag = 'p') => {
     const detail = document.createElement(tag);
@@ -74,6 +77,68 @@ const pokemonDataFetch = async (pokemonNumber, rootUrl) => {
         const pokemonImage = pokemonData.sprites.back_shiny;
         createDivAndItsElementsAppendToMain(pokemonImage, pokemonName, pokemonId, pokemonType);
     } catch (error) {
-        console.error(error);
+        console.error(`Error fetching Pokémon #${pokemonNumber}: ${error.message}`);
+    }
+};
+
+const search = () => {
+    const searchByElement = document.getElementById('searchBy');
+    const searchInput = document.getElementById('searchItem');
+    searchInput.addEventListener('input', passElementsToSearch);
+    searchByElement.addEventListener('change', passElementsToSearch);
+};
+
+const passElementsToSearch = () => {
+    const searchByElement = document.getElementById('searchBy');
+    const searchInput = document.getElementById('searchItem');
+    const searchBy = searchByElement.value;
+    const searchText = searchInput.value.toLowerCase();
+    filterPokemons(searchBy, searchText);
+};
+
+const searchDisplay = (container, searchBy, matchesName, matchesId, matchesType) => {
+    if (searchBy === 'all') {
+        container.style.display = (matchesName || matchesId || matchesType) ? 'block' : 'none';
+    } else if (searchBy === 'name') {
+        container.style.display = matchesName ? 'block' : 'none';
+    } else if (searchBy === 'id') {
+        container.style.display = matchesId ? 'block' : 'none';
+    } else if (searchBy === 'type') {
+        container.style.display = matchesType ? 'block' : 'none';
+    }
+};
+
+const isTextSame = (text, searchText) => {
+    const searchTextLength = searchText.length;
+    for (let j = 0; j <= text.length - searchTextLength; j++) {
+        let subString = '';
+        for (let k = j; k < j + searchTextLength; k++) {
+            subString += text[k];
+        }
+        if (subString === searchText) {
+            return true;
+        }
+    }
+    return false;
+};
+
+const filterPokemons = (searchBy, searchText) => {
+    const pokemonContainers = document.getElementsByClassName('pokemon-container');
+
+    for (let i = 0; i < pokemonContainers.length; i++) {
+        const container = pokemonContainers[i];
+        const nameElements = container.getElementsByClassName('pokemon-name')[0];
+        const idElements = container.getElementsByClassName('pokemon-id')[0];
+        const typeElements = container.getElementsByClassName('pokemon-type')[0];
+
+        const nameValue = nameElements.innerText.toLowerCase();
+        const idValue = idElements.innerText.split(': ')[1].toLowerCase();
+        const typeValue = typeElements.innerText.split(': ')[1].toLowerCase();
+
+        const matchesName = isTextSame(nameValue, searchText);
+        const matchesId = isTextSame(idValue, searchText);
+        const matchesType = isTextSame(typeValue, searchText);
+
+        searchDisplay(container, searchBy, matchesName, matchesId, matchesType);
     }
 };

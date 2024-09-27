@@ -29,7 +29,7 @@ const renderPokemonData = async (id) => {
   const response = await fetch(url);
   const data = await response.json();
   return data;
-}
+};
 
 const fetchpokemonData = async () => {
   const totalPokemons = 500;
@@ -44,7 +44,7 @@ const fetchpokemonData = async () => {
 const onloadPokemons = (displayType) => {
   const loader = document.getElementById('loader');
   loader.style.display = displayType;
-}
+};
 
 const loadPokimons = async () => {
   let renderPokemon = 'pending';

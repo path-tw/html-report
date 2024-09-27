@@ -72,6 +72,11 @@ const getPokemonName = (card) => {
 const getPokemonId = (card) => {
   return card.querySelector('.pokemon-id').textContent;
 };
+const getPokemonTypes = (card) => {
+  return card.querySelectorAll('.pokemon-type').map(type => {
+    return type.textContent;
+  });
+};
 
 const handleSearch = () => {
   const searchElement = document.getElementById('search');
@@ -84,6 +89,8 @@ const handleSearch = () => {
   pokemonCards.forEach((card) => {
     const pokemonName = getPokemonName(card);
     const pokemonId = getPokemonId(card);
+    const pokemonTypes = getPokemonTypes(card);
+    console.log(pokemonTypes);
     const isMatch = isNameMatch(pokemonName, searchValue) || isIdMatch(pokemonId, searchValue);
     card.style.display = isMatch ? '' : 'none'
   });

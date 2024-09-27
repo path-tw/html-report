@@ -43,6 +43,7 @@ body {
 .pokemon-unit:hover {
 	scale: 102%;
 	font-weight: 500;
+	box-shadow: 1px 1px 1px 1px lightgrey;
 }
 
 .pokemon-image {

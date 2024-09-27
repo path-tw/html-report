@@ -43,7 +43,7 @@ const createCard = (pokemon, name, id, type, image) => {
 };
 
 const createPokeCard = (pokemons) => {
-  const pokedex = document.getElementById('pokemons')
+  const pokedex = document.getElementById('pokemons');
   pokedex.innerText = '';
   pokemons.map(pokemon => {
     const name = document.createElement('span');
@@ -56,7 +56,7 @@ const createPokeCard = (pokemons) => {
 };
 
 const getType = async (id) => {
-  const types = await fetch(`https://pokeapi.co/api/v2/pokemon-form/${id}`)
+  const types = await fetch(`https://pokeapi.co/api/v2/pokemon-form/${id}`);
   const typeData = await types.json();
   const image = typeData.sprites.front_default;
   const numberOfTypes = [];
@@ -71,7 +71,7 @@ const getType = async (id) => {
 };
 
 const loadPokemons = async () => {
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000&offset=0')
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0');
   const data = await response.json();
   const pokemons = await Promise.all(data.results.map(async pokemon => {
     id = id + 1;
