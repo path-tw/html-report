@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokemon_desk</title>
-    <link rel="stylesheet" href="src/css/style.css">
-    <script src="src/js/script.js"></script>
-</head>
-<body>
-    <header>
-        <h1>Pokédex</h1>
-    </header>
-    <main>
-        <div id="pokemons">
 
-        </div>
-    </main>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokemon_desk</title>
+  <link rel="stylesheet" href="src/css/style.css">
+  <script src="src/js/script.js"></script>
+</head>
+
+<body>
+  <header>
+      <h1>Pokédex</h1>
+      <div class="searchBlock">
+        <input type="text" id="search" placeholder="search">
+        <button id="searchButton" onclick="search()">search</button>
+      </div>
+  </header>
+  <main>
+    <div id="pokemons">
+    </div>
+  </main>
 </body>
+
 </html>

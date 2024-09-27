@@ -56,12 +56,31 @@ const createSectionForPokemon = () => {
   return pokemonContainer;
 };
 
-const processPokemonData = async (responseJson) => {
+const createLoadingPopup = (textMessage, className) => {
+  const loaderContainer = createElementAssignClass('div', className);
+  const loadingMessage = createElementAssignClass('div', 'loader-popup-message')
+  loadingMessage.innerText = textMessage;
+  loaderContainer.appendChild(loadingMessage);
+  const mainContainer = document.querySelector('.all-pokemons-main-container');
+  mainContainer.appendChild(loaderContainer);
+  return loaderContainer;
+};
+
+const togglePopup = (isRendered, container) => {
+  const visibleStatus = isRendered ? 'none' : 'block';
+  container.style.cssText = `display: ${visibleStatus}`;
+};
+
+const processPokemonData = async (responseJson, loaderContainer) => {
   pokemonsData = responseJson.results;
+  console.log(pokemonsData)
+  togglePopup(false, loaderContainer);
   for (const pokemon of pokemonsData) {
     const pokemonData = await getPokemonData(pokemon.url);
     const pokemonContainer = createSectionForPokemon();
     setPokemonImg(pokemonContainer, pokemonData);
     setPokemonInfo(pokemonContainer, pokemonData);
   }
+  togglePopup(true, loaderContainer);
 };
+

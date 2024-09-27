@@ -25,3 +25,17 @@
   align-items: center;
   justify-content: center;
 }
+
+.loader-container {
+  font-family: monospace, sans-serif;
+  height: fit-content;
+  width: fit-content;
+  position: relative;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 15px 15px;
+  margin: auto;
+  z-index: 2;
+}

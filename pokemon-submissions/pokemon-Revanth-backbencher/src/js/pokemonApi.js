@@ -91,7 +91,7 @@ const removeLoading = function (pokemonContainer, loading) {
 
 window.onload = function () {
   const pokemonContainer = document.getElementById('pokemonContainer');
-  const apiOfPokemon = 'https://pokeapi.co/api/v2/pokemon';
+  const apiOfPokemon = 'https://pokeapi.co/api/v2/pokemon?limit=359&offset=0';
   const loading = document.createElement('h1');
   loading.className = 'loading';
   loading.innerText = 'Loading...';

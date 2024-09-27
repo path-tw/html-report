@@ -16,10 +16,10 @@ button.addEventListener('click', () => {
 
 setTimeout(() => {
 
-  increment = increment + 5;
+  increment = increment + 1000;
 fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
-  .then((response) => {
-    return response.json();
+  .then((data) => {
+    return data.json();
   })
   .then((data) => {
     return data;

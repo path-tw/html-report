@@ -9,3 +9,11 @@ header{
     height: 10vh;
     background-color: grey;
 }
+#container{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.details{
+    border: 1px solid black;
+}

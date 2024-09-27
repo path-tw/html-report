@@ -1,17 +1,43 @@
 *{
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+#loadingText{
+  position: fixed;
+  top: 220px;
+  left: 0px;
+  right: 0px;
+ text-align: center;
+ padding-top: 30px;
+ font-size: 40px;
 
+}
 .navbar{
   width: 100wh;
-  height: 50px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid black;
-  background-color: #ada1a1d8;
+  background-color: #6C4E31;
+  color: white;
   margin-bottom: 20px;
 }
-#heading{
+.navbar #heading{
   font-size: 30px;
-  
+padding-left: 30px;
+}
+
+.searchBox{
+  margin-right: 50px;
+}
+
+.searchBox input{
+  width: 200px;
+  height: 20px;
+}
+
+.searchBox label{
+  font-size: 20px;
 }
   #allPokemonsDetails{
     background-color: #CDC2A5;
@@ -19,6 +45,10 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
+}
+p{
+  margin-top: -5px;
+  font-size: 20px;
 }
 .pokemonContainer{
   background-color:#EAE4DD;
