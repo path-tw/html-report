@@ -39,8 +39,7 @@ header {
   padding-top: 140px;
 }
 
-.pokemon-card,
-.skeleton-card {  
+.pokemon-card { 
   background-color: #1f1f1f;
   border-radius: 10px;
   padding: 20px;
@@ -68,7 +67,6 @@ header {
   font-size: 16px;
   color: #bbbbbb;
   margin-bottom: 8px;
-  /* text-align: start; */
 }
 .pokemon-id::before {
   content: 'ID: ';
