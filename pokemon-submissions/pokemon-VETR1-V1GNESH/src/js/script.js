@@ -5,19 +5,24 @@ window.onload = async () => {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
     const data = await response.json();
     const pokemonArray = data.results;
-    pokemonArray.forEach(async (pokemon) => {
-      const pokemonData = await fetch(pokemon.url);
-      const parsedPokemon = await pokemonData.json();
-      generatePokemon(parsedPokemon);
-    })
-}
+    renderPokemon(pokemonArray);
+  };
+
+  const renderPokemon = function (pokemonArray) {
+  pokemonArray.forEach(async (pokemon) => {
+    const pokemonData = await fetch(pokemon.url);
+    const parsedPokemon = await pokemonData.json();
+    generatePokemon(parsedPokemon);
+  });
+  document.getElementById('page-loader').classList.add('hide');
+};
 
 const generatePokemon = function (pokemon) {
   const pokemonContainer = createPokemonContainer();
   pokemonContainer.append(generatePokemonImage(pokemon));
   pokemonContainer.append(generatePokemonDetails('Name', pokemon.name));
   pokemonContainer.append(generatePokemonDetails('Id', pokemon.id));
-  pokemonContainer.append(generatePokemonDetails('Type', pokemon.types[0].type.name));
+  pokemonContainer.append(generatePokemonDetails('Type', pokemon.types.map(index => index.type.name).join(', ')));
   document.getElementById('main-container').append(pokemonContainer);
 }
 

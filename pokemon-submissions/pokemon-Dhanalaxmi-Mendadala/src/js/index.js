@@ -3,12 +3,11 @@ let isResolved = false;
 const fetchPokemonData = async () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const fetchData = await fetch('https://pokeapi.co/api/v2/pokemon?limit=40');
+      const fetchData = await fetch('https://pokeapi.co/api/v2/pokemon?limit=50');
       const pokemonsData = await fetchData.json();
       for (const pokemon of pokemonsData.results) {
         const otherData = await fetch(pokemon.url);
         const object = await otherData.json();
-        console.log("called fetch");
         allData.push({
           name: object.name,
           id: object.id,
@@ -35,7 +34,6 @@ const createAndAppendDiv = (pokemon) => {
   image.src = pokemon.image;
   name.innerText = pokemon.name || 'pokemon';
   div.id = pokemon.id;
-  console.log("called");
   id.innerText = `Pokemon Id: ${pokemon.id || 'id not exist'}`;
   type.innerText = `Pokemon Type: ${pokemon.type || 'normal'}`;
   div.append(name, image, id, type);
@@ -51,16 +49,12 @@ const renderPokemons = async () => {
   }
 };
 const search = () => {
-  const input = document.getElementById('search').value;
-  console.log(input);
+  const input = document.getElementById('search').value.toLowerCase();
   allData.forEach((element) => {
-    if (Object.values(element).some((eachData) => {
-      return eachData.toString().includes(input)
-    })) {
-      document.getElementById(element.id).hidden = false;
-    } else {
-      document.getElementById(element.id).hidden = true;
-    }
+    const pokemonDiv=document.getElementById(element.id);
+    pokemonDiv.hidden = !(Object.values(element).some((eachData) => {
+      return eachData.toString().includes(input);
+    }));
   });
 
 };

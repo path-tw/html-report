@@ -24,7 +24,7 @@ const createPokemonDiv = (data) => {
   container.appendChild(appendDiv);
 };
 
-const renderApiData = async (id) => {
+const renderPokemonData = async (id) => {
   const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
   const response = await fetch(url);
   const data = await response.json();
@@ -35,7 +35,7 @@ const fetchpokemonData = async () => {
   const totalPokemons = 500;
   let allPokemonsData = [];
   for (let id = 1; id <= totalPokemons; id++) {
-    const data = await renderApiData(id);
+    const data = await renderPokemonData(id);
     allPokemonsData.push(data);
   }
   return allPokemonsData;
@@ -46,14 +46,13 @@ const onloadPokemons = (displayType) => {
   loader.style.display = displayType;
 }
 
-const displayLoader = async () => {
-  document.getElementById('search').addEventListener('input', setupSearch);
+const loadPokimons = async () => {
   let renderPokemon = 'pending';
   onloadPokemons('flex');
   renderPokemon = await fetchpokemonData();
   renderPokemon.forEach(pokemon => createPokemonDiv(pokemon));
-  loader.style.display = 'none';
   onloadPokemons('none');
+  document.getElementById('search').addEventListener('input', setupSearch);
 };
 
-window.onload = displayLoader;
+window.onload = loadPokimons;

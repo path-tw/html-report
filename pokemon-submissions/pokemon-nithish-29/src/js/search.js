@@ -2,11 +2,11 @@
 
 const searchPokemon = async (searchedItem) => {
   onloadPokemons('flex');
-  const allPokemonsData = await fetchpokemonData();
+  const allPokemonsData = await fetchpokemonData(); 
   onloadPokemons('none');
   const searchedPokemons = allPokemonsData.filter(pokemon => {
     const nameMatches = pokemon.name.toLowerCase().includes(searchedItem);
-    const idMatches = pokemon.id === parseInt(searchedItem);
+    const idMatches = pokemon.id.toString().includes(searchedItem);
     const typeMatches = pokemon.types.some(typeInfo => 
       typeInfo.type.name.toLowerCase().includes(searchedItem)
     );

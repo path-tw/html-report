@@ -11,6 +11,9 @@ header {
     color: white;
     position: sticky;
     padding: 10px;
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
     top: 0px;
     z-index: 1;
 }
@@ -71,6 +74,7 @@ h1 {
     width: fit-content;
     padding: 2px;
     font-size: 35px;
+    margin-left: 20%;
     text-decoration: underline;
     text-shadow: 0px 0px 4px white;
 }
@@ -102,4 +106,10 @@ h1 {
         transform: rotate(360deg);
     }
 
+}
+
+#search {
+    padding: 5px;
+    border-radius: 22px;
+    border:2px solid white;
 }
