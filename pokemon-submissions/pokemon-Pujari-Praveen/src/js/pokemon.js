@@ -1,9 +1,6 @@
-let res;
-
 const getPokemonData = async (apiUrl) => {
   try {
     const response = await fetch(apiUrl);
-    res = response;
     const responseJson = await response.json();
     return responseJson;
   } catch (error) {

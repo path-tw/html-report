@@ -71,4 +71,21 @@ const forLoading = async () => {
 
 }
 
-window.onload = toFetchApi;
+const search = () => {
+    const searchData = document.getElementById('searchBar').value.toLowerCase();
+    const pokemonSearch = document.querySelectorAll('.pokemonContainer');
+
+    pokemonSearch.forEach(container => {
+        const nameText = container.querySelector('h3').innerText.toLowerCase();
+        const idNumber = container.querySelector('p').innerText;
+        const typeName = container.querySelector('div').innerText;
+        const searchResults = (nameText.includes(searchData) || idNumber.includes(searchData) || typeName.includes(searchData));
+        container.style.display = searchResults ? '' : 'none';
+    });
+}
+
+
+window.onload = () => {
+    toFetchApi();
+    document.getElementById('searchBar').addEventListener('input' ,search);
+};

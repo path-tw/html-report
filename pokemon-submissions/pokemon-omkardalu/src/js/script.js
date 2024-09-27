@@ -1,64 +1,17 @@
 // https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0 All Pokemons for name nad id
 // https://pokeapi.co/api/v2/pokemon/ditto name search
-let pokemonCollection;
 
+let pokemonCollection = [];
 
-const fetchWithLink = async (link) => {
-  const response = await fetch(link);
-  const data = await response.json();
-  return data;
+const getData = async (link) => {
+  try {
+    const response = await fetch(link);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };
-
-
-const createPTag = (text, classname) => {
-  const pTag = document.createElement('p');
-  pTag.innerText = text;
-  pTag.classList.add(classname);
-  return pTag;
-};
-
-const createImgTag = (url, classname) => {
-  const imgTag = document.createElement('img');
-  imgTag.src = url;
-  imgTag.classList.add(classname);
-  return imgTag;
-};
-
-const createPokemonCard = (details) => {
-  const container = document.createElement('div');
-  container.className = 'pokemonCard';
-  const image = createImgTag(details.image, 'image');
-  const id = createPTag('id : ' +details.id, 'id');
-  const name = createPTag('Name : ' + details.name, 'name');
-  const type = createPTag('Type : ' + details.type, 'type');
-  container.append(image, id, name, type);
-  return container;
-};
-
-const getPokemonByName = async (name) => {
-  return await fetchWithLink(`https://pokeapi.co/api/v2/pokemon/${name}`);
-};
-
-const renderPokemon = async (pokemonName) => {
-  const newPokemon = await getPokemonByName(pokemonName);
-  const details = {
-    image: newPokemon.sprites.front_shiny,
-    id: newPokemon.id,
-    name: newPokemon.name,
-    type: newPokemon.types[0].type.name
-  };
-  document.querySelector('#all-pokemons')
-    .append(createPokemonCard(details));
-};
-
-const fetchAllPokemons = async () => {
-  const data = await fetchWithLink('https://pokeapi.co/api/v2/pokemon?limit=1400&offset=0');
-  const allPokemonNames = data.results.map(pokemon => pokemon.name);
-  pokemonCollection = await allPokemonNames.map(renderPokemon);
-  return allPokemonNames;
-};
-
-
 
 const createLoader = () => {
   const loaderContainer = document.createElement('div');
@@ -72,15 +25,111 @@ const createLoader = () => {
 const setLoader = () => {
   const loader = createLoader();
   const main = document.querySelector('#main');
-  console.log(main)
   main.append(loader);
-}
+};
 
+const removeLoader = () => {
+  document.querySelector('#loader-background').remove();
+};
+
+const createPTag = (text, className) => {
+  const pTag = document.createElement('p');
+  pTag.innerText = text;
+  pTag.classList.add(className);
+  return pTag;
+};
+
+const createImgTag = (url, className) => {
+  const imgTag = document.createElement('img');
+  imgTag.src = url;
+  imgTag.classList.add(className);
+  return imgTag;
+};
+
+const createPokemonCard = (details) => {
+  const container = document.createElement('div');
+  container.className = 'pokemonCard';
+  const image = createImgTag(details.image, 'image');
+  const id = createPTag('ID : ' + details.id, 'id');
+  const name = createPTag('Name : ' + details.name, 'name');
+  const type = createPTag('Type : ' + details.type, 'type');
+  container.append(image, id, name, type);
+  return container;
+};
+
+const renderElements = (pokemon, parent) => {
+  const isArray = Array.isArray(pokemon);
+  const container = document.querySelector(parent);
+  isArray && pokemon.forEach((pokemonDetails) => {
+    container.append(createPokemonCard(pokemonDetails));
+  });
+  isArray || container.append(createPokemonCard(pokemon));
+};
+
+const getPokemonByName = async (name) => {
+  return await getData(
+    `https://pokeapi.co/api/v2/pokemon/${name}`
+  );
+};
+
+const getAllPokemonNames = async () => {
+  let pokemonNames;
+  const data = await getData(
+    'https://pokeapi.co/api/v2/pokemon?limit=1400&offset=0'
+  );
+  pokemonNames = data.results.map(pokemon => pokemon.name);
+  return pokemonNames;
+};
+
+const getPokemonCollection = async () => {
+  const allPokemonNames = await getAllPokemonNames();
+  for (const pokemonName of allPokemonNames) {
+    await getPokemonByName(pokemonName).then((pokemon) => {
+      const details = {
+        image: pokemon.sprites.front_shiny,
+        id: pokemon.id,
+        name: pokemon.name,
+        type: pokemon.types.map(element => element.type.name),
+      };
+      pokemonCollection.push(details);
+    });
+  }
+};
+
+const search = (value) => {
+  const searchResults = pokemonCollection.filter((pokemon) => {
+    if (
+      pokemon.id === value ||
+      pokemon.name.includes(value) ||
+      pokemon.type.includes(value)
+    ) {
+      return true;
+    }
+    return false;
+  })
+  document.querySelector('#search-results').innerText = '';
+  renderElements(searchResults, '#search-results');
+};
+
+const activateSearch = () => {
+  const searchBar = document.querySelector('#search-bar');
+  searchBar.addEventListener('input', () => {
+    document.querySelector('#search-results')
+    .classList.remove('hide');
+    search(searchBar.value);
+  });
+  searchBar.addEventListener('blur' , () => {
+    document.querySelector('#search-results').classList.add('hide');
+
+  })
+};
 
 window.onload = () => {
   setLoader();
-  fetchAllPokemons().then(()=> {
-    document.querySelector('#loader-background').remove();
-  })
-
-}
+  getPokemonCollection()
+    .then(() => {
+      renderElements(pokemonCollection, '#all-pokemons');
+      removeLoader();
+    });
+  activateSearch()
+};

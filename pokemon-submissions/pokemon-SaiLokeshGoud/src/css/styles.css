@@ -62,7 +62,7 @@ header {
   font-size: 24px;
 }
 
-#loading {
+.loading {
   position: fixed;
   right: 0;
   left: 0;
@@ -73,7 +73,7 @@ header {
   font-family: 'Comic Sans MS', 'Comic Sans', cursive;
 }
 
-#loadAnimation {
+.loadAnimation {
   height: 8px;
   margin-top: 20px;
   aspect-ratio: 5;

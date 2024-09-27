@@ -21,8 +21,6 @@ const removeLoadingMessage = () => {
 
 const pokemonFetch = async () => {
     const rootUrl = 'https://pokeapi.co/api/v2/pokemon';
-    let i = 1;
-
     try {
         const response = await fetch(`${rootUrl}?limit=100000&offset=0`);
         const pokemons = await response.json();
@@ -30,14 +28,13 @@ const pokemonFetch = async () => {
 
         removeLoadingMessage();
 
-        for (i = 1; i <= totalPokemons; i++) {
-            await pokemonDataFetch(i, rootUrl);
+        for (let i = 0; i < totalPokemons; i++) {
+            await pokemonDataFetch(pokemons.results[i].url);
         }
     } catch (error) {
         console.error(error);
     }
 };
-
 
 const createDivAndItsElementsAppendToMain = (src, name, id, type) => {
     const main = document.getElementById('main-container');
@@ -67,17 +64,17 @@ const createDetail = (info, className, tag = 'p') => {
     return detail;
 };
 
-const pokemonDataFetch = async (pokemonNumber, rootUrl) => {
+const pokemonDataFetch = async (pokemonUrl) => {
     try {
-        const response = await fetch(`${rootUrl}/${pokemonNumber}/`);
+        const response = await fetch(pokemonUrl);
         const pokemonData = await response.json();
         const pokemonName = pokemonData.name;
         const pokemonId = pokemonData.id;
         const pokemonType = pokemonData.types.map(item => item.type.name).join(', ');
-        const pokemonImage = pokemonData.sprites.back_shiny;
+        const pokemonImage = pokemonData.sprites.front_default;
         createDivAndItsElementsAppendToMain(pokemonImage, pokemonName, pokemonId, pokemonType);
     } catch (error) {
-        console.error(`Error fetching Pokémon #${pokemonNumber}: ${error.message}`);
+        console.error(error);
     }
 };
 
@@ -109,17 +106,7 @@ const searchDisplay = (container, searchBy, matchesName, matchesId, matchesType)
 };
 
 const isTextSame = (text, searchText) => {
-    const searchTextLength = searchText.length;
-    for (let j = 0; j <= text.length - searchTextLength; j++) {
-        let subString = '';
-        for (let k = j; k < j + searchTextLength; k++) {
-            subString += text[k];
-        }
-        if (subString === searchText) {
-            return true;
-        }
-    }
-    return false;
+    return text.includes(searchText);
 };
 
 const filterPokemons = (searchBy, searchText) => {

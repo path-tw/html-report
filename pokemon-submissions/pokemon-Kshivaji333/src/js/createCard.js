@@ -25,7 +25,7 @@ const createH2Tag = (name) =>  {
 
 const createPTag = (type) =>  {
   const pTag = document.createElement('p');
-  pTag.innerText = type;
+  pTag.innerText = `${type} type`;
   pTag.className = 'type';
 
   return pTag;

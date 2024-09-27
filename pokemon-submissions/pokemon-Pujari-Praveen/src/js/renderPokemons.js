@@ -29,8 +29,9 @@ const setPokemonType = (pokemonInfo, pokemonData) => {
   const pokemonTypePara = createElementAssignClass('p', 'pokemon-type');
   const pokemonType = document.createElement('span');
   const defaultText = document.createTextNode('Type:');
-  const pokemonTypes = pokemonData.types;
-  pokemonTypes.forEach(type => pokemonType.textContent = type['type'].name);
+  const pokemonTypes = [];
+  pokemonData.types.forEach(type => pokemonTypes.push(type['type'].name));
+  pokemonType.innerText = pokemonTypes.join(', ')
   pokemonTypePara.append(defaultText, pokemonType);
   pokemonInfo.appendChild(pokemonTypePara);
 };
@@ -74,7 +75,6 @@ const togglePopup = (isRendered, container) => {
 
 const processPokemonData = async (responseJson, loaderContainer) => {
   pokemonsData = responseJson.results;
-  console.log(pokemonsData)
   togglePopup(false, loaderContainer);
   for (const pokemon of pokemonsData) {
     const pokemonData = await getPokemonData(pokemon.url);

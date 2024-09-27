@@ -6,21 +6,22 @@
 }
 
 h1 {
-    z-index: 1;
     background-color: #eee;
     text-align: center;
     padding-top: 15px;
     padding-bottom: 15px;
-    position: sticky;
-    top: 0px;
     font-size: 40px;
-    border-bottom: 2px solid black;
+    margin-left: 20px;
 }
 
 nav {
+    z-index: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 2px solid black;
+    position: sticky;
+    top: 0px;
 }
 
 #searchBar {
@@ -64,7 +65,7 @@ nav {
     margin: 20px;
     height: 200px;
     width: 150px;
-    border: 1px solid rgb(12, 12, 12);
+    border: 2px solid rgb(12, 12, 12);
     border-radius: 20px;
     box-shadow: 10px;
     background-color: white;
