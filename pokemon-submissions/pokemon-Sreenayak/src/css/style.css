@@ -17,7 +17,7 @@ header img {
     padding: 10px;
 }
 h1 {
-    color: #ff3366;
+    color: orange;
     margin: 0;
 }
 .heading {
@@ -31,7 +31,7 @@ h1 {
 input[type="text"] {
     padding: 10px;
     width: 200px;
-    border: 3px solid  #ff3366;
+    border: 3px solid  orange;
     border-radius: 4px 0 0 4px;
     outline: none;
 }

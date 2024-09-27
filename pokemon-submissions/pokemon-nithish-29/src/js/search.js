@@ -6,7 +6,7 @@ const searchPokemon = async (searchedItem) => {
   onloadPokemons('none');
   const searchedPokemons = allPokemonsData.filter(pokemon => {
     const nameMatches = pokemon.name.toLowerCase().includes(searchedItem);
-    const idMatches = pokemon.id.toString() === searchedItem;
+    const idMatches = pokemon.id === parseInt(searchedItem);
     const typeMatches = pokemon.types.some(typeInfo => 
       typeInfo.type.name.toLowerCase().includes(searchedItem)
     );

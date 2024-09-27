@@ -1,7 +1,7 @@
 const pokemonContainer = document.getElementById('pokemonContainer');
 
 async function fetchPokemons() {
-    for (let i = 1; i <= 350; i++) { 
+    for (let i = 1; i <= 1350; i++) { 
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
         const data = await response.json();
         displayPokemon(data);

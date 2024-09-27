@@ -15,10 +15,10 @@ const insertData = (pokemonDiv, name, image, id, type , data) => {
 const createPokemonDiv = (data) => {
   const container = document.getElementById('allpokemons');
   let pokemonDiv = document.createElement('div');
-  const name = document.createElement('h2');
+  const name = document.createElement('h1');
   const image = document.createElement('img');
-  const id = document.createElement('h3');
-  const type = document.createElement('h3');
+  const id = document.createElement('h4');
+  const type = document.createElement('h4');
   pokemonDiv.className = 'pokemon';
   const appendDiv = insertData(pokemonDiv, name, image, id, type, data);
   container.appendChild(appendDiv);
