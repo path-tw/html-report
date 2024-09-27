@@ -4,6 +4,23 @@
   box-sizing:border-box;
 }
 
+.lableForSearch{
+  font-size: em;
+  font-size:1.3em;
+  margin-left: 20px;
+}
+
+header{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+#searchBar{
+  margin-left: 5px;
+  padding: 10px;
+  border-radius: 20px;
+}
 @keyframes loading {
   0%{border-bottom :3px solid gray}
   100%{border-bottom :6px solid gray}
@@ -64,16 +81,15 @@ justify-content: center;
   font-weight: 100;
 }
 #pageTitle{
-  margin: 14px;
   height: 13vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3em;
-  font-family: 'Arial', sans-serif;
+  margin:3vh 19%;
 }
 #pageTitle img{
   width: 300px;
+  /* border: solid; */
 }
 main{
   margin: 20px;

@@ -24,7 +24,6 @@ const appendDetails = (details) => {
 const createPokemon = async (pokemon, index) => {
   const pokemonName = pokemon.name;
   const pokemonContainer = document.createElement('div');
-  const pokemonsContainer = document.querySelector('.pokemonContainer');
   const url = 'https://pokeapi.co/api/v2/pokemon/'+ pokemonName;
   const pokemonData = await renderPokemon(url);
   const details = {name: pokemonName, imageUrl: pokemonData.sprites.front_default, pokenonId: pokemonData.id, pokemonType: pokemonData.types[0].type.name}
@@ -32,16 +31,21 @@ const createPokemon = async (pokemon, index) => {
   pokemonContainer.append(element.image,element.name, element.id, element.type);
   pokemonContainer.setAttribute('class', 'pokemon');
   pokemonContainer.setAttribute('id', index);
-  pokemonsContainer.append(pokemonContainer);
+  return pokemonContainer;
 };
 
-const appendPokemon = (pokemons) => {
-  const container = document.querySelector('.pokemonContainer');
-  for(let index = 0; index < pokemons.length; index++) {
-    createPokemon(pokemons[index], index);
+const appendPokemon = async (pokemons) => {
+  const loading = document.querySelector('.pokemonContainer');
+  const container = document.createElement('div');
+  container.classList.add('pokemonContainer');
+  let pokemon;
+  for (let index = 0; index < pokemons.length; index++) {
+    pokemon= await createPokemon(pokemons[index], index)
+    container.appendChild(pokemon);
   }
-  container.innerText = '';
-};
+  document.body.removeChild(loading);
+  document.body.appendChild(container);
+ };
 
 const fetchPokemons = async() => {
   const url = 'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0';
@@ -52,7 +56,7 @@ const fetchPokemons = async() => {
     appendPokemon(pokemons);
   }
   catch (error) {
-    console.log(err);
+    console.log(error);
   }
 };
 

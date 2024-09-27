@@ -42,5 +42,40 @@ const generatePokemonImage = function (obj) {
 const generatePokemonDetails = function(key, value) {
   const detail = document.createElement('h2');
   detail.innerText = key + ': ' + value;
+  detail.classList.add(key.toLowerCase());
   return detail;
 }
+
+const searchPokemon = function () {
+  const searchedValue = document.getElementById('search-bar').value.toLowerCase();
+  if (searchedValue === '') {
+      window.alert('Please Enter a Search Value');
+      return;
+  }
+  document.getElementById('page-loader').classList.remove('hide');
+  const displayedPokemon = document.querySelectorAll('.pokemon-container');
+  
+  if(!filterSearchResults(searchedValue, displayedPokemon)) {
+    window.alert('Search Item Not Found');
+  }
+  document.getElementById('page-loader').classList.add('hide');
+};
+
+
+const filterSearchResults = function (searchedValue, displayedPokemon) {
+  let isFound = false;
+  displayedPokemon.forEach((pokemon) => {
+    const pokemonName = pokemon.querySelector('.name').textContent.replace('Name: ', '').toLowerCase();
+    const pokemonId = pokemon.querySelector('.id').textContent.replace('ID: ', '').toLowerCase();
+    const pokemonType = pokemon.querySelector('.type').textContent.replace('Type: ', '').toLowerCase();
+    if (pokemonName.includes(searchedValue)
+      || pokemonId.includes(searchedValue)
+      || pokemonType.includes(searchedValue)) {
+      isFound = true;
+        pokemon.style.display = 'block';
+    } else {
+        pokemon.style.display = 'none';
+    }
+  });
+return isFound;
+};

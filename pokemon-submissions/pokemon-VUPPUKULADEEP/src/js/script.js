@@ -1,24 +1,34 @@
 
 const dataLimit = async function () {
-  const js = await fetchAPI();
-  return Object.values(js)[3].length;
+  const data = await fetchAPI();
+  return Object.values(data)[3].length;
 };
 
 const fetchAPI = async function () {
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=50');
-  const value = await response.json();
-  return value;
+  try{
+  const url = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000&offset=0');
+  const pokemon = await url.json();
+  return pokemon;
+  }
+  catch(error){
+    console.log(error);
+  } 
 };
 
 const data = async function (container, index) {
-  const js = await fetchAPI();
-  const result = await fetch(js.results[index].url);
-  properties = await result.json();
-  const div = createContainer(js, properties, index);
+  try{
+  const extraData = await fetchAPI();
+  const result = await fetch(extraData.results[index].url);
+  const properties = await result.json();
+  const div = createContainer(extraData, properties, index);
   container.append(div);
+  }
+  catch(error){
+    console.log(error);
+  }
 };
 
-const createContainer = function (js, properties, index) {
+const createContainer = function (extraData, properties, index) {
   const div = document.createElement('div');
   div.className = 'content';
   const img = document.createElement('img');
@@ -29,7 +39,7 @@ const createContainer = function (js, properties, index) {
   type.className = 'type';
   const name = document.createElement('h2');
   name.className = 'name';
-  name.innerText = `${js.results[index].name}`
+  name.innerText = `${extraData.results[index].name}`
   id.innerText = ` id = ${properties.id}`
   type.innerText = ` type = ${properties.types['0'].type.name}`
   img.src = properties.sprites.front_default;

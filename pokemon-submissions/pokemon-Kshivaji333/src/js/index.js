@@ -1,4 +1,10 @@
 
+const searchBar = () => {
+  const inputTag = document.getElementById('input');
+  inputTag.id = 'searchBar';
+  inputTag.placeholder = 'name,type,id..'
+}
+
 const showLoader = () => {
   const container = document.querySelector('main')
   const loadIcon = document.createElement('div')
@@ -13,6 +19,7 @@ const appendCards = () => {
     container.appendChild(card);
   }
 };
+
 window.onload = () => {
   showLoader()
   // const loader = document.querySelector('loading-icon')

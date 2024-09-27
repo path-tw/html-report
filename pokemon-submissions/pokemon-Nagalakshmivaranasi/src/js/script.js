@@ -25,6 +25,13 @@ const fetchPokemonData = async () => {
   }
 };
 
+const addImage = (addImage) => {
+  const image = document.createElement('img');
+  image.classList.add('image');
+  image.src = addImage;
+  return image;
+};
+
 const addDetial = (label, value) => {
   const pTag = document.createElement('p');
   const spanTag = document.createElement('span');
@@ -33,13 +40,6 @@ const addDetial = (label, value) => {
   spanTag.innerText = label;
   pTag.append(spanTag, value);
   return pTag;
-};
-
-const addImage = (addImage) => {
-  const image = document.createElement('img');
-  image.classList.add('image');
-  image.src = addImage;
-  return image;
 };
 
 const displayPokemonDetails = (pokemonObj) => {
@@ -77,18 +77,19 @@ const displayPokemonOnSearch = (pokemons) => {
   const input = document.getElementById('search');
   const value = input.value.toLowerCase();
   for (let pokemon of pokemons) {
-    if (pokemon.name.includes(value) || pokemon.type.includes(value)) {
-      const name = document.getElementById(pokemon.name);
-      name.style.display = 'block';
+    const id = pokemon.id.toString();
+    if (pokemon.name.includes(value) || pokemon.type.includes(value) || id.includes(value)) {
+      const pokemonDetial = document.getElementById(pokemon.name);
+      pokemonDetial.style.display = 'block';
     }
     else {
-      const name = document.getElementById(pokemon.name);
-      name.style.display = 'none';
+      const pokemonDetial = document.getElementById(pokemon.name);
+      pokemonDetial.style.display = 'none';
     }
   }
 };
 
-const data = async () => {
+const main = async () => {
   preloading();
   const pokemons = await fetchPokemonData();
   addDetialsToDom(pokemons);
@@ -99,4 +100,4 @@ const data = async () => {
   searchPokemon.addEventListener('input', () => { displayPokemonOnSearch(pokemons) })
 };
 
-window.onload = data;
+window.onload = main;

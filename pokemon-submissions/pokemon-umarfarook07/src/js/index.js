@@ -84,25 +84,28 @@ const getPokemonTypes = (card) => {
 };
 
 const handleSearch = () => {
-  const searchElement = document.getElementById('search');
-  const searchValue = searchElement.value.trim().toLowerCase();
-  if (!searchValue) {
-    console.log('Search is empty');
-    return;
-  }
+  const searchValue = getSearchValue();
   const pokemonCards = document.querySelectorAll('.pokemon-card');
   pokemonCards.forEach((card) => {
-    const pokemonName = getPokemonName(card);
-    const pokemonId = getPokemonId(card);
-    const pokemonTypes = getPokemonTypes(card);
-    const isNameMatched = isNameMatch(pokemonName, searchValue);
-    const isIdMatched = isIdMatch(pokemonId, searchValue);
-    const areTypesMatched = isTypeMatch(pokemonTypes, searchValue);
-    const isMatch = isNameMatched || isIdMatched || areTypesMatched;
+    const isMatch = isPokemonMatch(card, searchValue);
     card.style.display = isMatch ? '' : 'none';
   });
 };
 
+const getSearchValue = () => {
+  const searchElement = document.getElementById('search');
+  return searchElement.value.trim().toLowerCase();
+};
+
+const isPokemonMatch = (card, searchValue) => {
+  const pokemonName = getPokemonName(card);
+  const pokemonId = getPokemonId(card);
+  const pokemonTypes = getPokemonTypes(card);
+  const isNameMatched = isNameMatch(pokemonName, searchValue);
+  const isIdMatched = isIdMatch(pokemonId, searchValue);
+  const areTypesMatched = isTypeMatch(pokemonTypes, searchValue);
+  return isNameMatched || isIdMatched || areTypesMatched;
+};
 
 const fetchPokemonDetails = async (pokemon) => {
   const pokemonDetails = await fetch(pokemon.url);

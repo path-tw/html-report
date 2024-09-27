@@ -27,11 +27,11 @@ const fetchPokemons = async () => {
 
 const generateNewArray = (searchValue, array) => {
   const newArray = [];
-  array.forEach((pokemon)=> {
+  array.forEach((pokemon) => {
     const name = pokemon.name;
     const id = pokemon.id.toString();
     const type = pokemon.type;
-    if (name.includes(searchValue) || type.includes(searchValue) || id.includes(searchValue) ) {
+    if (name.includes(searchValue) || type.includes(searchValue) || id.includes(searchValue)) {
       newArray.push(pokemon);
     }
   });
@@ -50,7 +50,7 @@ const filterPokemons = (search, array) => {
 
 const addSearchAction = (array) => {
   const search = document.getElementById('search');
-  search.addEventListener('input', () => {filterPokemons(search, array)});
+  search.addEventListener('input', () => { filterPokemons(search, array) });
 };
 
 const displayPokemons = (array) => {

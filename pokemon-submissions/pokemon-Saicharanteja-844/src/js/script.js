@@ -53,8 +53,8 @@ const filterPokemon = (pokemonList, searchValue) => {
   const filteredPokemon = pokemonList.filter(pokemon => {
     const nameMatch = pokemon.name.toLowerCase().includes(searchValue.toLowerCase());
     const idMatch = pokemon.id.toString() === searchValue;
-    const typeMatch = pokemon.types.some(type => {
-      type.type.name.toLowerCase().includes(searchValue.toLowerCase())
+    const typeMatch = pokemon.types.some((type) => {
+      return type.type.name.toLowerCase() === searchValue.toLowerCase();
     });
     return nameMatch || idMatch || typeMatch;
   });
@@ -114,15 +114,16 @@ const handleSearchClick = async (searchValue) => {
   const pokemonInfoSection = document.getElementById('pokemon-info');
   pokemonInfoSection.textContent = '';
   const loaderContainer = await createLoader();
+  const lowerSearchValue = searchValue.toLowerCase();
   setTimeout(async () => {
     loaderContainer.remove();
-    await displaySearchedResults(searchValue);
+    await callDisplaySearchResults(lowerSearchValue);
   }, 5000);
 };
 
-const displaySearchedResults = async (searchValue) => {
+const callDisplaySearchResults = async (lowerSearchValue) => {
   const pokemonList = await getAllPokemonData();
-  const filteredPokemon = filterPokemon(pokemonList, searchValue);
+  const filteredPokemon = filterPokemon(pokemonList, lowerSearchValue);
   displaySearchResults(filteredPokemon);
 };
 

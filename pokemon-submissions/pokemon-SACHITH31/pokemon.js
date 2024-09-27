@@ -3,9 +3,14 @@ let main = document.querySelector('main');
 let pokemonsContainer = document.querySelector('#pokemonsContainer');
 let increment = 0;
 let namesContainer = [];
+let searchInput = document.querySelector('#searchInput');
 
-button.addEventListener('click', () => {
 
+
+button.addEventListener('click', displayPokemons)
+searchInput.addEventListener('input', filterPokemons)
+
+function displayPokemons () {
   let loadingPTag = document.createElement('p');
   loadingPTag.setAttribute('class', 'loadingMessage');
   loadingPTag.innerText = 'Pokemons Loading...Please Wait';
@@ -16,7 +21,7 @@ button.addEventListener('click', () => {
 
 setTimeout(() => {
 
-  increment = increment + 1000;
+  increment = increment + 500;
 fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
   .then((data) => {
     return data.json();
@@ -31,9 +36,9 @@ fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
     for (let i = 0; i < data.length; i++) {
     fetch(data[i].url)
       .then((data) => {
-        return data.json()
+        return data.json();
       })
-      .then((data) =>{
+      .then((data) => {
         let pokemonID = document.createElement('p');
         let typesContainer = [];
         let pokemonType;
@@ -90,12 +95,12 @@ fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
         }
         let pokemonNamesContainer = [];
         pokemonNamesContainer.push(data.name);
-        namesContainer.push(pokemonNamesContainer)
+        namesContainer.push(pokemonNamesContainer);
         // for (let i = 0; i < pokemonNamesContainer.length; i++) {
         //  // console.log(pokemonNamesContainer[i]);
         // }
         let divContainer = document.createElement('div');
-        divContainer.setAttribute('class', 'pokemonDiv')
+        divContainer.setAttribute('class', 'pokemonDiv');
         let imageContainer = document.createElement('img');
         imageContainer.setAttribute('class', 'pokemonImage');
         let pokemonName = document.createElement('p');
@@ -107,7 +112,7 @@ fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
         main.append(pokemonsContainer);
         pokemonsContainer.append(divContainer);
         divContainer.append(pokemonID);           
-        divContainer.append(imageContainer);           
+        divContainer.append(imageContainer);
         divContainer.append(pokemonName);
         divContainer.append(pokemonType);
       })
@@ -116,5 +121,16 @@ fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
   loadingMessageDiv.style.display = 'none';
   loadingPTag.innerText = '';
 },2000)
-})
+}
 
+function filterPokemons (e) {
+  let pokemons = document.querySelectorAll('.pokemonDiv');
+  pokemons.forEach((pokemon) => {
+    if (!pokemon.innerText.includes(e.target.value)) {
+      pokemon.classList.add('hide');
+    } else {
+      pokemon.classList.remove('hide');
+    }
+  });
+};
+ 

@@ -40,7 +40,6 @@ const searchValue = function (value, contents) {
 
 const printOrgData = function(data) {
   let container = document.querySelector('.container');
-  container.style.display = 'flex';
   for(let index = 0; index < data.length; index++) {
     container.appendChild(data[index]);
   }

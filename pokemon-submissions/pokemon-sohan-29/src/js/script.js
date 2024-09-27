@@ -56,22 +56,32 @@ const createPokeCard = (pokemons) => {
 };
 
 const getType = async (id) => {
-  const types = await fetch(`https://pokeapi.co/api/v2/pokemon-form/${id}`);
-  const typeData = await types.json();
-  const image = typeData.sprites.front_default;
-  const numberOfTypes = [];
-  const x = typeData.types.map(types => {
-    numberOfTypes.push(types.type.name);
-  })
-  return {
-    id: id,
-    type: numberOfTypes,
-    imagesrc: image
-  };
+  try {
+    const types = await fetch(`https://pokeapi.co/api/v2/pokemon-form/${id}`);
+    const typeData = await types.json();
+    const image = typeData.sprites.front_default;
+    const numberOfTypes = [];
+      typeData.types.map(types => {
+      numberOfTypes.push(types.type.name);
+    })
+    return {
+      id: id,
+      type: numberOfTypes,
+      imagesrc: image
+    }
+  } catch (error) {
+    console.error('error: images and types are not found')
+    return {
+      id: id,
+      type: 'not found',
+      imagesrc: 'src/images/default.png'
+    };
+  }
+
 };
 
 const loadPokemons = async () => {
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0');
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
   const data = await response.json();
   const pokemons = await Promise.all(data.results.map(async pokemon => {
     id = id + 1;
