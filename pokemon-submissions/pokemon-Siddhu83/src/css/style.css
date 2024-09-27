@@ -71,3 +71,15 @@ body {
 	box-sizing: content-box;
 	font-size: small;
 }
+
+.load-message {
+	box-shadow: 2px 2px 2px 2px lightgrey;
+	border-radius: 10px;
+	margin-top: 25vh;
+	padding: 10px;
+	width: 300px;
+	font-size: large;
+	text-align: center;
+	text-wrap: wrap;
+	background-color: whitesmoke;
+}

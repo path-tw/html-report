@@ -27,14 +27,36 @@ body {
   margin: 0px;
   padding: 0px;
   float: right;
+  display: flex;
 }
 
 #search {
   margin-right: 10px;
+  margin-left: 0px;
   padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
   width: 200px;
+}
+
+#select {
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: rgb(244, 244, 81);
+  color: black;
+  font-weight: bold;
+  font-size: small;
+  margin: 0px;
+  gap: 0;
+}
+
+.searchBy {
+  padding: 10px;
+  background-color: white;
+  color: black;
+  font-size: medium;
 }
 
 #pokemons {

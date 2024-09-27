@@ -7,7 +7,7 @@ const createPTag = (value, className, text) => {
 
 const createImageTag = (image) => {
   const imgTag = document.createElement('img');
-  imgTag.src = image;
+  imgTag.setAttribute('src', image);
   imgTag.classList.add('pokemon-image');
   return imgTag;
 };
@@ -15,52 +15,59 @@ const createImageTag = (image) => {
 const generatePokemonTypes = (types) => {
   const divTag = document.createElement('div');
   divTag.innerText = 'Types: ';
+  const spanTag = document.createElement('span');
   types.forEach(element => {
-    const spanTag = document.createElement('span');
-    spanTag.innerText = `${element}, `;
-    divTag.appendChild(spanTag);
+    spanTag.innerText += `${element}- `;
   });
+  divTag.appendChild(spanTag);
   return divTag;
 };
 
-const createAndAppendPokemonCard = (name, id, types, image) => {
+const AppendPokemonCard = (name, id, types, image) => {
   const divTagForCard = document.createElement('div');
+  const divTagForDetails = document.createElement('div');
   const imgTag = createImageTag(image);
   const pTagForName = createPTag(name, 'name', 'Name');
   const pTagForId = createPTag(id, 'id', 'Id');
   const divTagForTypes = generatePokemonTypes(types);
-  divTagForCard.classList.add('card')
-  divTagForCard.append(imgTag, pTagForName, pTagForId, divTagForTypes);
+  divTagForCard.classList.add('card');
+  divTagForDetails.append(pTagForName, pTagForId, divTagForTypes);
+  divTagForDetails.classList.add('pokemon-details');
+  divTagForCard.append(imgTag, divTagForDetails);
   return divTagForCard;
 }
 
-const fetchPokemonDetails = async () => {
+const pokemons = [];
+
+const fetchAndStorePokemons = async () => {
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=0');
+  const parsedResponse = await response.json();
+  const data = parsedResponse.results;
+  for (let index = 1; index <= data.length; index++) {
+    const otherDetails = await fetch(`https://pokeapi.co/api/v2/pokemon/${index}/`);
+    const parsedDetails = await otherDetails.json();
+    const pokemon = {};
+    pokemon['image'] = parsedDetails.sprites.front_default;
+    pokemon['name'] = data[index - 1].name;
+    pokemon['id'] = parsedDetails.id;
+    pokemon['types'] = [];
+    parsedDetails.types.forEach(element => {
+      pokemon['types'].push(element.type.name);
+    });
+    pokemons.push(pokemon);
+  }
+};
+
+const renderPokemons = async (pokemons) => {
   const mainTag = document.querySelector('main');
   const container = document.createElement('div');
   container.classList.add('container');
-  const url = 'https://pokeapi.co/api/v2/pokemon/';
-  try {
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=0');
-    const parsedResponse = await response.json();
-    const data = parsedResponse.results;
-    for (let index = 1; index <= data.length; index++) {
-      const otherDetails = await fetch(`${url}${index}/`);
-      const parsedDetails = await otherDetails.json();
-      const pokemonName = data[index - 1].name;
-      const pokemonId = parsedDetails.id;
-      const pokemonTypes = [];
-      parsedDetails.types.forEach(element => {
-        pokemonTypes.push(element.type.name);
-      });
-      const pokemonImage = parsedDetails.sprites.front_default;
-      const card = createAndAppendPokemonCard(pokemonName, pokemonId, pokemonTypes, pokemonImage);
-      container.appendChild(card);
-    }
-    mainTag.innerHTML = '';
-    mainTag.appendChild(container);
-  } catch (error) {
-    console.error(error);
+  for (let index = 0; index < pokemons.length; index++) {
+    const card = AppendPokemonCard(pokemons[index]['name'], pokemons[index]['id'], pokemons[index]['types'], pokemons[index]['image']);
+    container.appendChild(card);
   }
+  mainTag.innerHTML = '';
+  mainTag.appendChild(container);
 }
 
 const loader = () => {
@@ -71,7 +78,8 @@ const loader = () => {
   container.appendChild(pTag);
 };
 
-window.onload = () => {
+window.onload = async () => {
   loader();
-  fetchPokemonDetails();
+  await fetchAndStorePokemons();
+  renderPokemons(pokemons);
 };

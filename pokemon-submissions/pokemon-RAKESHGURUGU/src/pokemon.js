@@ -49,11 +49,65 @@ const showLoader = () => {
 const callSearch = () => {
   const loader = document.getElementById('loader');
   const search = document.getElementById('search');
+  const selectOption = document.getElementById('select');
+  console.log(selectOption.value);
   if (loader) {
     loader.innerText = `The search functionality will not active until the page loads`;
     search.value = '';
   } else {
-    searchFunctionality(search.value);
+    switch (selectOption.value) {
+      case 'all': searchFunctionality(search.value);
+        break;
+      case 'name': searchByName(search.value);
+        break;
+      case 'id': searchById(search.value);
+        break;
+      case 'type': searchByType(search.value);
+        break;
+      default: break;
+    }
+  }
+}
+
+const searchByName = (value) => {
+  const pokemonName = document.getElementsByClassName('pokemonName');
+  const container = document.getElementsByClassName('pokemonInfo');
+  const searchValue = value.toLowerCase();
+  for (let index = 0; index < container.length; index++) {
+    const name = pokemonName[index].innerText.toLowerCase();
+    if (name.match(searchValue)) {
+      container[index].style.display = 'block';
+    } else {
+      container[index].style.display = 'none';
+    }
+  }
+}
+
+const searchById = (value) => {
+  const container = document.getElementsByClassName('pokemonInfo');
+  const pokemonId = document.getElementsByClassName('pokemonId');
+  const searchValue = value.toLowerCase();
+  for (let index = 0; index < container.length; index++) {
+    const id = pokemonId[index].innerText.toLowerCase();
+    if (id.match(searchValue)) {
+      container[index].style.display = 'block';
+    } else {
+      container[index].style.display = 'none';
+    }
+  }
+}
+
+const searchByType = (value) => {
+  const container = document.getElementsByClassName('pokemonInfo');
+  const pokemonType = document.getElementsByClassName('pokemonType');
+  const searchValue = value.toLowerCase();
+  for (let index = 0; index < container.length; index++) {
+    const type = pokemonType[index].innerText.toLowerCase();
+    if (type.match(searchValue)) {
+      container[index].style.display = 'block';
+    } else {
+      container[index].style.display = 'none';
+    }
   }
 }
 
@@ -76,7 +130,13 @@ const searchFunctionality = (value) => {
   }
 }
 
+const searchBy = () => {
+  const SelectOption = document.getElementById('select');
+  console.log(SelectOption.value);
+}
+
 window.onload = () => {
   showLoader();
+  document.getElementById('select').addEventListener('change', callSearch);
   document.getElementById('search').addEventListener('input', callSearch);
 }

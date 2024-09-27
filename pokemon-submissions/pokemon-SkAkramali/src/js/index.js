@@ -1,4 +1,4 @@
- 'use strict';
+'use strict';
 const renderPokemon = async(url) => {
   const response = await fetch(url);
   const pokemonData = await response.json();
@@ -33,7 +33,8 @@ const createPokemon = async (pokemon, index) => {
   pokemonContainer.setAttribute('class', 'pokemon');
   pokemonContainer.setAttribute('id', index);
   pokemonsContainer.append(pokemonContainer);
-}
+};
+
 const appendPokemon = (pokemons) => {
   const container = document.querySelector('.pokemonContainer');
   for(let index = 0; index < pokemons.length; index++) {
@@ -53,27 +54,32 @@ const fetchPokemons = async() => {
   catch (error) {
     console.log(err);
   }
- };
+};
+
+const checker = (name, id, type, pokemon) => {
+  const inputValue = document.querySelector('.search');
+  const searchCritera = inputValue.value.toLowerCase()
+  if(!(name.includes(searchCritera) || id.includes(searchCritera) || type.includes(searchCritera))) {
+    pokemon.style.display = 'none';
+  } else{
+    pokemon.style.display = 'flex';
+  }
+};
+
 const search = () => {
   const pokemons = document.querySelectorAll('.pokemon');
-  const inputValue = document.querySelector('.search');
-  let details;
-  let pokemon;
-  for(let index = 1; index < pokemons.length; index++) {
-    pokemon = pokemons[index];
-    // console.log(pokemon);
-    details = pokemon.querySelectorAll('p');
-    console.log(details[1]);
-    // let checker = details[0].innerText;
-    // console.log(checker);
-    // if(!checker.innerText.includes(inputValue.value)) {
-    //   checker.style.display = 'none';
-    // }
+   for(let index = 0; index < pokemons.length; index++) {
+    const pokemon = document.getElementById(index);
+    const details = pokemon.querySelectorAll('p');
+    const pokemonName = details[0].innerText.toLowerCase();
+    const pokemonid = details[1].innerText.toLowerCase();
+    const pokemonType = details[2].innerText.toLowerCase();
+    checker(pokemonName, pokemonid, pokemonType, pokemon)
   }
 };
 
 window.onload = () => {
   const inputValue = document.querySelector('.search');
-  inputValue.addEventListener('input', search)
+  inputValue.addEventListener('input', search);
   fetchPokemons();
 };

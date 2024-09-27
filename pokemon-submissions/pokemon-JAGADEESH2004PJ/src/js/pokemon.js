@@ -78,6 +78,23 @@ const createAndAppendType = (pokemonData, pokemonCard) => {
   pokemonCard.appendChild(types);
 };
 
+const searchFunction = () => {
+    const searchInput = document.querySelector('.searchBox');
+    const possibilities = document.querySelectorAll('#pokemonList .pokemonCard');
+    const pl = document.querySelector('#pokemonList')
+    const userInput = searchInput.value.toLowerCase();
+    for (let index = 0; index < possibilities.length; index++) {
+      const suggestion = possibilities[index];
+      const suggestionText = suggestion.textContent.toLowerCase();
+      if (suggestionText.includes(userInput)) {
+        suggestion.style.display = 'block';
+      } else {
+        suggestion.style.display = 'none';
+      }
+    }
+  };
+
 window.onload = () => {
+  document.querySelector('.searchBox').addEventListener('input', searchFunction)
   fetchAllPokemons();
 };

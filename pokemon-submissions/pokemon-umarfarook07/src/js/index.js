@@ -6,7 +6,7 @@ const capitalizeFirstLetter = (textContent) => {
 
 const createPokemonImage = (pokemon) => {
   const pokemonImage = document.createElement('img');
-  pokemonImage.src = pokemon.sprites.front_default || 'src/images/no-image-webp';
+  pokemonImage.src = pokemon.sprites.front_default || 'src/images/no-image.webp';
   pokemonImage.alt = pokemon.name;
   pokemonImage.classList.add('pokemon-img');
   return pokemonImage;
@@ -22,7 +22,7 @@ const createPokemonNameElement = (pokemon) => {
 const createPokemonIdElement = (pokemon) => {
   const pokemonIdElement = document.createElement('div');
   pokemonIdElement.classList.add('pokemon-id');
-  pokemonIdElement.textContent = `ID: ${pokemon.id}`;
+  pokemonIdElement.textContent = pokemon.id;
   return pokemonIdElement;
 };
 
@@ -56,35 +56,39 @@ const createPokemonCard = (pokemon) => {
 };
 
 const isMatchingSearchValue = (value, searchValue) => {
-  const isMatched = value.toLowerCase().includes(searchValue);
-  return isMatched;
+  return value.trim().toLowerCase().includes(searchValue);
 };
-const isMatchingSearchResult = (pokemon, searchValue) => {
-  const searchResult = isMatchingSearchValue(pokemon.name, searchValue);
-  return searchResult;
-}
 
-const handleSearch = async () => {
+const isNameMatch = (pokemonName, searchValue) => {
+  return isMatchingSearchValue(pokemonName, searchValue);
+};
+const isIdMatch = (pokemonId, searchValue) => {
+  return isMatchingSearchValue(pokemonId, searchValue);
+};
+
+const getPokemonName = (card) => {
+  return card.querySelector('.pokemon-name').textContent.toLowerCase()
+};
+const getPokemonId = (card) => {
+  return card.querySelector('.pokemon-id').textContent;
+};
+
+const handleSearch = () => {
   const searchElement = document.getElementById('search');
   const searchValue = searchElement.value.trim().toLowerCase();
-
   if (!searchValue) {
     console.log('Search is empty');
     return;
   }
-  const allPokemons = await fetchPokemons();
-  const searchResults = allPokemons.filter((pokemon) =>
-    isMatchingSearchResult(pokemon, searchValue)
-  );
-
-  if (searchResults.length === 0) {
-    document.getElementById('pokemon-grid').innerHTML =
-      '<p>No Pokémon found</p>';
-    return;
-  }
-
-  await renderPokemons(searchResults);
+  const pokemonCards = document.querySelectorAll('.pokemon-card');
+  pokemonCards.forEach((card) => {
+    const pokemonName = getPokemonName(card);
+    const pokemonId = getPokemonId(card);
+    const isMatch = isNameMatch(pokemonName, searchValue) || isIdMatch(pokemonId, searchValue);
+    card.style.display = isMatch ? '' : 'none'
+  });
 };
+
 
 const fetchPokemonDetails = async (pokemon) => {
   const pokemonDetails = await fetch(pokemon.url);
