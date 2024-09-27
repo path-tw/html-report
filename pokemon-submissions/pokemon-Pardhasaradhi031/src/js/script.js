@@ -4,8 +4,11 @@ const createPokemonContainer = function (id, name, image, type) {
   const mainSection = document.getElementById('pokemonSection');
   const pokemonContainer = document.createElement('div');
   pokemonContainer.className = 'pokemon';
-  const imageContainer = document.createElement('img');
-  imageContainer.src = image;
+  const imageContainer = document.createElement('div');
+  imageContainer.className = 'imageContainer';
+  const imageElement = document.createElement('img');
+  imageElement.src = image;
+  imageContainer.append(imageElement);
   const detailsContainer = document.createElement('div');
   detailsContainer.id = 'pokemonDetails';
   detailsContainer.innerText = `Id: ${id}\nName: ${name}\nType: ${type}`;

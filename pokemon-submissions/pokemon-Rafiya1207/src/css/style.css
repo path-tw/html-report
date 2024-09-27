@@ -25,6 +25,16 @@ header {
   height: 100%;
 }
 
+.loader {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3a3a3a89;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .pokemon-name {
   font-weight: bold;
 }
@@ -50,11 +60,14 @@ header {
   background-color: #fff;
 }
 
-.container {
+.cards-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 10px;
+}
+.search-area {
+  position: relative;
 }
 
 .search-bar {
@@ -63,4 +76,14 @@ header {
   padding: 1rem;
   border-radius: 20px;
   font-size: 1rem;
+}
+
+#search-button {
+  padding: 0.7rem 0.5rem;
+  background-color: #3a3a3a;
+  color: #fff;
+  position: absolute;
+  right: 0px;
+  border-radius: 0px 20px 20px 0px;
+  border: none;
 }

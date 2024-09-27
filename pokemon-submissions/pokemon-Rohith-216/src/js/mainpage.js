@@ -5,11 +5,11 @@ let isPageLoading = true;
 const removePopup = () => {
     const popup = document.getElementById('popup');
     if (popup) {
-    popup.innerText = '';
-    document.body.removeChild(popup);
+        popup.innerText = '';
+        document.body.removeChild(popup);
     }
     return;
-}
+};
 
 const popupAlert = () => {
     const popUp = document.createElement('h2');
@@ -17,7 +17,7 @@ const popupAlert = () => {
     popUp.id = 'popup';
     popUp.style.textAlign = 'center';
     document.body.appendChild(popUp);
-    setTimeout(() => {removePopup();}, 1000);
+    setTimeout(() => { removePopup(); }, 1000);
 };
 
 const searchAlert = () => {
@@ -32,14 +32,14 @@ const searchAlert = () => {
     }
 };
 
-const searchFunctioning = () => {   
+const searchFunctioning = () => {
     const search = document.querySelector('#search');
     search.addEventListener('input', () => {
-        (isPageLoading) ? popupAlert() :  searchAlert ();
+        (isPageLoading) ? popupAlert() : searchAlert();
     });
 };
 
-const appendChilderns  = (names, id, image, types, pokemonDIv) => {
+const appendChilderns = (names, id, image, types, pokemonDIv) => {
     const pokemonsContainer = document.getElementById('mainpage');
     pokemonDIv.style.textAlign = 'center';
     pokemonDIv.appendChild(names);
@@ -63,14 +63,14 @@ const displayData = (data, loadingpage) => {
     const types = document.createElement('p');
     types.innerText = `type: ${data.types.map(type => type.type.name).join(', ')}`;
     appendChilderns(names, id, image, types, pokemonDIv);
-}
+};
 
 const fetchDetails = async (url, loadingpage) => {
     try {
         const response = await fetch(url)
         const data = await response.json();
         displayData(data, loadingpage);
-    } catch(error){
+    } catch (error) {
         console.log(error);
     }
 };
@@ -83,7 +83,7 @@ const getPokemonDetails = (pokemons, loadingpage) => {
 
 const renderPokemons = async (loadingpage) => {
     try {
-        const response = await fetch ('https://pokeapi.co/api/v2/pokemon?limit=359&offset=0');
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=359&offset=0');
         const reverseResponse = await response.json();
         const data = reverseResponse.results;
         getPokemonDetails(data, loadingpage);
@@ -98,9 +98,9 @@ window.onload = () => {
     loadingpage.innerHTML = 'Loading...';
     pokemonsContainer.appendChild(loadingpage);
     setTimeout(() => {
-        renderPokemons (loadingpage);
+        renderPokemons(loadingpage);
         isPageLoading = false;
         removePopup();
     }, 5000);
-    searchFunctioning ();
-}
+    searchFunctioning();
+};

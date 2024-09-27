@@ -20,7 +20,7 @@
 
 .loading-animation {
   border: 10px solid rgba(128, 128, 128, 0.5);
-  border-top: 10px solid rgb(0, 128, 255);
+  border-top: 10px solid rgb(0, 132, 255);
   width: 50px;
   aspect-ratio: 1;
   border-radius: 50%;

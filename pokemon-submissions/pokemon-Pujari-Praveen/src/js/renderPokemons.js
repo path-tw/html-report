@@ -8,8 +8,8 @@ const createElementAssignClass = (element, classNames) => {
 };
 
 const setPokemonId = (pokemonInfo, pokemonData) => {
-  const pokemonIdPara = createElementAssignClass('p', 'pokemon-id');
-  const pokemonId = document.createElement('span');
+  const pokemonIdPara = createElementAssignClass('p', 'pokemon-id-para');
+  const pokemonId = createElementAssignClass('span', 'pokemon-id')
   const defaultText = document.createTextNode('Id:');
   pokemonId.innerText = pokemonData.id;
   pokemonIdPara.append(defaultText, pokemonId);
@@ -17,8 +17,8 @@ const setPokemonId = (pokemonInfo, pokemonData) => {
 };
 
 const setPokemonName = (pokemonInfo, pokemonData) => {
-  const pokemonNamePara = createElementAssignClass('p', 'pokemon-name');
-  const pokemonName = document.createElement('span');
+  const pokemonNamePara = createElementAssignClass('p', 'pokemon-name-para');
+  const pokemonName = createElementAssignClass('span', 'pokemon-name')
   const defaultText = document.createTextNode('Name:');
   pokemonName.innerText = pokemonData.name;
   pokemonNamePara.append(defaultText, pokemonName);
@@ -26,8 +26,8 @@ const setPokemonName = (pokemonInfo, pokemonData) => {
 };
 
 const setPokemonType = (pokemonInfo, pokemonData) => {
-  const pokemonTypePara = createElementAssignClass('p', 'pokemon-type');
-  const pokemonType = document.createElement('span');
+  const pokemonTypePara = createElementAssignClass('p', 'pokemon-type-para');
+  const pokemonType = createElementAssignClass('span', 'pokemon-type')
   const defaultText = document.createTextNode('Type:');
   const pokemonTypes = [];
   pokemonData.types.forEach(type => pokemonTypes.push(type['type'].name));

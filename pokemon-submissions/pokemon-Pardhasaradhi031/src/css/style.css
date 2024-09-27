@@ -73,15 +73,23 @@ header #pokeball {
 }
 
 .pokemon {
-  height: 190px;
+  height: 235px;
   aspect-ratio: 1;
   border: 2px solid black;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 0px;
   align-items: center;
   box-shadow: 2px 2px 2px black;
   font-size: 15px;
   padding: 10px;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 200px;
 }

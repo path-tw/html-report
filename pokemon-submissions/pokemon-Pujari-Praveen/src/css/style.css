@@ -48,18 +48,18 @@
   height: 70px;
 }
 
-.search-bar {
+.search-bar-container {
   margin-left: auto;
   margin-right: 5%;
 }
 
-.search-bar input {
+.search-bar-container input {
   height: 30px;
   width: 300px;
   border-radius: 10px;
 }
 
-.search-bar input::placeholder {
+.search-bar-container input::placeholder {
   font-weight: 700;
   font-size: 0.85rem;
   padding-left: 10px;
