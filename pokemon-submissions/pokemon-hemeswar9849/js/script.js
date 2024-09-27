@@ -3,7 +3,7 @@
 const getTheData = () => {
   return new Promise(async (resolve) => {
     try {
-      const fetchedData = await fetch('https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=1');
+      const fetchedData = await fetch('https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=10');
       const resultData = await fetchedData.json();
       resolve(resultData);
     } catch (error) {
@@ -39,6 +39,7 @@ const appendPokemonID = (pokemonContainer, pokemonDetails) => {
 
 const appendPokemonImage = (pokemonContainer, pokemonDetails) => {
   const pokemonImage = document.createElement('img');
+  pokemonImage.classList.add('pokemonImage');
   pokemonImage.src = pokemonDetails.sprites.front_default;
   pokemonContainer.appendChild(pokemonImage);
 };
@@ -47,6 +48,7 @@ const appendPokemonName = (pokemonContainer, pokemonDetails) => {
   const pokemonNameh3 = document.createElement('h3');
   pokemonNameh3.innerText = 'Pokémon name : ';
   const pokemonNamediv = document.createElement('div');
+  pokemonNamediv.classList.add('pokemonName');
   pokemonNamediv.innerText = pokemonDetails.name;
   pokemonContainer.append(pokemonNameh3, pokemonNamediv);
 };
@@ -55,10 +57,9 @@ const appendPokemonType = (pokemonContainer, pokemonDetails) => {
   const pokemonTypesh3 = document.createElement('h3');
   pokemonTypesh3.innerText = 'Type/Types: ';
   pokemonContainer.appendChild(pokemonTypesh3);
-  pokemonTypesh3.classList.add('types');
   const pokemonTypespan = document.createElement('span');
+  pokemonTypespan.classList.add('pokemonType');
   pokemonDetails.types.forEach(type => {
-    pokemonTypespan.classList.add('type');
     pokemonTypespan.innerText = pokemonTypespan.innerText + `  ${type.type.name}`;
   });
   pokemonContainer.appendChild(pokemonTypespan);
@@ -94,6 +95,7 @@ const appendAllPokemonDetails = async () => {
 
 const searchBarFunctionality = (event) => {
   const sampleText = 'hemeswar reddy';
+  // const 
   sampleText.includes(event.target.value);
 };
 

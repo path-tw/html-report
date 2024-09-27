@@ -5,7 +5,18 @@ let increment = 0;
 let namesContainer = [];
 
 button.addEventListener('click', () => {
-increment = increment + 300;
+
+  let loadingPTag = document.createElement('p');
+  loadingPTag.setAttribute('class', 'loadingMessage');
+  loadingPTag.innerText = 'Pokemons Loading...Please Wait';
+  let loadingMessage = document.querySelector('.loadingMessage');
+  let loadingMessageDiv = document.querySelector('.loadingMessageContainer');
+  loadingMessageDiv.style.display = 'block';
+  loadingMessageDiv.append(loadingPTag);
+
+setTimeout(() => {
+
+  increment = increment + 5;
 fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
   .then((response) => {
     return response.json();
@@ -26,7 +37,7 @@ fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
         let pokemonID = document.createElement('p');
         let typesContainer = [];
         let pokemonType;
-         console.log(data)
+        //  console.log(data)
         for (let i = 0; i < data.types.length; i++ ) {
           typesContainer.push(data.types[i].type.name);
         }
@@ -99,11 +110,11 @@ fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
         divContainer.append(imageContainer);           
         divContainer.append(pokemonName);
         divContainer.append(pokemonType);
-
-        // console.log(pokemonType)
-       
-
       })
     }
   })
-});
+  loadingMessageDiv.style.display = 'none';
+  loadingPTag.innerText = '';
+},2000)
+})
+
