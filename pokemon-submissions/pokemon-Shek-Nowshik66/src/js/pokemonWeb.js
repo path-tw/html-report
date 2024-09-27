@@ -51,14 +51,14 @@ const createPokemonContainer = async (rawPokemonInfo) => {
   const allPokemonData = rawPokemonInfo['results'];
   const loader = document.querySelector('.loader');
   let count = 0;
-  allPokemonData.forEach(async (element) => {
+  for (const element of allPokemonData) {
     const pokemonData = await getPokemonData(element);
     assignData(pokemonData.image, pokemonData.name, pokemonData.id, pokemonData.type);
     count++;
     if (count === allPokemonData.length) {
       loader.style.display = 'none';
     }
-  });
+  }
 };
 
 const searchPokemon = () => {

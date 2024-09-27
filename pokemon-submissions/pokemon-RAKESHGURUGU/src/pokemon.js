@@ -3,8 +3,8 @@ const renderPokemon = async (loader) => {
   const result = await response.json();
   console.log(result.results);
   for (let index = 0; index < result.results.length; index++) {
-  const link = await fetch(result.results[index].url);
-  const info = await link.json();
+    const link = await fetch(result.results[index].url);
+    const info = await link.json();
     renderPokemonNameAndId(info.name, info.id, info.sprites.front_shiny, info.types[0].type.name);
   }
   loader.remove();
@@ -46,6 +46,37 @@ const showLoader = () => {
   renderPokemon(loader);
 }
 
+const callSearch = () => {
+  const loader = document.getElementById('loader');
+  const search = document.getElementById('search');
+  if (loader) {
+    loader.innerText = `The search functionality will not active until the page loads`;
+    search.value = '';
+  } else {
+    searchFunctionality(search.value);
+  }
+}
+
+const searchFunctionality = (value) => {
+  const container = document.getElementsByClassName('pokemonInfo');
+  const pokemonName = document.getElementsByClassName('pokemonName');
+  const pokemonId = document.getElementsByClassName('pokemonId');
+  const pokemonType = document.getElementsByClassName('pokemonType');
+  const searchValue = value.toLowerCase();
+  for (let index = 0; index < container.length; index++) {
+    const name = pokemonName[index].innerText.toLowerCase();
+    const id = pokemonId[index].innerText.toLowerCase();
+    const type = pokemonType[index].innerText.toLowerCase();
+
+    if (name.match(searchValue) || id.match(searchValue) || type.match(searchValue)) {
+      container[index].style.display = 'block';
+    } else {
+      container[index].style.display = 'none';
+    }
+  }
+}
+
 window.onload = () => {
   showLoader();
+  document.getElementById('search').addEventListener('input', callSearch);
 }
