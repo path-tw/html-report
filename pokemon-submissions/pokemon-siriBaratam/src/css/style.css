@@ -9,7 +9,13 @@ body {
 #header {
     display: flex;
     border-bottom: 1px solid #DEE2FF;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
+    position: sticky;
+    background-color: #DEE2FF;
+    border-radius: 5px;
+    top: 0;
+    left: 0;
+    display: none;
 }
 
 #logo {
@@ -110,5 +116,4 @@ body {
     border: 2px solid rgb(254, 216, 4);
     border-radius: 3px;
     font-size: 15px;
-    display: none;
 }

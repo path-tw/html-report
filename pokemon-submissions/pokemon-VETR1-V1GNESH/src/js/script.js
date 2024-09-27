@@ -1,12 +1,16 @@
 'use strict';
 
 window.onload = async () => {
-    const container = document.getElementById('main-container');
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
-    const data = await response.json();
-    const pokemonArray = data.results;
-    renderPokemon(pokemonArray);
-  };
+  const pokemonArray = await generatePokemonArray();
+  renderPokemon(pokemonArray);
+};
+
+const generatePokemonArray = async function () {
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
+  const data = await response.json();
+  const pokemonArray = data.results;
+  return pokemonArray;
+  }
 
   const renderPokemon = function (pokemonArray) {
   pokemonArray.forEach(async (pokemon) => {
@@ -34,8 +38,9 @@ const createPokemonContainer = function () {
 
 const generatePokemonImage = function (obj) {
   const pokemonImage = document.createElement('img');
-  pokemonImage.src = obj.sprites.front_default;
+  pokemonImage.src = obj.sprites.front_default || './src/images/no-image.png';
   pokemonImage.alt = obj.name;
+  pokemonImage.classList.add('pokemon-image');
   return pokemonImage;
 }
 
@@ -79,3 +84,9 @@ const filterSearchResults = function (searchedValue, displayedPokemon) {
   });
 return isFound;
 };
+
+const openHomePage = async function () {
+  document.getElementById('main-container').textContent = '';
+  const pokemonArray = await generatePokemonArray();
+  renderPokemon(pokemonArray);
+}

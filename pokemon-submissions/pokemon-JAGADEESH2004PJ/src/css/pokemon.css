@@ -81,7 +81,15 @@ h1 {
   border-radius: 15px;
   background-color: black;
 }
+
 #noResultsMessage {
   display: none;
   color: red;
+}
+
+.stillLoading {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 15px;
+  float: right;
+
 }

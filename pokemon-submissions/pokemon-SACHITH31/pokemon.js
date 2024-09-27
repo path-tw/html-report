@@ -91,7 +91,6 @@ fetch(`https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=${increment}`)
           if (typesContainer[i] === 'psychic') {
             pokemonType.setAttribute('id', 'psychic');
           }
-          // console.log(typesContainer)
         }
         let pokemonNamesContainer = [];
         pokemonNamesContainer.push(data.name);

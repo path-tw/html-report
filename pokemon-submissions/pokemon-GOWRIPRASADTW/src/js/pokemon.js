@@ -1,8 +1,13 @@
 'use strict';
+const loader = document.getElementById('Loader');
+
 const fetchPokemon = async () => {
   const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
   const data = await response.json();
-  displayPokemon(data.results);
+  setTimeout(() =>   
+    displayPokemon(data.results), 5000);
+displayPokemon(data.results)
+
 };
 
 const displayPokemon = async (pokemonData) => {
@@ -22,11 +27,16 @@ const displayPokemon = async (pokemonData) => {
   }
 };
 
-// const loader = () =>{
-//   setTimeout(() => {
-//     const loader = document.getElementById('Loader');
-//     loader.innerText = '';
-    fetchPokemon();
-//   }, 2000)
+// const searchPokemon = document.getElementById('search')
+// const searchPokemons = () => {
+//   const searchTerm = searchPokemon.value.toLowerCase();
+//   const allPokemons = Array.from(document.querySelectorAll('.detail'));
+//   allPokemons.forEach(pokemon => {
+//       const name = pokemon.querySelector('h2').innerText.toLowerCase();
+//       pokemon.style.display = name.includes(searchTerm) ? 'block' : 'none';
+//   });
 // };
 
+// searchPokemon.addEventListener('input', searchPokemons);   
+
+  fetchPokemon();

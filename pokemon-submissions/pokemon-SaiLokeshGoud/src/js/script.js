@@ -1,5 +1,61 @@
 'use strict';
 
+const pokemonNotFound = (pokemonFound) => {
+  const noPokemonFoundDiv = document.querySelector('.no-pokemon-found');
+  if (pokemonFound) {
+    if (noPokemonFoundDiv) {
+      noPokemonFoundDiv.remove();
+    }
+  } else {
+    if (!noPokemonFoundDiv) {
+      const newNoPokemonFoundDiv = createElementWithClass('div', 'no-pokemon-found');
+      const newNoPokemonFoundText = createElementWithClass('h2', '', 'No Pokemons found!!!');
+      newNoPokemonFoundDiv.appendChild(newNoPokemonFoundText);
+      document.body.appendChild(newNoPokemonFoundDiv);
+    }
+  }
+}
+
+const searchPokemons = () => {
+  const searchInput = document.getElementById('searchBar');
+  searchInput.addEventListener('click', () => {
+    if (document.querySelector('.loading')) {
+      const popupDiv = createElementWithClass('div', 'popup');
+      const popupText = createElementWithClass('h3', '', 'Please wait while Pokemons are loading...!!!');
+      popupDiv.appendChild(popupText);
+      document.body.appendChild(popupDiv);
+
+      setTimeout(() => {
+        popupDiv.remove();
+      }, 2000);
+    }
+  });
+
+  searchInput.addEventListener('input', () => {
+    if (document.querySelector('.loading')) {
+      searchInput.value = '';
+    } else {
+      const searchTerm = searchInput.value.toLowerCase();
+      const allPokemons = document.querySelectorAll('.pokemon');
+
+      let pokemonFound = false;
+      allPokemons.forEach(pokemon => {
+        const pokemonName = pokemon.querySelector('.pokemon-name').innerText.toLowerCase();
+        const pokemonId = pokemon.querySelector('.pokemon-id').innerText.toLowerCase();
+        const pokemonType = pokemon.querySelector('.pokemon-type').innerText.toLowerCase();
+
+        if (pokemonName.includes(searchTerm) || pokemonId.includes(searchTerm) || pokemonType.includes(searchTerm)) {
+          pokemon.style.display = 'block';
+          pokemonFound = true;
+        } else {
+          pokemon.style.display = 'none';
+        }
+      });
+      pokemonNotFound(pokemonFound);
+    }
+  });
+};
+
 const createElementWithClass = (tag, className, textContent = '') => {
   const element = document.createElement(tag);
   element.className = className;
@@ -52,7 +108,7 @@ const displayPokemons = async (pokemonResults) => {
       pokemon.append(pokemonImage, pokemonName, pokemonId, pokemonType);
       main.appendChild(pokemon);
     } catch (error) {
-      console.error(`Error fetching Pokémon details: ${error.message}`);
+      console.error(`Error fetching Pokemon details: ${error.message}`);
     }
   }
 };
@@ -67,8 +123,10 @@ const showLoader = () => {
 };
 
 const hideLoader = () => {
-  const loading = document.getElementById('loading');
-  if (loading) loading.remove();
+  const loading = document.querySelector('.loading');
+  if (loading){
+    loading.remove();
+  } 
   document.querySelector('#main').style.display = 'flex';
 };
 
@@ -79,36 +137,10 @@ const fetchPokemons = async () => {
     const pokemonList = await response.json();
     await displayPokemons(pokemonList.results);
   } catch (error) {
-    console.error(`Error fetching Pokémon list: ${error.message}`);
+    console.error(`Error fetching Pokemon list: ${error.message}`);
   } finally {
     hideLoader();
   }
-};
-
-const searchPokemons = () => {
-  const searchInput = document.getElementById('searchBar');
-  searchInput.addEventListener('input', () => {
-    const searchTerm = searchInput.value.toLowerCase();
-    const allPokemons = document.querySelectorAll('.pokemon');
-
-    let pokemonFound = false;
-    allPokemons.forEach(pokemon => {
-      const pokemonName = pokemon.querySelector('.pokemon-name').innerText.toLowerCase();
-      const pokemonId = pokemon.querySelector('.pokemon-id').innerText.toLowerCase();
-      const pokemonType = pokemon.querySelector('.pokemon-type').innerText.toLowerCase();
-
-      if (pokemonName.includes(searchTerm) || pokemonId.includes(searchTerm) || pokemonType.includes(searchTerm)) {
-        pokemon.style.display = 'block';
-        pokemonFound = true;
-      } else {
-        pokemon.style.display = 'none';
-      }
-    });
-
-    if (!pokemonFound) {
-      console.log("No Pokémon found");
-    }
-  });
 };
 
 window.onload = () => {

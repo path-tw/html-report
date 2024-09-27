@@ -121,8 +121,14 @@ const fetchPokemons = async () => {
 };
 
 const addSearchButtonEventListener = () => {
+  const searchElement = document.getElementById('search');
   const searchButton = document.getElementById('search-btn');
   searchButton.onclick = handleSearch;
+  searchElement.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  });
 };
 
 const renderPokemons = async (pokemons) => {

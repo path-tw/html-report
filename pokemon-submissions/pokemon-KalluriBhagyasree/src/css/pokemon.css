@@ -13,3 +13,10 @@
     padding: 20% 45%;
     font-size: 2rem;
 }
+input{
+    padding: 8px;
+}
+header{
+    position: fixed;
+    top: 5px;
+}

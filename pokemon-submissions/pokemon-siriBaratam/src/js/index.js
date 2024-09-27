@@ -10,7 +10,7 @@ const createPokemonObject = (pokemonData) => {
 };
 
 const fetchPokemons = async () => {
-  const pokemonsResponse = await fetch('https://pokeapi.co/api/v2/pokemon?limit=50&offset=0');
+  const pokemonsResponse = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=0');
   const pokemonsData = await pokemonsResponse.json();
   const pokemons = pokemonsData.results;
   const array = [];
@@ -64,8 +64,8 @@ const afterFetchActions = () => {
   main.removeAttribute('class', 'main');
   const outerContainer = document.getElementById('outer-container');
   outerContainer.innerText = '';
-  const search = document.getElementById('search');
-  search.style.display = 'block';
+  const header = document.getElementById('header');
+  header.style.display = 'block';
 };
 
 const start = async () => {

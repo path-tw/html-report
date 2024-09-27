@@ -105,37 +105,31 @@ const searchDisplay = (container, searchBy, matchesName, matchesId, matchesType)
     }
 };
 
-const isTextSame = (text, searchText) => {
-    const searchTextLength = searchText.length;
-    for (let j = 0; j <= text.length - searchTextLength; j++) {
-        let subString = '';
-        for (let k = j; k < j + searchTextLength; k++) {
-            subString += text[k];
-        }
-        if (subString === searchText) {
-            return true;
-        }
-    }
-    return false;
-};
-
-const filterPokemons = (searchBy, searchText) => {
+const filterPokemons = async (searchBy, searchText) => {
     const pokemonContainers = document.getElementsByClassName('pokemon-container');
 
     for (let i = 0; i < pokemonContainers.length; i++) {
         const container = pokemonContainers[i];
-        const nameElements = container.getElementsByClassName('pokemon-name')[0];
-        const idElements = container.getElementsByClassName('pokemon-id')[0];
-        const typeElements = container.getElementsByClassName('pokemon-type')[0];
+        const { nameValue, idValue, typeValue } = await pokemonSearchDetails(container);
 
-        const nameValue = nameElements.innerText.toLowerCase();
-        const idValue = idElements.innerText.split(': ')[1].toLowerCase();
-        const typeValue = typeElements.innerText.split(': ')[1].toLowerCase();
-
-        const matchesName = isTextSame(nameValue, searchText);
-        const matchesId = isTextSame(idValue, searchText);
-        const matchesType = isTextSame(typeValue, searchText);
+        const matchesName = nameValue.includes(searchText);
+        const matchesId = idValue.includes(searchText);
+        const matchesType = typeValue.includes(searchText);
 
         searchDisplay(container, searchBy, matchesName, matchesId, matchesType);
     }
 };
+
+const pokemonSearchDetails = async (container) => {
+    const nameElement = container.getElementsByClassName('pokemon-name')[0];
+    const idElement = container.getElementsByClassName('pokemon-id')[0];
+    const typeElement = container.getElementsByClassName('pokemon-type')[0];
+
+    const nameValue = nameElement.innerText.toLowerCase();
+    const idValue = idElement.innerText.split(': ')[1].toLowerCase();
+    const typeValue = typeElement.innerText.split(': ')[1].toLowerCase();
+
+    return { nameValue, idValue, typeValue };
+};
+
+

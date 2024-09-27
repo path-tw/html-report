@@ -1,4 +1,3 @@
-
 'use strict';
 const getAllPokemons = async () => {
   const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1300&offset=0');
@@ -9,9 +8,6 @@ const getAllPokemons = async () => {
 const getPokemonDetails = async (url) => {
   try {
     const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch Pokémon details: ${response.status} ${response.statusText}`);
-    }
     const pokemonDetails = await response.json();
     return pokemonDetails;
   } catch (error) {
@@ -34,20 +30,23 @@ const createPokemonIdElement = (id) => {
 
 const createPokemonTypeElement = (types) => {
   const pokemonType = document.createElement('p');
-  pokemonType.innerText = `Type : ${types[0].type.name}`;
+  pokemonType.innerText = 'Type: ' + types.map(type => type.type.name).join(', ');
   return pokemonType;
 };
 
 const createPokemonImageElement = (imageUrl, name) => {
   const image = document.createElement('img');
-  image.src = imageUrl;
-  image.alt = name;
+  image.className = 'image';
+  image.src = imageUrl  || './src/images/noimage.jpeg';
   return image;
 };
 
-const createEachPokemonContainer= async (pokemonData, pokemonDetails) => {
+const createEachPokemonContainer = async (pokemonData, pokemonDetails) => {
   const pokemonContainer = document.createElement('div');
   pokemonContainer.className = 'pokemonContainer';
+  pokemonContainer.pokemonName = pokemonData.name.toLowerCase(); 
+  pokemonContainer.pokemonId = pokemonDetails.id.toString(); 
+  pokemonContainer.pokemonTypes = pokemonDetails.types
   const pokemonNameElement = createPokemonNameElement(pokemonData.name);
   const pokemonIdElement = createPokemonIdElement(pokemonDetails.id);
   const pokemonTypeElement = createPokemonTypeElement(pokemonDetails.types);
@@ -56,18 +55,11 @@ const createEachPokemonContainer= async (pokemonData, pokemonDetails) => {
   return pokemonContainer;
 };
 
+
 const fetchPokemon = async () => {
   try {
     const allPokemons = await getAllPokemons();  
-    const pokemons = [];
-    for (let index = 0; index < allPokemons.length; index++) {
-      const pokemonData = allPokemons[index];
-      const pokemonDetails = await getPokemonDetails(pokemonData.url);
-      if (pokemonDetails) {
-        const pokemon = await createEachPokemonContainer(pokemonData, pokemonDetails);
-        pokemons.push(pokemon); 
-      }
-    }
+    const pokemons = await iteration(allPokemons)
     const allPokemonsDetails = document.getElementById('allPokemonsDetails');
     pokemons.forEach(eachPokemon => {
       allPokemonsDetails.appendChild(eachPokemon);  
@@ -76,6 +68,34 @@ const fetchPokemon = async () => {
   } catch (error) {
     console.error('Error during Pokémon fetching process:', error);
   }
+};
+
+const iteration = async(allPokemons) =>{
+  const pokemonCollection = [];
+    for (let index = 0; index < allPokemons.length; index++) {
+      const pokemonData = allPokemons[index];
+      const pokemonDetails = await getPokemonDetails(pokemonData.url);
+      if (pokemonDetails) {
+        const pokemon = await createEachPokemonContainer(pokemonData, pokemonDetails);
+          pokemonCollection.push(pokemon);
+      }
+    }
+    return pokemonCollection;
+}
+
+const filterPokemons = () => {
+  const input = document.getElementById('search').value.toLowerCase();
+  const allPokemonContainers = document.querySelectorAll('.pokemonContainer');
+  allPokemonContainers.forEach(container => {
+    const name = container.pokemonName; 
+    const id = container.pokemonId;    
+    const types = container.pokemonTypes.join(',');  
+    if (name.includes(input) || id.includes(input) || types.includes(input)) {
+      container.style.display = 'block';
+    } else {
+      container.style.display = 'none';
+    }
+  });
 };
 
 const handleLoading = () => {
@@ -94,5 +114,7 @@ const removeLoading = () => {
 
 window.onload = async () => {
   handleLoading();  
-  await fetchPokemon();  
+  await fetchPokemon();
+  const searchInput = document.getElementById('search');
+  searchInput.addEventListener('input', filterPokemons);  
 };

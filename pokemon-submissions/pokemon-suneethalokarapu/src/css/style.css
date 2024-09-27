@@ -2,7 +2,7 @@
     height: 100px;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     background-color: white;
     align-items: center;
     position: relative;
@@ -30,18 +30,27 @@
     text-align: center;
     margin: 5px;
     border-radius: 20px;
-    height: 300px;
+    height: 300px;  
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     width: 200px;
 }
 
 .load {
     display: flex;
-    height: 550px;
+    height: 200px;
     width: 100%;
     background-color: white;
     font-size: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+#search{
+    width: 200px;
+    height: 30px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+.hide{
+    display: none;
 }

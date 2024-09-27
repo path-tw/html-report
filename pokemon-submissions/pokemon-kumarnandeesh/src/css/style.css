@@ -52,11 +52,19 @@ nav {
     margin-right: 40px;
 }
 
-#main {
+.main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
+}
+
+.loading {
+    font-size: 40px;
+    background-color: #eee;
+    position: relative;
+    top: 290px;
+    left: 720px;
 }
 
 .pokemonContainer {

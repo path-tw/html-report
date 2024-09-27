@@ -4,8 +4,10 @@ let isPageLoading = true;
 
 const removePopup = () => {
     const popup = document.getElementById('popup');
+    if (popup) {
     popup.innerText = '';
     document.body.removeChild(popup);
+    }
     return;
 }
 
@@ -13,7 +15,9 @@ const popupAlert = () => {
     const popUp = document.createElement('h2');
     popUp.innerText = 'page is loading please wait';
     popUp.id = 'popup';
+    popUp.style.textAlign = 'center';
     document.body.appendChild(popUp);
+    setTimeout(() => {removePopup();}, 1000);
 };
 
 const searchAlert = () => {

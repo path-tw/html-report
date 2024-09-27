@@ -14,17 +14,16 @@ const fetchAllPokemons = async () => {
   const loadingElement = document.querySelector('#loading');
   loadingElement.style.display = 'block';
   setTimeout(async () => {
-      const data = await fetchConvertData(`https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0`);
-      for (const pokemon of data.results) {
-        allPokemons.push(pokemon);
-      }
-      loadingElement.style.display = 'none';
-      for (let i = 0; i < allPokemons.length; i++) {
-        await appendToDom(allPokemons[i]);
-      }
+    const data = await fetchConvertData(`https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0`);
+    for (const pokemon of data.results) {
+      allPokemons.push(pokemon);
+    }
+    loadingElement.style.display = 'none';
+    for (let i = 0; i < allPokemons.length; i++) {
+      await appendToDom(allPokemons[i]);
+    }
   }, 4000);
 };
-
 
 const appendToDom = async (pokemon) => {
   try {
@@ -113,7 +112,25 @@ const filterPokemons = (possibilities, userInput, noResultsMessage) => {
   }
 };
 
+const stillLoading = () => {
+  const pTag = document.createElement('p');
+  pTag.innerText = 'Pokemons are still loading...Please wait..';
+  pTag.className = 'stillLoading';
+  document.body.appendChild(pTag);
+  setTimeout(() => {
+    pTag.remove();
+    document.querySelector('.searchBox').value = '';
+  }, 2000);
+};
+
 window.onload = () => {
   fetchAllPokemons();
-  document.querySelector('.searchBox').addEventListener('input', searchFunction);
+  document.querySelector('.searchBox').addEventListener('input', () => {
+    let state = document.querySelector('.pokemonList').textContent;
+    if (state === '') {
+      stillLoading();
+    } else {
+      searchFunction();
+    }
+  });
 };

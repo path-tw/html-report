@@ -1,5 +1,5 @@
-// https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0 All Pokemons for name nad id
-// https://pokeapi.co/api/v2/pokemon/ditto name search
+// https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0 for all pokemos
+// https://pokeapi.co/api/v2/pokemon/ditto search using name
 
 let pokemonCollection = [];
 
@@ -116,7 +116,7 @@ const activateSearch = () => {
   const searchBar = document.querySelector('#search-bar');
   searchBar.addEventListener('input', () => {
     document.querySelector('#search-results').classList.remove('hide');
-    search(searchBar.value.trim());
+    search(searchBar.value.toLowerCase().trim());
   });
 
   searchBar.addEventListener('blur', () => {

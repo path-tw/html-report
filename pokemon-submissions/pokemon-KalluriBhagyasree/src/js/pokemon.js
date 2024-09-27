@@ -1,4 +1,5 @@
-function pokemon(data) {
+let allPokemonDetails = [];
+function displayAllPokemons(data) {
     const pokemonContainer = document.getElementById('pokemon');
         const pokemonBlock = document.createElement('div');
 
@@ -13,10 +14,13 @@ function pokemon(data) {
 
         const type = document.createElement('p');
         let types = '';
-        data.types.forEach(typeInfo => {
-            types += typeInfo.type.name + ' ';
-        });
-        type.textContent = `Type: ${types.trim()}`;
+        for (let i = 0; i < data.types.length; i++) {
+            types += data.types[i].type.name;
+            if (i < data.types.length - 1) {
+               types += ', ';
+            }
+        }
+            type.textContent = `Type: ${types}`;
 
       pokemonBlock.appendChild(name);
       pokemonBlock.appendChild(id);
@@ -31,14 +35,40 @@ function fetching() {
 .then((response) => response.json())
 .then((data) => data.results)
 .then((arr) => {
+    allPokemonDetails = [];
     for (let i = 0; i < arr.length; i++) {
         fetch(arr[i].url)
             .then((response) => response.json())
             .then((pokemonData) => {
-                pokemon(pokemonData);
+                allPokemonDetails.push(pokemonData);
+                displayAllPokemons(pokemonData);
             });
     }
     loading.style.display = 'none';
 });
 }
+function searchPokemon() {
+    const searchInput = document.getElementById('search').value;
+    const foundPokemon = [];
+    
+    allPokemonDetails.forEach(pokemon => {
+        if (pokemon.name.includes(searchInput) ||
+            pokemon.id.toString().includes(searchInput)) {
+            foundPokemon.push(pokemon);
+        }
+        
+        pokemon.types.forEach(typeInfo => {
+            if (typeInfo.type.name.includes(searchInput)) {
+                foundPokemon.push(pokemon);
+            }
+        });
+    });
+
+    document.getElementById('pokemon').innerText = '';
+    if (foundPokemon.length > 0) {
+        foundPokemon.forEach(pokemon =>
+         displayAllPokemons(pokemon));
+    }
+}
+
 window.onload = fetching;

@@ -3,13 +3,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="./src/js/fetchapi.js"></script>
     <link rel="stylesheet" href="./src/css/style.css">
+    <script src="./src/js/fetchapi.js"></script> 
 </head>
 <body>
     <header>Pokemon World</header>
-    <section id="loader">Loading.....</section>
+    <section id="loader">Loading.....</section> 
     <main id="main">
+        <label for="search">Search:</label><input type="text" id="search" oninput="searchPokemons()" placeholder="--enter pokemon Data --">
         <div id="pokemons"></div>
     </main>
 </body>

@@ -35,6 +35,17 @@ body {
   margin-left: 1px;
 }
 
+.search-feature .home-button{
+  padding: 12px 20px;
+  background-color: #cd1515;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 1px;
+}
+
 .page-loader {
   position: fixed;
   height: 100vh;
@@ -73,6 +84,11 @@ body {
   padding: 20px;
   width: 220px;
   text-align: left;
+}
+
+.pokemon-image {
+  height: 96px;
+  width: 96px;
 }
 
 .hide {
