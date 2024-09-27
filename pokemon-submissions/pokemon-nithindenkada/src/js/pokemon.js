@@ -15,14 +15,13 @@ const getPokemonDetails = (pokemonDetails) => {
     loadingPage.classList.add('loader');
     loadingPage.innerText = 'Loading please wait...';
     pokemonsContainer.appendChild(loadingPage);
-    // console.log(pokemandetails);
     const fetchPromises = pokemonDetails.map(key => fetchCharacterDetailsAndAppend(key.url));
     Promise.all(fetchPromises)
-    .then(() => pokemonsContainer.removeChild())
-    .catch(error => {
-        console.error('Error fetching Pokémon details:', error);
-        pokemonsContainer.removeChild(loadingPage);
-    }); 
+        .then(() => pokemonsContainer.removeChild())
+        .catch(error => {
+            console.error('Error fetching Pokémon details:', error);
+            pokemonsContainer.removeChild(loadingPage);
+        });
 };
 
 const fetchCharacterDetailsAndAppend = async (url) => {
@@ -61,20 +60,20 @@ const appendDetails = (pokemonData) => {
 };
 
 const searchBar = () => {
-   const pokemonContainer = document.getElementsByClassName('pokemon');
-   const searchInput = document.getElementById('searchBar');
-   searchInput.addEventListener('input', () => {
+  const pokemonContainer = document.getElementsByClassName('pokemon');
+  const searchInput = document.getElementById('searchBar');
+  searchInput.addEventListener('input', () => {
     for (let index = 0; index < pokemonContainer.length; index++) {
-        const showTheCharacter = pokemonContainer[index];
-        if (showTheCharacter.textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
-            showTheCharacter.style.display = 'block';
-        } else {
-            showTheCharacter.style.display = 'none';
-        }
+      const showTheCharacter = pokemonContainer[index];
+      if (showTheCharacter.textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
+          showTheCharacter.style.display = 'block';
+      } else {
+          showTheCharacter.style.display = 'none';
+      }
     }
-
-   });
+  });
 };
+
 window.onload = () => {
     fetchPokemonDetails();
     searchBar();

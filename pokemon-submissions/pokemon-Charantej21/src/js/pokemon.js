@@ -1,31 +1,42 @@
 'use strict';
 async function fetchPokemonDetails() {
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1342');
-  const data = await response.json();
-  displayPokemondata(data.results);
-}
+  fetch('https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=1268')
+.then((response) => {
+  return response.json();
+})
+.then((data) => {
+  return data.results;
+})
+.then( (data) => {
+  for( let index = 0; index < data.length; index++) {
+  fetch(data[index].url)
+  .then((data) => {
+   return data.json();
+  })
+  .then((data) => {
+    const pokemonContainer = document.getElementById('pokemon-container');
+    const divelem = document.createElement('div');
+    const pokemonImg = document.createElement('img');
+    const pokemonName = document.createElement('p');
+    const pokemonType = document.createElement('p');
+    const pokemonId = document.createElement('p');
 
-async function displayPokemondata(pokemonList) {
-  const container = document.getElementById('pokemon-container');
-  for (const pokemon of pokemonList) {
-    const pokemonImg = await fetch(pokemon.url);
-    const pokemonDetails = await pokemonImg.json();
-    const types = pokemonDetails.types.map(typeInfo => typeInfo.type.name).join(', ');
-    const pokemonContainer = `
-      <section class="pokemon">
-        <img src="${pokemonDetails.sprites.front_default}" alt="${pokemonDetails.name}">
-        <h4>${pokemonDetails.name}</h4>
-        <div>ID: ${pokemonDetails.id}</div>
-        <div>Type: ${types}</div>
-      </section>`;
-    container.innerHTML += pokemonContainer;
+    pokemonImg.src = data.sprites.front_default;
+    divelem.append(pokemonImg);
+    divelem.appendChild(pokemonName).innerText ='Name: ' + data.name;
+    divelem.appendChild(pokemonType).innerText = 'Id :'+data.id;
+    divelem.appendChild(pokemonId).innerText = 'Type: '+ data.types.map(type => type.type.name).join(',');
+    pokemonContainer.appendChild(divelem);
+  })
   }
-}
+})
+};
+
 const main = () => {
     setTimeout( () => {
         document.getElementById('popupMsg').style.display = "none";
         document.querySelector('.page-heading').style.display = 'block';
         fetchPokemonDetails();
-    },5000);
+    },7000);
   };
 main();

@@ -44,8 +44,8 @@ const determineType = (typesArray) => {
 
 const makeFetchCall = async (url) => {
   try {
-    const response = await fetch(url);
-    const json = await response.json();
+    const pokemonResponse = await fetch(url);
+    const json = await pokemonResponse.json();
     return json;
   } catch (error) {
     console.log(error);
@@ -53,7 +53,7 @@ const makeFetchCall = async (url) => {
 };
 
 const createPokemon = async () => {
-  for (let i = 1; i <= 1000; i++) {
+  for (let i = 1; i <= 1024; i++) {
     const url = `https://pokeapi.co/api/v2/pokemon-form/${i}/`;
     const pokemon = await makeFetchCall(url);
     const pokemonTypes = determineType(pokemon.types);
@@ -70,17 +70,12 @@ const createPokemon = async () => {
   });
 };
 
-// const addDefaultListeners = () => {
-//   const search = document.getElementById('search-bar');
-//   search.addEventListener('focus', () => createPopup());
-// };
-
 const displayLoader = async () => {
   const loadMessage = createPTag('you are going to pokemon world in few moments...', 'load-message');
   const parent = document.getElementsByClassName('pokemon-main-container')[0];
   parent.innerHTML = '';
+
   parent.appendChild(loadMessage);
-  // addDefaultListeners();
   return;
 };
 
@@ -109,17 +104,45 @@ const performSearch = (event) => {
   displayPokemons(POKEMON); // when the search input text has nothing
 };
 
-const addEventListeners = () => {
+const removePopup = popup => {
+  const header = document.getElementsByTagName('header')[0];
+  header.classList.remove('disabled');
+
+  popup.remove();
+};
+
+const createPopup = () => {
+  console.log(1234567)
+  const popup = createPTag('Kindly wait until the content is loaded', 'wait-popup');
+  const parent = document.getElementsByClassName('pokemon-main-container')[0];
+  parent.appendChild(popup);
+
+  const header = document.getElementsByTagName('header')[0];
+  header.classList.add('disabled');
+  setTimeout(() => {
+    removePopup(popup)
+  }, 1500);
+};
+
+const addDefaultListeners = () => {
   const search = document.getElementById('search-bar');
+  search.addEventListener('focus', createPopup);
+};
+
+const makeMainEventListeners = () => {
+  const search = document.getElementById('search-bar');
+  search.removeEventListener('focus', createPopup);
+  search.value = '';
   search.addEventListener('input', () => performSearch(event));
   return;
 };
 
 const main = async () => {
   displayLoader();
+  addDefaultListeners();
   const pokemonData = await createPokemon();
   displayPokemons(pokemonData);
-  addEventListeners();
+  makeMainEventListeners();
 };
 
 window.onload = main;

@@ -67,7 +67,7 @@ body {
 }
 
 .pokemon-container {
-  border: 1px solid #eee;
+  border: 1px solid black;
   border-radius: 8px;
   margin: 10px;
   padding: 20px;

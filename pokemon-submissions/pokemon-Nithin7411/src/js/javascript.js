@@ -24,13 +24,13 @@ const fetchAllPokemons = async function (url, allPokemons) {
       for (let pokemon of data.results) {
         await fetchPokeInfo(pokemon.url, allPokemons);
       }
-
       url = data.next;
     } catch (error) {
       console.error("Error fetching Pokémon data:", error);
       break;
     }
   }
+    document.getElementById('SearchBox').style.display = 'block';
   hideLoader();
 };
 
@@ -70,7 +70,7 @@ const getData = function (data) {
 
 const appendPokeName = function (data, pokemon) {
   const name = document.createElement("div");
-  name.innerText = "Name: " + data.Name; // Use data.Name instead of data.name
+  name.innerText = "Name: " + data.Name;
   pokemon.append(name);
 };
 

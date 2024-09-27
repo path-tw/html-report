@@ -36,11 +36,23 @@ img{
     width: 320px;
     height: 35px;
     margin: 10px 50px;
+    display: none;
 }
 #loader{
     font-family: monospace;
-
+    font-size: large;
+    margin-top: 20px;
+    margin-left: 20px;
 }
 #displaySearchedElements{
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+#searchTitle{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 2em;
+    margin-top: 50px;
+    margin-left: 20px;
+    display: none;
 }

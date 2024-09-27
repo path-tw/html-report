@@ -81,9 +81,9 @@ button:hover {
 }
 #loadingSymbol {
     position: fixed;
-    top: 50%;
+    top: 47%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 24px;
-    color: #333;
+    color: blue;
 }
