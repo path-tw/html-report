@@ -35,7 +35,7 @@ input[type="text"] {
     border-radius: 4px 0 0 4px;
     outline: none;
 }
-input[type="submit"] {
+button {
     padding: 10px;
     border: 1px solid #ff3366;
     background-color: #ff3366;
@@ -43,7 +43,7 @@ input[type="submit"] {
     border-radius: 0 4px 4px 0;
     cursor: pointer;
 }
-input[type="submit"]:hover {
+button:hover {
     background-color: #e62e5e;
 }
 .container {
@@ -78,4 +78,12 @@ input[type="submit"]:hover {
     font-weight: bold;
     text-transform: uppercase;
     font-style: inherit;
+}
+#loadingSymbol {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #333;
 }

@@ -5,40 +5,37 @@ const displayData = (div) => {
   main.append(div)
 };
 
+const appendelementsToDiv = (object,div,elements) =>{
+  elements[1].innerText = `Id : ${object.id}`;
+  div.setAttribute('id', `poke${object.id}`);
+  div.classList.add('div-container');
+  div.appendChild(elements[0]);
+  div.appendChild(elements[2]);
+  div.appendChild(elements[3]);
+  div.appendChild(elements[1]);
+  displayData(div);
+}
+
 const createDiv = (object) => {
   const div = document.createElement('div');
-  const id = `poke${object.id}`;
-  div.setAttribute('id',id);
   const image = document.createElement('img');
   image.src = object.image;
   const h3 = document.createElement('h3');
-  const details = document.createElement('h4');
+  const id = document.createElement('h4');
   const type = document.createElement('h4');
   type.innerText = 'Type :';
   for (let i of object.type) {
-    type.innerText += `${i} `;
+    type.innerText += `${i.toUpperCase()} `;
   }
   h3.innerText = object.name.toUpperCase();
-  details.innerText = `Id : ${object.id}`;
-  div.classList.add('div-container');
-  div.appendChild(h3);
-  div.appendChild(image);
-  div.appendChild(type);
-  div.appendChild(details);
-  displayData(div);
+  appendelementsToDiv(object,div,[h3,id,image,type]);
 };
 
-const getPokeData = async () => {
-  const pokemonData = [];
-  const pokeData = (await (await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')).json());
-  console.log('datafetched')
-  let index =0;
+const addPokeDataToObject = async (pokemonData,pokeData) => {
   for (let i in pokeData.results) {
     const object = {};
     object.name = (pokeData.results[i].name);
     const pokemon = await (await fetch(pokeData.results[i].url)).json();
-    console.log('data')
-    if(++index>500) {break;}
     object.id = pokemon.id;
     object.type = [];
     object.image = pokemon.sprites.front_default;
@@ -47,18 +44,26 @@ const getPokeData = async () => {
     }
     pokemonData.push(object);
   }
+}
+
+const getPokeData = async () => {
+  const pokemonData = [];
+  const pokeData = (await 
+  (await 
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
+  ).json());
+  await addPokeDataToObject(pokemonData,pokeData);
   return pokemonData;
 };
 
 const getSearchedDiv = (pokemon) => {
   const searchValue = document.getElementById('search-input').value;
-  console.log(searchValue)
-  for(const i of pokemon) {
-    for(const j of i.type){
-      if(
-        i.name.toLowerCase() === searchValue.toLowerCase() ||
+  for (const i of pokemon) {
+    for (const j of i.type) {
+      if (
+        i.name.toLowerCase().indexOf(searchValue.toLowerCase()) > -1 ||
         i.id == searchValue ||
-        j.toLowerCase() === searchValue.toLowerCase()
+        j.toLowerCase().indexOf(searchValue.toLowerCase()) > -1
       ) {
         document.getElementById(`poke${i.id}`).style.display = '';
         break;
@@ -71,12 +76,12 @@ const getSearchedDiv = (pokemon) => {
 
 const load = async () => {
   const pokemon = await getPokeData();
-  console.log('loaded')
   document.getElementById('load').remove();
-  for(const poke in pokemon) {
+  for (const poke in pokemon) {
     createDiv(pokemon[poke]);
   }
-  document.getElementById('search-button').addEventListener('click',()=>getSearchedDiv(pokemon));
+  document.getElementById('search-input')
+    .addEventListener('input', () => getSearchedDiv(pokemon));
 };
 
 window.onload = load();

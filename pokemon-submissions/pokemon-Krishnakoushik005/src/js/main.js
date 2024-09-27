@@ -45,18 +45,31 @@ const fetchPokesData = async function () {
   return pokesData;
 };
 
+const search = function () {
+  const userData = document.querySelector('#search').value.toLowerCase();
+  const allPokes = document.querySelectorAll('.allPokemon section');
+  for (let index = 0; index < allPokes.length; index++) {
+    const pokeData = allPokes[index].innerText.toLowerCase();
+    if (pokeData.includes(userData)) {
+      allPokes[index].style.display = 'block';
+    } else {
+      allPokes[index].style.display = 'none';
+    }
+  }
+};
+
 window.onload = async function () {
-  let structuredPokesData;
   try {
+    let structuredPokesData;
     structuredPokesData = await fetchPokesData();
-  } catch (error) {
-    console.log(`Error : ${error}`);
-  } finally {
     setTimeout(async () => {
       document.querySelector('.allPokemon').innerText = '';
       structuredPokesData.forEach(element => {
         appendPoke(element);
       });
     });
+    document.querySelector('#search').addEventListener('input', search);
+  } catch (error) {
+    console.log(`Error : ${error}`);
   }
 };

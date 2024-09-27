@@ -1,9 +1,4 @@
 'use strict';
-const closeLoadingAnimation = function () {
-  const loadingBox = document.querySelector('#loading-container');
-  loadingBox.remove();
-};
-
 const getPokemonAndRender = function (
   inputValue,
   pokemonGallery,
@@ -58,7 +53,7 @@ const renderDataInGallery = async function (allPokemonData) {
   for (const eachPokemon of allPokemonData) {
     eachPokemon.element = renderEachPokemon(eachPokemon);
   }
-  closeLoadingAnimation();
+  document.querySelector('.loading-container').remove();
 };
 
 const getSpecificData = async function (eachData) {

@@ -4,7 +4,7 @@
   font-family: sans-serif;
 }
 
-#loading-container {
+.loading-container {
   width: 100vw;
   height: 100vh;
   background-color: rgba(128, 128, 128, 0.365);

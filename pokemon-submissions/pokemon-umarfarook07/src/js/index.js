@@ -65,6 +65,9 @@ const isNameMatch = (pokemonName, searchValue) => {
 const isIdMatch = (pokemonId, searchValue) => {
   return isMatchingSearchValue(pokemonId, searchValue);
 };
+const isTypeMatch = (pokemonTypes, searchValue) => {
+  return pokemonTypes.some((type) => isMatchingSearchValue(type, searchValue));
+};
 
 const getPokemonName = (card) => {
   return card.querySelector('.pokemon-name').textContent.toLowerCase()
@@ -73,9 +76,11 @@ const getPokemonId = (card) => {
   return card.querySelector('.pokemon-id').textContent;
 };
 const getPokemonTypes = (card) => {
-  return card.querySelectorAll('.pokemon-type').map(type => {
-    return type.textContent;
+  const types = [];
+  card.querySelectorAll('.pokemon-type').forEach((type) => {
+    types.push(type.textContent.toLowerCase());
   });
+  return types;
 };
 
 const handleSearch = () => {
@@ -90,9 +95,11 @@ const handleSearch = () => {
     const pokemonName = getPokemonName(card);
     const pokemonId = getPokemonId(card);
     const pokemonTypes = getPokemonTypes(card);
-    console.log(pokemonTypes);
-    const isMatch = isNameMatch(pokemonName, searchValue) || isIdMatch(pokemonId, searchValue);
-    card.style.display = isMatch ? '' : 'none'
+    const isNameMatched = isNameMatch(pokemonName, searchValue);
+    const isIdMatched = isIdMatch(pokemonId, searchValue);
+    const areTypesMatched = isTypeMatch(pokemonTypes, searchValue);
+    const isMatch = isNameMatched || isIdMatched || areTypesMatched;
+    card.style.display = isMatch ? '' : 'none';
   });
 };
 

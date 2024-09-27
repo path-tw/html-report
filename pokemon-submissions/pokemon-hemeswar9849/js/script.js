@@ -3,7 +3,7 @@
 const getTheData = () => {
   return new Promise(async (resolve) => {
     try {
-      const fetchedData = await fetch('https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=10');
+      const fetchedData = await fetch('https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=1025');
       const resultData = await fetchedData.json();
       resolve(resultData);
     } catch (error) {

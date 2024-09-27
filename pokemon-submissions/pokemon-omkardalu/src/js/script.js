@@ -97,18 +97,20 @@ const getPokemonCollection = async () => {
 };
 
 const search = (value) => {
+  const container = document.querySelector('#search-results');
+  container.innerText = '';
   const searchResults = pokemonCollection.filter((pokemon) => {
     if (
-      pokemon.id === value ||
+      pokemon.id.toString().includes(value) ||
       pokemon.name.includes(value) ||
-      pokemon.type.includes(value)
+      pokemon.type.toString().includes(value)
     ) {
       return true;
     }
     return false;
   })
-  document.querySelector('#search-results').innerText = '';
   renderElements(searchResults, '#search-results');
+  searchResults.length || (container.innerText = 'No Results');
 };
 
 const activateSearch = () => {

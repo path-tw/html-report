@@ -6,6 +6,8 @@
 header{
   padding: 1rem;
   border-bottom: 2px solid black;
+  display: flex;
+  justify-content: space-between;
 }
 main{
   padding: 1rem;
@@ -31,4 +33,17 @@ main{
 .allPokemon img{
   width: 80%;
   aspect-ratio: 1;
+}
+#searchFeature{
+  padding: 0.5rem 1.5rem;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+#searchFeature input{
+  height: 2rem;
+  padding: 0.5rem;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  background-color: lightblue;
+  outline: none;
 }

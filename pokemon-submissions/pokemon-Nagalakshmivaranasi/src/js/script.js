@@ -1,5 +1,5 @@
 const fetchPokemonData = async () => {
-  const url = 'https://pokeapi.co/api/v2/pokemon?limit=52';
+  const url = 'https://pokeapi.co/api/v2/pokemon?limit=100';
   const options = {
     method: 'GET'
   }
@@ -45,6 +45,7 @@ const addImage = (addImage) => {
 const displayPokemonDetails = (pokemonObj) => {
   const container = document.createElement('div');
   container.classList.add('pokemon-details');
+  container.id = pokemonObj['name'];
 
   const pokemonImage = addImage(pokemonObj['image']);
   const pokemonName = addDetial('Name: ', pokemonObj['name']);
@@ -68,9 +69,24 @@ const preloading = () => {
   const divForLoading = document.createElement('div');
   const pokemonContainer = document.getElementById('pokemon-container');
   divForLoading.classList.add('preload');
-  divForLoading.innerHTML = 'Loading..';
+  divForLoading.innerHTML = 'Loading...';
   pokemonContainer.appendChild(divForLoading);
 }
+
+const displayPokemonOnSearch = (pokemons) => {
+  const input = document.getElementById('search');
+  const value = input.value.toLowerCase();
+  for (let pokemon of pokemons) {
+    if (pokemon.name.includes(value) || pokemon.type.includes(value)) {
+      const name = document.getElementById(pokemon.name);
+      name.style.display = 'block';
+    }
+    else {
+      const name = document.getElementById(pokemon.name);
+      name.style.display = 'none';
+    }
+  }
+};
 
 const data = async () => {
   preloading();
@@ -78,6 +94,9 @@ const data = async () => {
   addDetialsToDom(pokemons);
   const preload = document.querySelector('.preload');
   preload.remove();
+  const searchPokemon = document.getElementById('search');
+  console.log(pokemons);
+  searchPokemon.addEventListener('input', () => { displayPokemonOnSearch(pokemons) })
 };
 
 window.onload = data;

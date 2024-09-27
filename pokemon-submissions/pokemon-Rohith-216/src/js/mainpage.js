@@ -1,27 +1,38 @@
 'use strict';
 
-// const storeDetailsForSearch = () => {
-//         let detailscontainer = [];
-//         const name = pokemonsContainer.querySelector('h2').innerText;
-//         const id = pokemonsContainer.querySelector('p:nth-child(1)').innerText;
-//         const types = pokemonsContainer.querySelector('p:nth-child(2)').innerText;
-//         detailscontainer.push(name, id, types);
-//         console.log(detailscontainer);
-// };
+let isPageLoading = true;
 
-const searchFunctioning = () => {
+const removePopup = () => {
+    const popup = document.getElementById('popup');
+    popup.innerText = '';
+    document.body.removeChild(popup);
+    return;
+}
+
+const popupAlert = () => {
+    const popUp = document.createElement('h2');
+    popUp.innerText = 'page is loading please wait';
+    popUp.id = 'popup';
+    document.body.appendChild(popUp);
+};
+
+const searchAlert = () => {
     const container = document.getElementsByClassName('pokemon');
+    for (let index = 0; index < container.length; index++) {
+        const separateDiv = container[index];
+        if (separateDiv.innerText.toLowerCase().includes(search.value)) {
+            separateDiv.style.display = 'block';
+        } else {
+            separateDiv.style.display = 'none';
+        }
+    }
+};
+
+const searchFunctioning = () => {   
     const search = document.querySelector('#search');
     search.addEventListener('input', () => {
-        for (let index = 0; index < container.length; index++) {
-            const separateDiv = container[index];
-            if (separateDiv.innerText.toLowerCase().includes(search.value)) {
-                separateDiv.style.display = 'block';
-            } else {
-                separateDiv.style.display = 'none';
-            }
-        }
-    })
+        (isPageLoading) ? popupAlert() :  searchAlert ();
+    });
 };
 
 const appendChilderns  = (names, id, image, types, pokemonDIv) => {
@@ -66,11 +77,7 @@ const getPokemonDetails = (pokemons, loadingpage) => {
     });
 };
 
-const renderPokemons = async () => {
-    const pokemonsContainer = document.querySelector('#mainpage');
-    const loadingpage = document.createElement('div');
-    loadingpage.innerHTML = 'Loading...';
-    pokemonsContainer.appendChild(loadingpage);
+const renderPokemons = async (loadingpage) => {
     try {
         const response = await fetch ('https://pokeapi.co/api/v2/pokemon?limit=359&offset=0');
         const reverseResponse = await response.json();
@@ -82,6 +89,14 @@ const renderPokemons = async () => {
 };
 
 window.onload = () => {
-    renderPokemons ();
-    searchFunctioning();
+    const pokemonsContainer = document.querySelector('#mainpage');
+    const loadingpage = document.createElement('div');
+    loadingpage.innerHTML = 'Loading...';
+    pokemonsContainer.appendChild(loadingpage);
+    setTimeout(() => {
+        renderPokemons (loadingpage);
+        isPageLoading = false;
+        removePopup();
+    }, 5000);
+    searchFunctioning ();
 }

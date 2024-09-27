@@ -52,7 +52,7 @@ const loadPokimons = async () => {
   renderPokemon = await fetchpokemonData();
   renderPokemon.forEach(pokemon => createPokemonDiv(pokemon));
   onloadPokemons('none');
-  document.getElementById('search').addEventListener('input', setupSearch);
+  document.getElementById('searchPokemon').addEventListener('click', setupSearch);
 };
 
 window.onload = loadPokimons;
