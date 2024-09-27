@@ -14,7 +14,13 @@ const toAppendId = (id) => {
 
 const toAppendImage = (url) => {
     const imageContainer = document.createElement('img');
-    imageContainer.src = url;
+    // if (!url) {
+    //     imageContainer.src = './src/images/no-image.png';
+    //     imageContainer.style.display = 'flex';
+    //     return imageContainer;
+    // }
+    imageContainer.classList.add('imageContainer');
+    imageContainer.src = url || './src/images/no-image2 - Copy.jpg';
     imageContainer.style.display = 'flex';
     return imageContainer;
 };

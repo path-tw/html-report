@@ -39,6 +39,7 @@ header {
   background: white;
   width: 150px;
   text-align: center;
+  box-shadow: 5px 5px rgb(253, 191, 75);
 }
 
 #pokemonContainer section img {

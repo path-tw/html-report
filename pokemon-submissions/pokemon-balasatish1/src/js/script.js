@@ -69,7 +69,7 @@ const getSpecificData = async function (eachData) {
 
 const getPokemonData = async function () {
   const allPokemonData = [];
-  const pokemonCount = 150;
+  const pokemonCount = 200;
   const url = `https://pokeapi.co/api/v2/pokemon-form/?limit=${pokemonCount}`;
   const response = await fetch(url);
   const responseData = await response.json();

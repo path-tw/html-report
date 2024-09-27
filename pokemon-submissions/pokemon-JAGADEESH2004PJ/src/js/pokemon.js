@@ -14,9 +14,7 @@ const fetchAllPokemons = async () => {
   const loadingElement = document.querySelector('#loading');
   loadingElement.style.display = 'block';
   setTimeout(async () => {
-
-      const apiUrl = `https://pokeapi.co/api/v2/pokemon?limit=10000`;
-      const data = await fetchConvertData(apiUrl);
+      const data = await fetchConvertData(`https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0`);
       for (const pokemon of data.results) {
         allPokemons.push(pokemon);
       }
@@ -24,7 +22,7 @@ const fetchAllPokemons = async () => {
       for (let i = 0; i < allPokemons.length; i++) {
         await appendToDom(allPokemons[i]);
       }
-  }, 3000);
+  }, 4000);
 };
 
 
@@ -79,22 +77,43 @@ const createAndAppendType = (pokemonData, pokemonCard) => {
 };
 
 const searchFunction = () => {
-    const searchInput = document.querySelector('.searchBox');
-    const possibilities = document.querySelectorAll('#pokemonList .pokemonCard');
-    const pl = document.querySelector('#pokemonList')
-    const userInput = searchInput.value.toLowerCase();
-    for (let index = 0; index < possibilities.length; index++) {
-      const suggestion = possibilities[index];
-      const suggestionText = suggestion.textContent.toLowerCase();
-      if (suggestionText.includes(userInput)) {
-        suggestion.style.display = 'block';
-      } else {
-        suggestion.style.display = 'none';
-      }
+  const userInput = document.querySelector('.searchBox').value.toLowerCase();
+  const possibilities = document.querySelectorAll('#pokemonList .pokemonCard');
+  const noResultsMessage = document.querySelector('#noResultsMessage');
+  if (userInput === '') {
+    showAllPokemons(possibilities, noResultsMessage);
+  } else {
+    filterPokemons(possibilities, userInput, noResultsMessage);
+  }
+};
+
+const showAllPokemons = (possibilities, noResultsMessage) => {
+  for (const suggestion of possibilities) {
+    suggestion.style.display = 'block';
+  }
+  noResultsMessage.style.display = 'none';
+};
+
+const filterPokemons = (possibilities, userInput, noResultsMessage) => {
+  let isFound = false;
+  for (const suggestion of possibilities) {
+    const suggestionText = suggestion.textContent.toLowerCase();
+    if (suggestionText.includes(userInput)) {
+      suggestion.style.display = 'block';
+      isFound = true;
+    } else {
+      suggestion.style.display = 'none';
     }
-  };
+  }
+  if (!isFound) {
+    noResultsMessage.textContent = 'No Pokémon found';
+    noResultsMessage.style.display = 'block';
+  } else {
+    noResultsMessage.style.display = 'none';
+  }
+};
 
 window.onload = () => {
-  document.querySelector('.searchBox').addEventListener('input', searchFunction)
   fetchAllPokemons();
+  document.querySelector('.searchBox').addEventListener('input', searchFunction);
 };

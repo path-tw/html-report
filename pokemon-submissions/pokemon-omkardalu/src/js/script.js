@@ -107,22 +107,20 @@ const search = (value) => {
     ) {
       return true;
     }
-    return false;
   })
   renderElements(searchResults, '#search-results');
-  searchResults.length || (container.innerText = 'No Results');
+  searchResults.length || (container.innerText = 'No Results Found');
 };
 
 const activateSearch = () => {
   const searchBar = document.querySelector('#search-bar');
   searchBar.addEventListener('input', () => {
-    document.querySelector('#search-results')
-    .classList.remove('hide');
-    search(searchBar.value);
+    document.querySelector('#search-results').classList.remove('hide');
+    search(searchBar.value.trim());
   });
-  searchBar.addEventListener('blur' , () => {
-    document.querySelector('#search-results').classList.add('hide');
 
+  searchBar.addEventListener('blur', () => {
+    document.querySelector('#search-results').classList.add('hide');
   })
 };
 
@@ -133,5 +131,5 @@ window.onload = () => {
       renderElements(pokemonCollection, '#all-pokemons');
       removeLoader();
     });
-  activateSearch()
+  activateSearch();
 };

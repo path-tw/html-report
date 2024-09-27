@@ -48,32 +48,41 @@ const renderPokemonApi = async () => {
     const pokemonDetails = await fetchPokemonApi();
     const loadingMessage = document.getElementById('loadingMessage');
     loadingMessage.style.display = 'none';
-    for (let index = 0; index < pokemonDetails.length; index++) {
-        createDiv(pokemonDetails[index]);
-    }
     return pokemonDetails;
 };
 
+const displayPokemonDetails = (pokemonDetails) => {
+    for (let index = 0; index < pokemonDetails.length; index++) {
+        createDiv(pokemonDetails[index]);
+    }
+};
 
-
-window.onload = async () => {
+const searcArray = (pokemonArray, searchValue) => {
     const outerDiv = document.getElementById('pokemonImages');
-        const arrayOfObjects = await renderPokemonApi();
-    const search = document.getElementById('search');
-    search.addEventListener('input', () => {
-        const data = searchItems(arrayOfObjects, search.value.toLowerCase())
-        console.log(data);
+    const searchData = searchItems(pokemonArray, searchValue);
+    console.log(searchData);
+    outerDiv.innerHTML = '';
+    displayPokemonDetails(searchData);
+};
+
+const searchItems = (pokemonArray, searchInput) => {
+    const outerDiv = document.getElementById('pokemonImages');
+    const homeButton = document.getElementById('homeButton');
+    homeButton.addEventListener('click', () => {
         outerDiv.innerHTML = '';
-        for (let index = 0; index < data.length; index++) {
-            document.body.appendChild(outerDiv);
-            createDiv(data[index]);
-        }
+        displayPokemonDetails(pokemonArray);
+    });
+    return pokemonArray.filter(({ id, type, name }) => {
+        id = id.toString();
+        type = type.toLowerCase();
+        name = name.toLowerCase();
+        return id.includes(searchInput) || type.includes(searchInput) || name.includes(searchInput);
     });
 };
 
-const searchItems = (array, searchInput) => {
-    const outerDiv = document.getElementById('pokemonImages');
-   return array.filter((eachObject) => {
-        return eachObject.id.toString().includes(searchInput) || eachObject.type.toLowerCase().includes(searchInput) || eachObject.name.toLowerCase().includes(searchInput);
-    });
+window.onload = async () => {
+    const pokemonArray = await renderPokemonApi();
+    displayPokemonDetails(pokemonArray);
+    const search = document.getElementById('search');
+    search.addEventListener('input', () => searcArray(pokemonArray, search.value.toLowerCase()));
 };

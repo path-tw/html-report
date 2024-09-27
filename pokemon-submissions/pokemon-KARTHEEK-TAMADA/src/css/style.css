@@ -42,6 +42,31 @@ h1 {
   font-size: 0.9em;
   color: #555;
 }
-/* .pokemon-card:hover {
-  box-shadow: 6px 7px 9px rgba(0, 0, 0, 0.1)
-} */
+
+.search-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  width: 250px;
+  height: 40px;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  font-size: 18px;
+  padding: 0 15px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-box input:focus {
+  border-color: #007bff;
+}
+nav{
+  position: sticky;
+  top:0;
+  background-color: white;
+  padding-bottom: 3px;
+  padding-top: 5px;
+}

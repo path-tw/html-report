@@ -73,14 +73,13 @@ const togglePopup = (isRendered, container) => {
   container.style.cssText = `display: ${visibleStatus}`;
 };
 
-const processPokemonData = async (responseJson, loaderContainer) => {
-  pokemonsData = responseJson.results;
+const processPokemonData = async (pokemonsData, loaderContainer) => {
   togglePopup(false, loaderContainer);
   for (const pokemon of pokemonsData) {
     const pokemonData = await getPokemonData(pokemon.url);
-    const pokemonContainer = createSectionForPokemon();
-    setPokemonImg(pokemonContainer, pokemonData);
-    setPokemonInfo(pokemonContainer, pokemonData);
+    const pokemonContainer = pokemonData && createSectionForPokemon();
+    pokemonData && setPokemonImg(pokemonContainer, pokemonData);
+    pokemonData && setPokemonInfo(pokemonContainer, pokemonData);
   }
   togglePopup(true, loaderContainer);
 };

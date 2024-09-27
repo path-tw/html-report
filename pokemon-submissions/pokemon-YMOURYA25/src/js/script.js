@@ -106,7 +106,17 @@ const searchDisplay = (container, searchBy, matchesName, matchesId, matchesType)
 };
 
 const isTextSame = (text, searchText) => {
-    return text.includes(searchText);
+    const searchTextLength = searchText.length;
+    for (let j = 0; j <= text.length - searchTextLength; j++) {
+        let subString = '';
+        for (let k = j; k < j + searchTextLength; k++) {
+            subString += text[k];
+        }
+        if (subString === searchText) {
+            return true;
+        }
+    }
+    return false;
 };
 
 const filterPokemons = (searchBy, searchText) => {

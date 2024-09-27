@@ -63,16 +63,16 @@ nav {
     text-align: center;
     padding: 10px;
     margin: 20px;
-    height: 200px;
-    width: 150px;
+    height: 220px;
+    width: 160px;
     border: 2px solid rgb(12, 12, 12);
-    border-radius: 20px;
+    border-radius: 10px;
     box-shadow: 10px;
     background-color: white;
 }
 
 .pokemonContainer:hover {
-    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .pokemonContainer h3 {
@@ -82,7 +82,7 @@ nav {
 
 .pokemonContainer img {
     position: relative;
-    left: 30px;
+    left: 25px;
 }
 
 .pokemonContainer img,p, div, span {

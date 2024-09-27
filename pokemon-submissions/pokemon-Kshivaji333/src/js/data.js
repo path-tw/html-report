@@ -12,13 +12,13 @@ const getNamesOfAllPokemons = async () => {
 const createPokemonsData = async () => {
   console.log('in creat start');
   const allPokemons = await getNamesOfAllPokemons();
-  
+  const length = allPokemons.results.length
   // for(const pokemon of allPokemons.results){
   //   const data = await getPokemonDetails(pokemon.name);
   //   allPokemonsData.push(data);
   //   console.log('in loop')
   // }
-  for(let index = 0; index < 50; index++){
+  for(let index = 0; index < 150; index++){
     const data = await getPokemonDetails(allPokemons.results[index].name);
     allPokemonsData.push(data);
     console.log('in loop')

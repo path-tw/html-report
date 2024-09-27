@@ -60,14 +60,22 @@ const appendDetails = (pokemonData) => {
     pokemonsContainer.appendChild(pokemonContainer);
 };
 
+const searchBar = () => {
+   const pokemonContainer = document.getElementsByClassName('pokemon');
+   const searchInput = document.getElementById('searchBar');
+   searchInput.addEventListener('input', () => {
+    for (let index = 0; index < pokemonContainer.length; index++) {
+        const showTheCharacter = pokemonContainer[index];
+        if (showTheCharacter.textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
+            showTheCharacter.style.display = 'block';
+        } else {
+            showTheCharacter.style.display = 'none';
+        }
+    }
+
+   });
+};
 window.onload = () => {
     fetchPokemonDetails();
+    searchBar();
 }
-
-
-
-
-
-
-
-

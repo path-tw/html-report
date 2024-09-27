@@ -10,7 +10,7 @@ const createPokemonObject = (pokemonData) => {
 };
 
 const fetchPokemons = async () => {
-  const pokemonsResponse = await fetch('https://pokeapi.co/api/v2/pokemon');
+  const pokemonsResponse = await fetch('https://pokeapi.co/api/v2/pokemon?limit=50&offset=0');
   const pokemonsData = await pokemonsResponse.json();
   const pokemons = pokemonsData.results;
   const array = [];

@@ -27,7 +27,7 @@ h1 {
 .pokemonList {
   margin: 25px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 20px;
   width: 100%;
   max-width: 1200px;
@@ -69,27 +69,10 @@ h1 {
 .searchBox {
   position: absolute;
   left: 65%;
-  border-radius: 20px;
-  height: 45px;
-  width: 370px;
-  font-size: 15px;
-}
-
-.searchImg{
-  border-radius: 20px;
+  border-radius: 10px;
   height: 40px;
-  width: 50px;
-}
-
-.searchBtn{
-  position: absolute;
-  left: 85%;
-  top: 40px;
-  border-radius: 7px;
-  height: 30px;
-  width: 40px;
-  background-color:white;
-  border: none;
+  width: 300px;
+  font-size: 15px;
 }
 
 #pikachuImage {

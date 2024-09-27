@@ -3,7 +3,7 @@
 const getTheData = () => {
   return new Promise(async (resolve) => {
     try {
-      const fetchedData = await fetch('https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=1025');
+      const fetchedData = await fetch('https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=10');
       const resultData = await fetchedData.json();
       resolve(resultData);
     } catch (error) {
@@ -22,6 +22,11 @@ const getTheDetails = (pokemonDetailsLink) => {
       console.log(error);
     }
   });
+};
+
+const captilisingTheFirstLetter = (string) => {
+  const firstletter = string.charAt(0).toUpperCase();
+  return string.replace(string[0], firstletter);
 };
 
 const createAPokemonContainer = () => {
@@ -47,7 +52,8 @@ const appendPokemonImage = (pokemonContainer, pokemonDetails) => {
 const appendPokemonName = (pokemonContainer, pokemonDetails) => {
   const pokemonNameh3 = document.createElement('h3');
   pokemonNameh3.classList.add('pokemonName');
-  pokemonNameh3.innerText = pokemonDetails.name;
+  const pokemonName = captilisingTheFirstLetter(pokemonDetails.name);
+  pokemonNameh3.innerText = pokemonName;
   pokemonContainer.appendChild(pokemonNameh3);
 };
 

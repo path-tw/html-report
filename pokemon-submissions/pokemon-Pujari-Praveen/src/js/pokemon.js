@@ -4,7 +4,7 @@ const getPokemonData = async (apiUrl) => {
     const responseJson = await response.json();
     return responseJson;
   } catch (error) {
-    console.log(`Error: ${error}`);
+    return null;
   }
 };
 
@@ -20,7 +20,7 @@ const main = async () => {
   const initialData = await getPokemonData(`https://pokeapi.co/api/v2/pokemon/?limit=1&&offset=0`);
   const allpokemonsData = await getPokemonData(`https://pokeapi.co/api/v2/pokemon/?limit=${initialData.count}&&offset=0`);
   togglePopup(true, loaderContainer);
-  processPokemonData(allpokemonsData, loaderContainer);
+  processPokemonData(allpokemonsData.results, loaderContainer);
 };
 
 window.onload = main;

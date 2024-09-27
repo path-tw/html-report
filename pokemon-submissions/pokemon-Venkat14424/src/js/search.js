@@ -1,12 +1,18 @@
 'use strict';
-const searchPokemon = () => {
-  const searchInput = document.getElementById('searchPokemon');
-  const searchOption = document.getElementById('searchOption').value;
-  const pokemonDataSections = document.querySelectorAll('#pokemonContainer section');
-  const searchValue = searchInput.value.toLowerCase();
-  pokemonDataSections.forEach((pokemonSection) => {
-    pokemonSection.style.display = searchData(searchOption, searchValue, pokemonSection) ? 'block' : 'none';
-  });
+
+const pokemonNameInContainer = (pokemonSection, searchValue) => {
+  const pokemonName = pokemonSection.querySelector('.pokemonName').innerText.toLowerCase();
+  return pokemonName.includes(searchValue);
+};
+
+const pokemonIdInContainer = (pokemonSection, searchValue) => {
+  const pokemonId = pokemonSection.querySelector('.pokemonId').innerText.toLowerCase();
+  return pokemonId.includes(searchValue);
+};
+
+const pokemonTypesInContainer = (pokemonSection, searchValue) => {
+  const pokemonTypes = pokemonSection.querySelector('.pokemonTypes').innerText.toLowerCase();
+  return pokemonTypes.includes(searchValue);
 };
 
 const searchData = (searchOption, searchValue, pokemonSection) => {
@@ -28,17 +34,12 @@ const searchData = (searchOption, searchValue, pokemonSection) => {
   return shouldDisplay;
 };
 
-const pokemonNameInContainer = (pokemonSection, searchValue) => {
-  const pokemonName = pokemonSection.querySelector('.pokemonName').innerText.toLowerCase();
-  return pokemonName.includes(searchValue);
-};
-
-const pokemonIdInContainer = (pokemonSection, searchValue) => {
-  const pokemonId = pokemonSection.querySelector('.pokemonId').innerText.toLowerCase();
-  return pokemonId.includes(searchValue);
-};
-
-const pokemonTypesInContainer = (pokemonSection, searchValue) => {
-  const pokemonTypes = pokemonSection.querySelector('.pokemonTypes').innerText.toLowerCase();
-  return pokemonTypes.includes(searchValue);
+const searchPokemon = () => {
+  const searchInput = document.getElementById('searchPokemon');
+  const searchOption = document.getElementById('searchOption').value;
+  const pokemonDataSections = document.querySelectorAll('#pokemonContainer section');
+  const searchValue = searchInput.value.toLowerCase();
+  pokemonDataSections.forEach((pokemonSection) => {
+    pokemonSection.style.display = searchData(searchOption, searchValue, pokemonSection) ? 'block' : 'none';
+  });
 };

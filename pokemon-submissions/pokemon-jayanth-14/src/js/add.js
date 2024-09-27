@@ -9,6 +9,9 @@ const createTitle = (data) => {
 const createImage = (data) => {
   const image = document.createElement('img');
   image.src = data.imageUrl;
+  if (data.imageUrl === null) {
+    image.src = './src/images/pokeball.png';
+  }
   image.classList.add('cardImage');
   return image;
 };
@@ -21,6 +24,7 @@ const createId = (data) => {
 
 const createTypes = (data) => {
   const types = document.createElement('p');
+  types.classList.add('cardTypes');
   const typesArray = data.type;
   typesArray.forEach((typeName) => {
     const type = document.createElement('span');
